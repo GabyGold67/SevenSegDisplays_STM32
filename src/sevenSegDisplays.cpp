@@ -483,8 +483,8 @@ bool SevenSegDisplays::print(const double &value, const unsigned int &decPlaces,
       if (value < 0 && value > -1)
          readOut = "-";
       readOut += std::to_string(int(value)) + ".";
-      start = std::to_string(value).indexOf('.') + 1;
-      readOut += (std::to_string(value) + _zeroPadding).substring(start, start + decPlaces);
+      start = std::to_string(value).find('.') + 1;
+      readOut += (std::to_string(value) + _zeroPadding).substr(start, start + decPlaces);
       if (rgtAlgn) {
          if (readOut.length() < _dspDigitsQty + 1) {
             if (value < 0)
@@ -504,5 +504,101 @@ bool SevenSegDisplays::print(const double &value, const unsigned int &decPlaces,
    }
 
    return displayable;
+}
+
+void SevenSegDisplays::resetBlinkMask(){
+   for (uint8_t i{0}; i < _dspDigitsQty; i++)
+      *(_blinkMaskPtr + i) = true;
+
+   return;
+}
+
+void SevenSegDisplays::restoreDspBuff(){
+    for (int i{0}; i < _dspDigitsQty; i++)
+        (*(_dspBuffPtr + i)) = (*(_dspAuxBuffPtr + i));
+   // strncpy((char*)_dspBuffPtr, (char*)_dspAuxBuffPtr, _dspDigitsQty );	//Equivalent single operation option
+
+    return;
+}
+
+void SevenSegDisplays::saveDspBuff(){
+    for (int i{0}; i < _dspDigitsQty; i++)
+        (*(_dspAuxBuffPtr + i)) = (*(_dspBuffPtr + i));
+   // strncpy((char*)_dspAuxBuffPtr, (char*)_dspBuffPtr, _dspDigitsQty );	//Equivalent single operation option
+
+   return;
+}
+
+void SevenSegDisplays::setAttrbts(){
+   if (_dspDigitsQty > 1){ // Calculate the minimum integer value displayable with this display's available digits
+      _dspValMin = 1;
+      for (uint8_t i{0}; i < (_dspDigitsQty - 1); i++)
+         _dspValMin *= 10;
+      _dspValMin = (-1)*(_dspValMin - 1); //-(--_dspValMin); //
+   }
+   else
+      _dspValMin = 0;
+
+   _dspValMax = 1; // Calculate the maximum integer value displayable with this display's available digits, create a Zero and a Space padding string for right alignment
+   for (uint8_t i{0}; i < _dspDigitsQty; i++) {
+      _dspValMax *= 10;
+      _zeroPadding += "0";
+      _spacePadding += " ";
+      *(_blinkMaskPtr + i) = true;
+   }
+   --_dspValMax;
+
+//   if (!_dspUndrlHw.getCommAnode()) {
+	if(false){
+		_waitChar = ~_waitChar;
+      _space = ~_space;
+      _dot = ~_dot;
+      for (int i{0}; i < (int)_charSet.length(); i++)
+         _charLeds[i] = ~_charLeds[i];
+   }
+
+   return;
+}
+
+void SevenSegDisplays::setBlinkMask(const bool* newBlnkMsk){
+   for (int i{0}; i < _dspDigitsQty; i++)
+      *(_blinkMaskPtr + i) = *(newBlnkMsk + i);
+
+   return;
+}
+
+bool SevenSegDisplays::setBlinkRate(const unsigned long &newOnRate, const unsigned long &newOffRate){
+   bool result {false};
+   long unsigned tmpOffRate{newOffRate};
+   BaseType_t tmrModResult {pdFAIL};
+
+   if (tmpOffRate == 0)
+      tmpOffRate = newOnRate;
+   if ((newOnRate != _blinkOnRate) || (tmpOffRate != _blinkOffRate)) {
+      if ((newOnRate >= _minBlinkRate) && (newOnRate <= _maxBlinkRate)) { //The new ON rate is in the valid range
+         if ((tmpOffRate >= _minBlinkRate) && (tmpOffRate <= _maxBlinkRate)) {    //The new OFF rate is in the valid range or is equal to 0 to set a symmetric blink
+            if(_blinkOnRate != newOnRate)
+               _blinkOnRate = newOnRate;
+            if(_blinkOffRate != tmpOffRate)
+               _blinkOffRate = tmpOffRate;
+            _blinkRatesGCD = blinkTmrGCD(newOnRate, newOffRate);
+            result =  true;
+
+            if(_blinking){ // If it's active and running modify the timer taking care of the blinking
+               tmrModResult = xTimerChangePeriod(_blinkTmrHndl,
+                              pdMS_TO_TICKS(_blinkRatesGCD),
+                              portMAX_DELAY
+                              );
+               if(tmrModResult == pdFAIL)
+                  result = false;
+            }
+         }
+      }
+   }
+   else{
+      result = true; //There's no need to change the current values, but as those were valid, they are still valid
+   }
+
+   return result;
 }
 
