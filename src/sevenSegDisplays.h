@@ -134,7 +134,7 @@ protected:
 
 public:
     SevenSegDisplays();
-//    SevenSegDisplays(SevenSegDispHw dspUndrlHw);
+    SevenSegDisplays(SevenSegDispHw dspUndrlHw);
     ~SevenSegDisplays();
     bool blink();
     bool blink(const unsigned long &onRate, const unsigned long &offRate = 0);

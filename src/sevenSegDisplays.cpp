@@ -12,32 +12,32 @@ SevenSegDisplays::SevenSegDisplays()
 {
 }
 
-//SevenSegDisplays::SevenSegDisplays(SevenSegDispHw dspUndrlHw)
-//:_dspUndrlHw{dspUndrlHw}
-//{
-//   if(_instancesLstPtr == nullptr){
-//      _instancesLstPtr = new SevenSegDisplays*[_dspPtrArrLngth](); //Initializes with all pointers value of 0, it might refuse to evaluate to nullptr, lookout!!
-//      for(int i{0}; i < _dspPtrArrLngth; i++)
-//         *(_instancesLstPtr + i) = nullptr;
-//   }
-//   if(_displaysCount < _dspPtrArrLngth){
-//      _dspDigitsQty = _dspUndrlHw.getDspDigits(); //Now that we know the display size in digits, we can build the needed arrays for data
-//      _dspBuffPtr  = new uint8_t[_dspDigitsQty];
-//      _blinkMaskPtr = new bool[_dspDigitsQty];
-//      _dspUndrlHw.setDspBuffPtr(_dspBuffPtr); //Indicate the hardware where de data to display is located
-//      _dspInstNbr = _dspSerialNum++; //This value is always incremented, as it's not related to the active objects but to amount of different displays created
-//      ++_displaysCount;  //This keeps the count of instantiated SevenSegDisplays objects
-//      _dspInstance = this;
-//      for (uint8_t i{0}; i < _dspPtrArrLngth; i++){
-//         if(*(_instancesLstPtr + i) == nullptr){
-//            *(_instancesLstPtr + i) = _dspInstance;
-//            break;
-//         }
-//      }
-//      setAttrbts();
-//      clear();
-//   }
-//}
+SevenSegDisplays::SevenSegDisplays(SevenSegDispHw dspUndrlHw)
+:_dspUndrlHw{dspUndrlHw}
+{
+   if(_instancesLstPtr == nullptr){
+      _instancesLstPtr = new SevenSegDisplays*[_dspPtrArrLngth](); //Initializes with all pointers value of 0, it might refuse to evaluate to nullptr, lookout!!
+      for(int i{0}; i < _dspPtrArrLngth; i++)
+         *(_instancesLstPtr + i) = nullptr;
+   }
+   if(_displaysCount < _dspPtrArrLngth){
+      _dspDigitsQty = _dspUndrlHw.getDspDigits(); //Now that we know the display size in digits, we can build the needed arrays for data
+      _dspBuffPtr  = new uint8_t[_dspDigitsQty];
+      _blinkMaskPtr = new bool[_dspDigitsQty];
+      _dspUndrlHw.setDspBuffPtr(_dspBuffPtr); //Indicate the hardware where de data to display is located
+      _dspInstNbr = _dspSerialNum++; //This value is always incremented, as it's not related to the active objects but to amount of different displays created
+      ++_displaysCount;  //This keeps the count of instantiated SevenSegDisplays objects
+      _dspInstance = this;
+      for (uint8_t i{0}; i < _dspPtrArrLngth; i++){
+         if(*(_instancesLstPtr + i) == nullptr){
+            *(_instancesLstPtr + i) = _dspInstance;
+            break;
+         }
+      }
+      setAttrbts();
+      clear();
+   }
+}
 
 SevenSegDisplays::~SevenSegDisplays(){
     if(_blinking)
@@ -64,16 +64,14 @@ bool SevenSegDisplays::blink(){
    if(!_waiting){   //If the display is waiting the blinking option is blocked out as they are mutually excluyent, as both simultaneous has no logical use!
       if (!_blinking){
          //Create a valid unique Name for identifying the timer created
-         char blnkTmrName[15];
-         char dspSerialNumChar[3]{};
-         sprintf(dspSerialNumChar, "%02u", (int)_dspSerialNum);
-         strcpy(blnkTmrName, "Disp");
-         strcat(blnkTmrName, dspSerialNumChar);
-         strcat(blnkTmrName, "blnk_tmr");
+         std::string blnkTmrNameStr{ "Disp" };
+         std::string dspSerialNumStr{ "00" + std::to_string(_dspSerialNum) };
 
+         dspSerialNumStr = dspSerialNumStr.substr(dspSerialNumStr.length() - 2, 2);
+         blnkTmrNameStr = blnkTmrNameStr + dspSerialNumStr + "blnk_tmr";
          if (!_blinkTmrHndl){
                _blinkTmrHndl = xTimerCreate(
-                  blnkTmrName,
+                  blnkTmrNameStr.c_str(),
                   pdMS_TO_TICKS(_blinkRatesGCD),
                   pdTRUE,  //Autoreload
                   _dspInstance,   //TimerID, data to be passed to the callback function
@@ -475,7 +473,7 @@ bool SevenSegDisplays::print(const double &value, const unsigned int &decPlaces,
       displayable = false;
       clear();
    }
-   else if ((decPlaces + std::to_string(int(value)).length()) > (((value < 0) && (value > (-1))) ? (_dspDigitsQty - 1) : _dspDigitsQty)) {
+   else if ((decPlaces + std::to_string(int(value)).length()) > static_cast<unsigned int>((((value > (-1)) && (value < 0)) ? (_dspDigitsQty - 1) : _dspDigitsQty))) {
       displayable = false;
       clear();
    }
@@ -486,7 +484,7 @@ bool SevenSegDisplays::print(const double &value, const unsigned int &decPlaces,
       start = std::to_string(value).find('.') + 1;
       readOut += (std::to_string(value) + _zeroPadding).substr(start, start + decPlaces);
       if (rgtAlgn) {
-         if (readOut.length() < _dspDigitsQty + 1) {
+         if (readOut.length() < static_cast<unsigned int>(_dspDigitsQty + 1)) {
             if (value < 0)
                pad += "-";
             if (zeroPad)
@@ -602,3 +600,353 @@ bool SevenSegDisplays::setBlinkRate(const unsigned long &newOnRate, const unsign
    return result;
 }
 
+bool SevenSegDisplays::setWaitChar (const char &newChar){
+    bool result {false};
+    int position {-1};
+
+   if(_waitChar != newChar){
+      position = _charSet.find(newChar);
+      if (position > -1) {
+         _waitChar = _charLeds[position];
+         result = true;
+      }
+   }
+   else{
+      result = true;
+   }
+
+   return result;
+}
+
+bool SevenSegDisplays::setWaitRate(const unsigned long &newWaitRate){
+   bool result {false};
+   BaseType_t tmrModResult {pdFAIL};
+
+   if(_waitRate != newWaitRate){
+      if ((newWaitRate >= _minBlinkRate) && newWaitRate <= _maxBlinkRate) {//if the new waitRate is within the accepted range, set it
+         _waitRate = newWaitRate;
+         result =  true;
+
+         if(_waiting){  // If it's active and running modify the timer taking care of the blinking
+            tmrModResult = xTimerChangePeriod(_waitTmrHndl,
+                           pdMS_TO_TICKS(_waitRate),
+                           portMAX_DELAY
+                           );
+            if(tmrModResult == pdFAIL)
+               result =  false;
+         }
+      }
+   }
+   return result;
+}
+
+void SevenSegDisplays::tmrCbBlink(TimerHandle_t blinkTmrCbArg){
+   SevenSegDisplays* thisDisplay = (SevenSegDisplays*)blinkTmrCbArg;
+   thisDisplay->updBlinkState();
+
+   return;
+}
+
+void SevenSegDisplays::tmrCbWait(TimerHandle_t waitTmrCbArg){
+   SevenSegDisplays* thisDisplay = (SevenSegDisplays*)waitTmrCbArg;
+   thisDisplay-> updWaitState();
+
+   return;
+}
+
+void SevenSegDisplays::updBlinkState(){
+    //The use of a xTimer that keeps flip-floping the _blinkShowOn value is better suited for symmetrical blinking, but not for asymmetrical cases.
+
+    // _ Confirm the condition _blinking
+        // _blinking = true
+            // _ calculate time elapsed since last _blinkShowOn change
+            // if ((_blinkShowOn && _blinkTimer > _blinkOnRate) ||(!_blinkShowOn && _blinkTimer > _blinkOffRate))
+                //Swap _blinkShowOn
+                //Reset _blinkTimer
+                // if (_blinkShowOn)
+                    //Retrieve full lit buffer (from _dspAuxBuffer to _dspBuffer)
+                    //Blank Aux buffer
+                // else
+                    //Save _dspBuffer to _dspAuxBuffer
+                    //Blank designated positions of the _dspBuffer
+        //blinking = false
+            //Abnormal situation, define if stops the timer or/and other corrective measures
+
+   if (_blinking == true){
+      if (_blinkShowOn == false) {
+         if (_blinkTimer == 0){
+            //The turn-Off display stage of the blinking started, copy the dspBuff contents to the dspAuxBuff before blanking the appropriate ports
+            saveDspBuff();
+            //turn off the digits by placing a space to each corresponding position of the buffer
+            for (int i{0}; i < _dspDigitsQty; i++)
+               if(*(_blinkMaskPtr + i))
+                  *(_dspBuffPtr + i) = _space;
+            _blinkTimer = xTaskGetTickCount() / portTICK_RATE_MS; //Starts the count for the blinkRate control
+         }
+         else if((xTaskGetTickCount() / portTICK_RATE_MS - _blinkTimer)> _blinkOffRate){
+            _blinkTimer = 0;
+            _blinkShowOn = true;
+         }
+      }
+      else{
+         if (_blinkTimer == 0){
+            //The turn-On display stage of the blinking started, restore the dspBuff contents from the dspAuxBuff
+            restoreDspBuff();
+            _blinkTimer = xTaskGetTickCount() / portTICK_RATE_MS;
+         }
+         else if((xTaskGetTickCount() / portTICK_RATE_MS - _blinkTimer) > _blinkOnRate){
+            _blinkTimer = 0;
+            _blinkShowOn = false;
+         }
+      }
+   }
+
+   return;
+}
+
+void SevenSegDisplays::updWaitState(){
+   if (_waiting == true){
+      if (_waitTimer == 0){
+         clear();
+         _waitTimer = xTaskGetTickCount()/portTICK_RATE_MS;
+      }
+      else if((xTaskGetTickCount()/portTICK_RATE_MS - _waitTimer) > _waitRate){
+         for (int i{_dspDigitsQty - 1}; i >= 0; i--){
+
+            if(( _dspDigitsQty - i) <= _waitCount)
+               *(_dspBuffPtr + i) = _waitChar;
+            else
+               *(_dspBuffPtr + i) = _space;
+         }
+         _dspBuffChng = true;
+         _waitCount++;
+         if (_waitCount == (_dspDigitsQty + 1))
+            _waitCount = 0;
+         _waitTimer = xTaskGetTickCount()/portTICK_RATE_MS;
+      }
+   }
+
+   return;
+}
+
+bool SevenSegDisplays::wait(){
+   bool result {false};
+   BaseType_t tmrModResult {pdFAIL};
+
+   if(!_waiting){   //If the display is waiting the blinking option is blocked out as they are mutually excluyent, as both simultaneous has no logical use!
+      //Create a valid unique Name for identifying the timer created
+//      char waitTmrName[15];	//To Be Replaced by a std::string
+      std::string waitTmrNameStr{ "Disp" };
+      std::string dspSerialNumStr{ "00" + std::to_string(_dspSerialNum) };
+
+      dspSerialNumStr = dspSerialNumStr.substr(dspSerialNumStr.length() - 2, 2);
+      waitTmrNameStr = waitTmrNameStr + dspSerialNumStr + "wait_tmr";
+
+      if (!_waitTmrHndl){
+            _waitTmrHndl = xTimerCreate(
+               waitTmrNameStr.c_str(),
+               pdMS_TO_TICKS(_waitRate),
+               pdTRUE,  //Autoreload
+               _dspInstance,   //TimerID, data to be passed to the callback function
+               tmrCbWait  //Callback function
+            );
+      }
+      if(_waitTmrHndl && (!xTimerIsTimerActive(_waitTmrHndl))){
+            // The timer was created, but it wasn't started. Start the timer
+            tmrModResult = xTimerStart(_waitTmrHndl, portMAX_DELAY);
+            if (tmrModResult == pdPASS)
+               result = true;
+      }
+
+      if (_blinking)
+         noBlink();
+      _dspAuxBuffPtr = new uint8_t[_dspDigitsQty];
+      saveDspBuff();
+      _waitCount = 0;
+      _waitTimer = 0;  //Start the blinking pace timer...
+      _waiting = true;
+      result = true;
+    }
+
+   return result;
+}
+
+bool SevenSegDisplays::wait(const unsigned long &newWaitRate){
+   bool result {true};
+
+   if (!_waiting){
+      if(_waitRate != newWaitRate){
+         if ((newWaitRate >= _minBlinkRate) && (newWaitRate <= _maxBlinkRate))
+            _waitRate = newWaitRate;
+         else
+            result = false;
+      }
+      if (result == true)
+         wait();
+   }
+   else{
+      result = false;
+   }
+
+   return result;
+}
+
+bool SevenSegDisplays::write(const uint8_t &segments, const uint8_t &port){
+   bool result {false};
+   bool writeOnBlink{_blinking};
+
+   if (port < _dspDigitsQty){
+      if(writeOnBlink)
+         noBlink();
+      *(_dspBuffPtr + port) = segments;
+      if(writeOnBlink)
+         blink();
+      result = true;
+   }
+
+    return result;
+}
+
+bool SevenSegDisplays::write(const std::string &character, const uint8_t &port){
+   bool result {false};
+   int position {-1};
+   bool writeOnBlink{_blinking};
+
+   if (port < _dspDigitsQty){
+      position = _charSet.find(character);
+      if (position > -1) { // Character found for translation
+         if(writeOnBlink)
+            noBlink();
+			*(_dspBuffPtr + port) = _charLeds[position];
+         if(writeOnBlink)
+            blink();
+         result = true;
+      }
+    }
+
+   return result;
+}
+
+//============================================================> Class methods separator
+
+ClickCounter::ClickCounter(uint8_t ccSclk, uint8_t ccRclk, uint8_t ccDio, bool rgthAlgn, bool zeroPad, bool commAnode, const uint8_t dspDigits)
+:_display()
+// :_display(ccSclk, ccRclk, ccDio, commAnode, dspDigits), _countRgthAlgn {rgthAlgn}, _countZeroPad {zeroPad}
+{
+    //Class constructor
+}
+
+ClickCounter::~ClickCounter(){
+
+}
+
+bool ClickCounter::blink(){
+
+    return _display.blink();
+}
+
+bool ClickCounter::blink(const unsigned long &onRate, const unsigned long &offRate){
+
+    return _display.blink(onRate, offRate);
+}
+
+void ClickCounter::clear(){
+    _display.clear();
+
+    return;
+}
+
+bool ClickCounter::countBegin(int32_t startVal){
+   bool result{false};
+
+    if ((startVal >= _display.getDspValMin()) && (startVal <= _display.getDspValMax())){
+        // if (_display.begin() == true){
+            result = countRestart(startVal);
+            if (result)
+                _beginStartVal = startVal;
+        // }
+    }
+   return result;
+}
+
+bool ClickCounter::countDown(int32_t qty){
+    bool result {false};
+    qty = abs(qty);
+
+    if((_count - qty) >= _display.getDspValMin()){
+        _count -= qty;
+        result = updDisplay();
+    }
+
+    return result;
+}
+
+bool ClickCounter::countReset(){
+
+    return countRestart(_beginStartVal);
+}
+
+bool ClickCounter::countRestart(int32_t restartValue){
+   bool result{false};
+
+   if ((restartValue >= _display.getDspValMin()) && (restartValue <= _display.getDspValMax())){
+      _count = restartValue;
+      result = updDisplay();
+   }
+
+   return result;
+}
+
+bool ClickCounter::countStop(){
+
+    // return _display.stop();
+    return true;
+}
+
+bool ClickCounter::countToZero(int32_t qty){
+    bool result {false};
+
+    if (_count > 0)
+        result = countDown(qty);
+    else if (_count < 0)
+        result = countUp(qty);
+
+    return result;
+}
+
+bool ClickCounter::countUp(int32_t qty){
+    bool result {false};
+    qty = abs(qty);
+
+    if((_count + qty) <= _display.getDspValMax()){
+        _count += qty;
+        result = updDisplay();
+    }
+
+    return result;
+}
+
+int32_t ClickCounter::getCount(){
+
+    return _count;
+}
+
+int32_t ClickCounter::getStartVal(){
+
+    return _beginStartVal;
+}
+
+bool ClickCounter::noBlink(){
+
+    return _display.noBlink();
+}
+
+bool ClickCounter::setBlinkRate(const unsigned long &newOnRate, const unsigned long &newOffRate){
+
+    return _display.setBlinkRate(newOnRate, newOffRate);
+}
+
+bool ClickCounter::updDisplay(){
+
+    return _display.print(_count, _countRgthAlgn, _countZeroPad);
+}
