@@ -1,3 +1,10 @@
+/**
+ * @file		: SevenSegDisplays.h
+ * @brief	: Header file for SevenSegDisplays library classes
+ *
+ * @author	: Gabriel D. Goldman
+ * @date		: Created on: Nov 16, 2023
+ */
 #ifndef _SEVENSEGDISPLAYS_STM32_H_
 #define _SEVENSEGDISPLAYS_STM32_H_
 

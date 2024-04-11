@@ -1,8 +1,9 @@
-/*
- * SevenSegDispHw.h
+/**
+ * @file		: SevenSegDispHw.h
+ * @brief	: Header file for SevenSegDispHw library classes
  *
- *  Created on: Apr 11, 2024
- *      Author: Gabriel D. Goldman
+ * @author	: Gabriel D. Goldman
+ * @date		: Created on: Nov 16, 2023
  */
 
 #ifndef _SEVENSEGDISPHW_H_
@@ -53,7 +54,6 @@ uint8_t singleBitPosNum(uint16_t mask);
 class SevenSegDispHw{
     static uint8_t _dspHwSerialNum;
 protected:
-//    uint8_t* _ioPins{};
     gpioPinId_t* _ioPins{};
     uint8_t* _digitPosPtr{nullptr};
     uint8_t _dspDigitsQty{}; //Display size in digits
