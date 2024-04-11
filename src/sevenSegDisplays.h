@@ -163,6 +163,35 @@ public:
 
 //============================================================> Class declarations separator
 
+class ClickCounter{
+private:
+    SevenSegDisplays _display;
+    int _count{0};
+    int _beginStartVal{0};
+    bool _countRgthAlgn{true};
+    bool _countZeroPad{false};
+public:
+    ClickCounter(uint8_t ccSclk, uint8_t ccRclk, uint8_t ccDio, bool rgthAlgn = true, bool zeroPad = false, bool commAnode = true, const uint8_t dspDigits = 4);
+    ~ClickCounter();
+    bool blink();
+    bool blink(const unsigned long &onRate, const unsigned long &offRate = 0);
+    void clear();
+    bool countBegin(int32_t startVal = 0);  //To be analyzed it's current need
+    bool countDown(int32_t qty = 1);
+    bool countReset();
+    bool countRestart(int32_t restartValue = 0);
+    bool countStop();   //To be analyzed it's current need
+    bool countToZero(int32_t qty = 1);
+    bool countUp(int32_t qty = 1);
+    int32_t getCount();
+    int32_t getStartVal();
+    bool noBlink();
+    bool setBlinkRate(const unsigned long &newOnRate, const unsigned long &newOffRate = 0);
+    bool updDisplay();  //To be analyzed it's current need
+};
+
+//============================================================> Class declarations separator
+
 
 
 #endif /* _SEVENSEGDISPLAYS_STM32_H_ */
