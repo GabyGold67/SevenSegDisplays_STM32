@@ -167,17 +167,81 @@ public:
      * @retval false: The display was already set to blink.
      */
     bool blink();
+    /**
+     * @brief
+     *
+     * @param onRate Time (in milliseconds) the display must stay on, the value must be in the range _minBlinkRate <= onRate <= _maxBlinkRate. Those preset values can be known by the use of the getMinBlinkRate() and the getMaxBlinkRate() methods.
+     * @param offRate (Optional) Time (in milliseconds) the display must stay off, the value must be in the range _minBlinkRate <= offRate <= _maxBlinkRate. Those preset values might be known by the use of the getMinBlinkRate() and the getMaxBlinkRate() methods. If no offRate value is provided the method will assume it's a symmetric blink call and use a value for offRate equal to the value passed for onRate.
+     *
+     * @retval true: If the display was not already set to blink (so now the blinking starts).
+     * @retval false: The display was already set to blink, and/or one or more of the parameters passed was out of range.
+     */
     bool blink(const unsigned long &onRate, const unsigned long &offRate = 0);
+    /**
+     * @brief Clears the display, turning off all the segments and dots.
+     *
+     * @note The clearing process involves writing **spaces** to every display port. Due to physical display characteristics this may not be equal to write a '\0' to them.
+     *
+     */
     void clear();
+    /**
+     * @brief Displays a basic graphical representation of the level of fulfillment or completeness of two segmented values or tasks.
+     *
+     *  The display gives a general fast notion on the matter, as a battery charge level, liquids deposit level, time remaining, tasks completeness and so on. The levels are represented by the horizontal segments (0, 1, 2 or 3 from bottom to top), and a character might be added before each of the graphical representations to give an indication of what the display is showing, passed through the **labelLeft** and **labelRight** parameters. As four digit ports must be used, this method only applies to displays with 4 or more digits, the display is splitted in two sectors, the left side and the right side, and each one of them must have a valid value (0 <= value <= 3) to enable them to be displayed, and might have (or not) a single displayable character to give a visual hint to what the value is showing. For more information check the **gauge()** method.
+     *
+     * @param levelLeft The value to display for the two left side 7 segments display ports, must be in the range 0 <= level <= 3.
+     * @param levelRight The value to display for the two right side 7 segments display ports, must be in the range 0 <= level <= 3.
+     * @param labelLeft A char, optional parameter (if not specified the default value, a Space, will be assumed), that will be displayed in the leftmost digit of the display. The character must be one of the "displayable" characters, as listed in the **print()** method description.
+     * @param labelRight A char, optional parameter (if not specified the default value, a Space, will be assumed), that will be displayed in the position left to the **levelRight** display, just before the levelRight value. The character must be one of the "displayable" characters, as listed in the **print()** method description.
+     *
+     * @retval If the values could be represented.
+     * @retval Otherwise, being that the **levelLeft** and/or **levelRight** parameter was out of range and/or the **labelLeft** and/or **labelRight** parameter was not in the list of displayable characters. The display will be blanked.
+     *
+     */
     bool doubleGauge(const int &levelLeft, const int &levelRight, char labelLeft = ' ', char labelRight = ' ');
+    /**
+     * @brief Displays a basic graphical representation of the level of fulfillment or completeness of a segmented value or task.
+     *
+     * The display gives a general fast notion on the matter, as a battery charge level, liquids deposit level, time remaining, tasks completeness and so on. The levels are represented by the horizontal segments (0, 1, 2 or 3 from bottom to top, and from left to right), and a character might be added before the graphical representation to give an indication of what the display is showing. This method is usable in displays which have from 4 digits and up, as the representation makes use of 4 digits or les.
+     *
+     * @param level The integer value to display, must be in the range 0 <= level <= 3.
+     * @param label (Optional) A character that might be added before (leftmost port) the graphical representation to give an indication of what the display is showing, if not specified the default value, a space, will be assumed. The character must be one of the "displayable" characters, as listed in the print(std::string) method description.
+     * @return
+     */
     bool gauge(const int &level, char label = ' ');
     bool gauge(const double &level, char label = ' ');
     uint8_t getDigitsQty();
+    /**
+     * @brief Gets the greatest integer number value displayable by the display.
+     *
+     * The value is calculated according to the quantity of digits -ports- the display has as indicated at the object instantiation.
+     *
+     * @return The greatest integer value display capability.
+     *
+     */
     int32_t getDspValMax();
+    /**
+     * @brief Gets the minimum integer number value displayable by the display.
+     *
+     * The value is calculated according to the quantity of digits -ports- the display has as indicated at the object instantiation.
+     *
+     * @return The greatest integer value display capability.
+     *
+     * @note The use of the leftmost port to represent the **-** (minus) sign is considered.
+     *
+     */
     int32_t getDspValMin();
     uint16_t getInstanceNbr();
     unsigned long getMaxBlinkRate();
     unsigned long getMinBlinkRate();
+    /**
+     * @brief Returns a value indicating if the display is blank
+     *
+     * @retval true: all the display ports hold a **space** value.
+     * @retval false: at least one of the display ports hold a value different to **space** value.
+     *
+     * @note The condition to be blank is that all the display ports are exhibiting the _space character, not to be confused with '\0'
+    */
     bool isBlank();
     bool isBlinking();
     bool isWaiting();
