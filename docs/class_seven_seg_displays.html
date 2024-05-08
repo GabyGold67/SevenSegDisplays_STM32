@@ -128,29 +128,64 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a667dc425877769e610f33f70055158cb" id="r_a667dc425877769e610f33f70055158cb"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a667dc425877769e610f33f70055158cb">SevenSegDisplays</a> (<a class="el" href="class_seven_seg_disp_hw.html">SevenSegDispHw</a> dspUndrlHw)</td></tr>
 <tr class="memdesc:a667dc425877769e610f33f70055158cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Class constructor.  <br /></td></tr>
 <tr class="separator:a667dc425877769e610f33f70055158cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aad6eac4fa55968318f6d0c1e4e80cb8e" id="r_aad6eac4fa55968318f6d0c1e4e80cb8e"><td class="memItemLeft" align="right" valign="top"><a id="aad6eac4fa55968318f6d0c1e4e80cb8e" name="aad6eac4fa55968318f6d0c1e4e80cb8e"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>~SevenSegDisplays</b> ()</td></tr>
+<tr class="memdesc:aad6eac4fa55968318f6d0c1e4e80cb8e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Virtual class destructor. <br /></td></tr>
+<tr class="separator:aad6eac4fa55968318f6d0c1e4e80cb8e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a576676d89b46d8d3752fc8d36fbcac2c" id="r_a576676d89b46d8d3752fc8d36fbcac2c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a576676d89b46d8d3752fc8d36fbcac2c">blink</a> ()</td></tr>
 <tr class="memdesc:a576676d89b46d8d3752fc8d36fbcac2c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes the display blink the contents it is showing.  <br /></td></tr>
 <tr class="separator:a576676d89b46d8d3752fc8d36fbcac2c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ade8596c25d7c6f2976422ef71a565508" id="r_ade8596c25d7c6f2976422ef71a565508"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ade8596c25d7c6f2976422ef71a565508">blink</a> (const unsigned long &amp;onRate, const unsigned long &amp;offRate=0)</td></tr>
+<tr class="memdesc:ade8596c25d7c6f2976422ef71a565508"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes the display blink the contents it is showing using the timing set by the parameters.  <br /></td></tr>
 <tr class="separator:ade8596c25d7c6f2976422ef71a565508"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a67a533e8239853768391bfe513fc318e" id="r_a67a533e8239853768391bfe513fc318e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a67a533e8239853768391bfe513fc318e">clear</a> ()</td></tr>
 <tr class="memdesc:a67a533e8239853768391bfe513fc318e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears the display, turning off all the segments and dots.  <br /></td></tr>
 <tr class="separator:a67a533e8239853768391bfe513fc318e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa74bbf6a2436ea01c170459ef1da5fbe" id="r_aa74bbf6a2436ea01c170459ef1da5fbe"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa74bbf6a2436ea01c170459ef1da5fbe">doubleGauge</a> (const int &amp;levelLeft, const int &amp;levelRight, char labelLeft=' ', char labelRight=' ')</td></tr>
-<tr class="memdesc:aa74bbf6a2436ea01c170459ef1da5fbe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Displays a basic graphical representation of the level of fulfillment or completeness of two segmented values or tasks.  <br /></td></tr>
+<tr class="memdesc:aa74bbf6a2436ea01c170459ef1da5fbe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Displays a basic graphical representation of the level of fulfillment or completeness of <b>two</b> segmented values or tasks.  <br /></td></tr>
 <tr class="separator:aa74bbf6a2436ea01c170459ef1da5fbe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6fea06785902000457c1105c78d85093" id="r_a6fea06785902000457c1105c78d85093"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6fea06785902000457c1105c78d85093">gauge</a> (const double &amp;level, char label=' ')</td></tr>
+<tr class="memdesc:a6fea06785902000457c1105c78d85093"><td class="mdescLeft">&#160;</td><td class="mdescRight">Displays a basic graphical representation of the level of fulfillment or completeness of a segmented value or task.  <br /></td></tr>
+<tr class="separator:a6fea06785902000457c1105c78d85093"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa00c8c2fbca4a0068590ef62de28f198" id="r_aa00c8c2fbca4a0068590ef62de28f198"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa00c8c2fbca4a0068590ef62de28f198">gauge</a> (const int &amp;level, char label=' ')</td></tr>
 <tr class="memdesc:aa00c8c2fbca4a0068590ef62de28f198"><td class="mdescLeft">&#160;</td><td class="mdescRight">Displays a basic graphical representation of the level of fulfillment or completeness of a segmented value or task.  <br /></td></tr>
 <tr class="separator:aa00c8c2fbca4a0068590ef62de28f198"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a05ddffe49e505638382affaa0426b272" id="r_a05ddffe49e505638382affaa0426b272"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a05ddffe49e505638382affaa0426b272">getDigitsQty</a> ()</td></tr>
+<tr class="memdesc:a05ddffe49e505638382affaa0426b272"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets quantity of digits, or ports, of the display.  <br /></td></tr>
+<tr class="separator:a05ddffe49e505638382affaa0426b272"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ace9c93b38f969bac953449c506c2ce2f" id="r_ace9c93b38f969bac953449c506c2ce2f"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ace9c93b38f969bac953449c506c2ce2f">getDspValMax</a> ()</td></tr>
 <tr class="memdesc:ace9c93b38f969bac953449c506c2ce2f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the greatest integer number value displayable by the display.  <br /></td></tr>
 <tr class="separator:ace9c93b38f969bac953449c506c2ce2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a09b7157b7be5f4c4b0562f862d6aaf5c" id="r_a09b7157b7be5f4c4b0562f862d6aaf5c"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a09b7157b7be5f4c4b0562f862d6aaf5c">getDspValMin</a> ()</td></tr>
 <tr class="memdesc:a09b7157b7be5f4c4b0562f862d6aaf5c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the minimum integer number value displayable by the display.  <br /></td></tr>
 <tr class="separator:a09b7157b7be5f4c4b0562f862d6aaf5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8faca0f757c0477f59a73668b6041689" id="r_a8faca0f757c0477f59a73668b6041689"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8faca0f757c0477f59a73668b6041689">getInstanceNbr</a> ()</td></tr>
+<tr class="memdesc:a8faca0f757c0477f59a73668b6041689"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the instantiation number it was given to the object.  <br /></td></tr>
+<tr class="separator:a8faca0f757c0477f59a73668b6041689"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a66d298970031a709ee5bad045a8356fb" id="r_a66d298970031a709ee5bad045a8356fb"><td class="memItemLeft" align="right" valign="top">unsigned long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a66d298970031a709ee5bad045a8356fb">getMaxBlinkRate</a> ()</td></tr>
+<tr class="memdesc:a66d298970031a709ee5bad045a8356fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the maximum value the blink rates for the <a class="el" href="#a576676d89b46d8d3752fc8d36fbcac2c" title="Makes the display blink the contents it is showing.">blink()</a> and blink(const unsigned long, const unsigned long) might take.  <br /></td></tr>
+<tr class="separator:a66d298970031a709ee5bad045a8356fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9bc655b23f3edd12f2b127441e4e1310" id="r_a9bc655b23f3edd12f2b127441e4e1310"><td class="memItemLeft" align="right" valign="top">unsigned long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9bc655b23f3edd12f2b127441e4e1310">getMinBlinkRate</a> ()</td></tr>
+<tr class="memdesc:a9bc655b23f3edd12f2b127441e4e1310"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the minimum values the blink rates for the <a class="el" href="#a576676d89b46d8d3752fc8d36fbcac2c" title="Makes the display blink the contents it is showing.">blink()</a> and blink(const unsigned long, const unsigned long) might take.  <br /></td></tr>
+<tr class="separator:a9bc655b23f3edd12f2b127441e4e1310"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8f52f000dcfe6c75be15f94b21556cb4" id="r_a8f52f000dcfe6c75be15f94b21556cb4"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8f52f000dcfe6c75be15f94b21556cb4">isBlank</a> ()</td></tr>
 <tr class="memdesc:a8f52f000dcfe6c75be15f94b21556cb4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a value indicating if the display is blank.  <br /></td></tr>
 <tr class="separator:a8f52f000dcfe6c75be15f94b21556cb4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a60fbaa5167e7f5de53b48855a67f5c17" id="r_a60fbaa5167e7f5de53b48855a67f5c17"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a60fbaa5167e7f5de53b48855a67f5c17">isBlinking</a> ()</td></tr>
+<tr class="memdesc:a60fbaa5167e7f5de53b48855a67f5c17"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets if the display is in <b>blinking mode</b>.  <br /></td></tr>
+<tr class="separator:a60fbaa5167e7f5de53b48855a67f5c17"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a718219a5716845dfa413f62218c575a7" id="r_a718219a5716845dfa413f62218c575a7"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a718219a5716845dfa413f62218c575a7">isWaiting</a> ()</td></tr>
+<tr class="memdesc:a718219a5716845dfa413f62218c575a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets if the display is in <b>waiting mode</b>.  <br /></td></tr>
+<tr class="separator:a718219a5716845dfa413f62218c575a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9f790df925c994efb27f0ce1c39014dd" id="r_a9f790df925c994efb27f0ce1c39014dd"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9f790df925c994efb27f0ce1c39014dd">noBlink</a> ()</td></tr>
+<tr class="memdesc:a9f790df925c994efb27f0ce1c39014dd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stops the display blinking, if it was doing so, leaving the display turned on.  <br /></td></tr>
+<tr class="separator:a9f790df925c994efb27f0ce1c39014dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2e6d2565f90dc6acf546934dde557471" id="r_a2e6d2565f90dc6acf546934dde557471"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2e6d2565f90dc6acf546934dde557471">noWait</a> ()</td></tr>
+<tr class="memdesc:a2e6d2565f90dc6acf546934dde557471"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stops the <b>waiting mode</b> in process.  <br /></td></tr>
+<tr class="separator:a2e6d2565f90dc6acf546934dde557471"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa40acb9d92f5a832d0ba1d22a03f395e" id="r_aa40acb9d92f5a832d0ba1d22a03f395e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa40acb9d92f5a832d0ba1d22a03f395e">print</a> (std::string text)</td></tr>
+<tr class="memdesc:aa40acb9d92f5a832d0ba1d22a03f395e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Displays a string of text.  <br /></td></tr>
+<tr class="separator:aa40acb9d92f5a832d0ba1d22a03f395e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Implements a seven segment display object. </p>
@@ -177,11 +212,12 @@ Public Member Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p>Is the physical device used to display the information generated by this object, and stored in it's buffer attribute. As such it has physical properties that might condition some of this object characteristics, some has no incidence, including:</p><ul>
-<li>Digits (a.k.a. ports) quantity.</li>
-<li>Type of led connection (common Anode/ common Cathode).</li>
+<p>Is the physical device used to display the information generated by this object, and is kept in it's buffer. As such it has physical properties that might condition some of this object characteristics -some has no practical incidence- including:</p><ul>
+<li>Digits (ports) quantity.</li>
+<li>Type of led connection (common Anode/common Cathode).</li>
 <li>Quantity and position of semicolons.</li>
-<li>Managed brightness levels. </li>
+<li>Managed brightness levels.</li>
+<li>Display color change. </li>
 </ul>
 
 </div>
@@ -203,7 +239,7 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Makes the display blink the contents it is showing. </p>
-<p>The display blinks until a noBlink() method is invoked. The display will continue blinking even if the contents are changed. By default all the digits blink, but each digit might be configured individually to blink or not by using the setBlinkMask() method. When invoking this method with no parameters the blinking is symmetrical, meaning that the time the display shows the contents and the time the display is blank are equal. The blinking starts at a preset rate the first time the method is invoked. The blinking rate can be changed by using the setBlinkRate() method. After changing the blinking rate, the new blinking rate will be kept after a noBlink() or a new <a class="el" href="#a576676d89b46d8d3752fc8d36fbcac2c" title="Makes the display blink the contents it is showing.">blink()</a> without parameters call is done, until it is modified with a new setBlinkRate(const unsigned long, const unsigned long) call, or it is restarted by a blink(const unsigned long, const unsigned long) with parameters. Note that to restart the blinking with a <a class="el" href="#a576676d89b46d8d3752fc8d36fbcac2c" title="Makes the display blink the contents it is showing.">blink()</a> the service must first be stopped, as the method call makes no changes if the blinking service was already running.</p>
+<p>The display blinks until a <a class="el" href="#a9f790df925c994efb27f0ce1c39014dd" title="Stops the display blinking, if it was doing so, leaving the display turned on.">noBlink()</a> method is invoked. The display will continue blinking even if the contents are changed. By default all the digits blink, but each digit might be configured individually to blink or not by using the setBlinkMask(const bool*) method. When invoking this method with no parameters the existing blinking times parameters -stating the time the blinking ports will stay off an then the time they will stay on-. The blinking times are set at instantiation time to generate a symmetrical blinking effect, meaning that the time the display shows the contents and the time the display is blank are equal. The blinking rate can be changed by using the setBlinkRate(const unsigned long, const unsigned long) method. After changing the blinking rate, the new blinking rate will be kept after a <a class="el" href="#a9f790df925c994efb27f0ce1c39014dd" title="Stops the display blinking, if it was doing so, leaving the display turned on.">noBlink()</a> or a new <a class="el" href="#a576676d89b46d8d3752fc8d36fbcac2c" title="Makes the display blink the contents it is showing.">blink()</a> without parameters call is done, until it is modified with a new setBlinkRate(const unsigned long, const unsigned long) call, or it is restarted by a blink(const unsigned long, const unsigned long) with parameters. Note that to restart the blinking with a <a class="el" href="#a576676d89b46d8d3752fc8d36fbcac2c" title="Makes the display blink the contents it is showing.">blink()</a> the service must first be stopped, as the method call makes no changes if the blinking service was already running.</p>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">true</td><td>If the display was not already set to blink (so now the blinking starts). </td></tr>
@@ -232,17 +268,19 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Makes the display blink the contents it is showing using the timing set by the parameters. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">onRate</td><td>Time (in milliseconds) the display must stay on, the value must be in the range _minBlinkRate &lt;= onRate &lt;= _maxBlinkRate. Those preset values can be known by the use of the getMinBlinkRate() and the getMaxBlinkRate() methods. </td></tr>
-    <tr><td class="paramname">offRate</td><td>(Optional) Time (in milliseconds) the display must stay off, the value must be in the range _minBlinkRate &lt;= offRate &lt;= _maxBlinkRate. Those preset values might be known by the use of the getMinBlinkRate() and the getMaxBlinkRate() methods. If no offRate value is provided the method will assume it's a symmetric blink call and use a value for offRate equal to the value passed for onRate.</td></tr>
+    <tr><td class="paramname">onRate</td><td>Time (in milliseconds) the display must stay on, the value must be in the range minBlinkRate &lt;= onRate &lt;= maxBlinkRate. Those preset values can be known by the use of the <a class="el" href="#a9bc655b23f3edd12f2b127441e4e1310" title="Gets the minimum values the blink rates for the blink() and blink(const unsigned long,...">getMinBlinkRate()</a> and the <a class="el" href="#a66d298970031a709ee5bad045a8356fb" title="Gets the maximum value the blink rates for the blink() and blink(const unsigned long,...">getMaxBlinkRate()</a> methods. </td></tr>
+    <tr><td class="paramname">offRate</td><td>(Optional) Time (in milliseconds) the display must stay off, the value must be in the range minBlinkRate &lt;= offRate &lt;= maxBlinkRate. Those preset values might be known by the use of the <a class="el" href="#a9bc655b23f3edd12f2b127441e4e1310" title="Gets the minimum values the blink rates for the blink() and blink(const unsigned long,...">getMinBlinkRate()</a> and the <a class="el" href="#a66d298970031a709ee5bad045a8356fb" title="Gets the maximum value the blink rates for the blink() and blink(const unsigned long,...">getMaxBlinkRate()</a> methods. If no offRate value is provided the method will assume it's a symmetric blink call and use a value for offRate equal to the value passed for onRate.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">true</td><td>If the display was not already set to blink (so now the blinking starts). </td></tr>
-    <tr><td class="paramname">false</td><td>The display was already set to blink, and/or one or more of the parameters passed was out of range. </td></tr>
+    <tr><td class="paramname">false</td><td>The display was already set to blink, and/or one or more of the parameters passed was out of range. The blinking won't be started. </td></tr>
   </table>
   </dd>
 </dl>
@@ -265,7 +303,7 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Clears the display, turning off all the segments and dots. </p>
-<dl class="section note"><dt>Note</dt><dd>The clearing process involves writing <b>spaces</b> to every display port. Due to physical display characteristics this may not be equal to write a '\0' to them. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>The clearing process involves writing a <b>space</b> character to every display port. Due to physical display characteristics this may or may not be equal to writing a '\0' to them. </dd></dl>
 
 </div>
 </div>
@@ -298,21 +336,59 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Displays a basic graphical representation of the level of fulfillment or completeness of two segmented values or tasks. </p>
-<p>The display gives a general fast notion on the matter, as a battery charge level, liquids deposit level, time remaining, tasks completeness and so on. The levels are represented by the horizontal segments (0, 1, 2 or 3 from bottom to top), and a character might be added before each of the graphical representations to give an indication of what the display is showing, passed through the <b>labelLeft</b> and <b>labelRight</b> parameters. As four digit ports must be used, this method only applies to displays with 4 or more digits, the display is splitted in two sectors, the left side and the right side, and each one of them must have a valid value (0 &lt;= value &lt;= 3) to enable them to be displayed, and might have (or not) a single displayable character to give a visual hint to what the value is showing. For more information check the <b><a class="el" href="#aa00c8c2fbca4a0068590ef62de28f198" title="Displays a basic graphical representation of the level of fulfillment or completeness of a segmented ...">gauge()</a></b> method.</p>
+<p>Displays a basic graphical representation of the level of fulfillment or completeness of <b>two</b> segmented values or tasks. </p>
+<p>The display gives a general fast notion on the matter, as a battery charge level, liquids deposit level, time remaining, tasks completeness and so on. The levels are represented by the horizontal segments (0, 1, 2 or 3 from bottom to top), and a character that might be added before each of the graphical representations to give an indication of what the display is showing. As four digit ports must be used, this method only applies to displays with 4 or more digits, the display is splitted in two sectors, the left side and the right side, and each one of them must have a valid value (0 &lt;= value &lt;= 3) to enable them to be displayed, and might have (or not) a single displayable character to give a visual hint to what the value is showing. For more information check the gauge(const int, char) method.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">levelLeft</td><td>The value to display for the two left side 7 segments display ports, must be in the range 0 &lt;= level &lt;= 3. </td></tr>
     <tr><td class="paramname">levelRight</td><td>The value to display for the two right side 7 segments display ports, must be in the range 0 &lt;= level &lt;= 3. </td></tr>
-    <tr><td class="paramname">labelLeft</td><td>A char, optional parameter (if not specified the default value, a Space, will be assumed), that will be displayed in the leftmost digit of the display. The character must be one of the "displayable" characters, as listed in the <b>print()</b> method description. </td></tr>
-    <tr><td class="paramname">labelRight</td><td>A char, optional parameter (if not specified the default value, a Space, will be assumed), that will be displayed in the position left to the <b>levelRight</b> display, just before the levelRight value. The character must be one of the "displayable" characters, as listed in the <b>print()</b> method description.</td></tr>
+    <tr><td class="paramname">labelLeft</td><td>(Optional) A char, if not specified the default value, a space, will be assumed, that will be displayed in the leftmost digit of the display. The character must be one of the "displayable" characters, as listed in the <b><a class="el" href="#aa40acb9d92f5a832d0ba1d22a03f395e" title="Displays a string of text.">print()</a></b> method description. </td></tr>
+    <tr><td class="paramname">labelRight</td><td>A char, optional parameter (if not specified the default value, a Space, will be assumed), that will be displayed in the position left to the <b>levelRight</b> display, just before the levelRight value. The character must be one of the "displayable" characters, as listed in the <a class="el" href="#aa40acb9d92f5a832d0ba1d22a03f395e" title="Displays a string of text.">print(std::string)</a> method description.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">If</td><td>the values could be represented. </td></tr>
-    <tr><td class="paramname">Otherwise,being</td><td>that the <b>levelLeft</b> and/or <b>levelRight</b> parameter was out of range and/or the <b>labelLeft</b> and/or <b>labelRight</b> parameter was not in the list of displayable characters. The display will be blanked. </td></tr>
+    <tr><td class="paramname">true</td><td>The values could be represented. </td></tr>
+    <tr><td class="paramname">false</td><td>The values couldn't be represented, being that the <b>levelLeft</b> and/or <b>levelRight</b> parameter was out of range and/or the <b>labelLeft</b> and/or <b>labelRight</b> parameter was not in the list of displayable characters. The display will be blanked. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a6fea06785902000457c1105c78d85093" name="a6fea06785902000457c1105c78d85093"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6fea06785902000457c1105c78d85093">&#9670;&#160;</a></span>gauge() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool SevenSegDisplays::gauge </td>
+          <td>(</td>
+          <td class="paramtype">const double &amp;</td>          <td class="paramname"><span class="paramname"><em>level</em>, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char</td>          <td class="paramname"><span class="paramname"><em>label</em><span class="paramdefsep"> = </span><span class="paramdefval">'&#160;'</span></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Displays a basic graphical representation of the level of fulfillment or completeness of a segmented value or task. </p>
+<p>See gauge(const int, char) for details</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">level</td><td>The double value to display, must be in the range 0.0 &lt;= level &lt;= 1.0, being the range the representation of the percentage of the 'full' level, so that the ranges are: 0.0 &lt;= level &lt; 0.25 for the first level, 0.25 &lt;= level &lt; 0.50 for the second level, 0.50 &lt;= level &lt; 0.75 for the third level, and 0.75 &lt;= level &lt;= 1.00 for the fourth and upper level. </td></tr>
+    <tr><td class="paramname">label</td><td>(Optional) A character that might be added before (leftmost port) the graphical representation to give an indication of what the display is showing, if not specified the default value, a space, will be assumed. The character must be one of the "displayable" characters, as listed in the <a class="el" href="#aa40acb9d92f5a832d0ba1d22a03f395e" title="Displays a string of text.">print(std::string)</a> method description.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">true</td><td>The value could be represented. </td></tr>
+    <tr><td class="paramname">false</td><td>The value couldn't be represented, being that the <b>level</b> parameter was out of range and/or the <b>label</b> parameter was not in the list of displayable characters. The display will be blanked. </td></tr>
   </table>
   </dd>
 </dl>
@@ -320,7 +396,7 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="aa00c8c2fbca4a0068590ef62de28f198" name="aa00c8c2fbca4a0068590ef62de28f198"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa00c8c2fbca4a0068590ef62de28f198">&#9670;&#160;</a></span>gauge()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aa00c8c2fbca4a0068590ef62de28f198">&#9670;&#160;</a></span>gauge() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -339,15 +415,42 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Displays a basic graphical representation of the level of fulfillment or completeness of a segmented value or task. </p>
-<p>The display gives a general fast notion on the matter, as a battery charge level, liquids deposit level, time remaining, tasks completeness and so on. The levels are represented by the horizontal segments (0, 1, 2 or 3 from bottom to top, and from left to right), and a character might be added before the graphical representation to give an indication of what the display is showing. This method is usable in displays which have from 4 digits and up, as the representation makes use of 4 digits or les.</p>
+<p>The display gives a general fast notion on the matter, as a battery charge level, liquids deposit level, time remaining, tasks completeness and so on. The levels are represented by the horizontal segments (0, 1, 2 or 3 from bottom to top, and from left to right), and a character might be added before -leftmost port- the graphical representation to give an indication of what the display is showing. This method is usable in displays which have from 4 digits and up, as the representation makes use of 4 digits.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">level</td><td>The integer value to display, must be in the range 0 &lt;= level &lt;= 3. </td></tr>
-    <tr><td class="paramname">label</td><td>(Optional) A character that might be added before (leftmost port) the graphical representation to give an indication of what the display is showing, if not specified the default value, a space, will be assumed. The character must be one of the "displayable" characters, as listed in the print(std::string) method description. </td></tr>
+    <tr><td class="paramname">label</td><td>(Optional) A character that might be added before (leftmost port) the graphical representation to give an indication of what the display is showing, if not specified the default value, a space, will be assumed. The character must be one of the "displayable" characters, as listed in the <a class="el" href="#aa40acb9d92f5a832d0ba1d22a03f395e" title="Displays a string of text.">print(std::string)</a> method description.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd></dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">true</td><td>The value could be represented. </td></tr>
+    <tr><td class="paramname">false</td><td>The value couldn't be represented, being that the <b>level</b> parameter was out of range and/or the <b>label</b> parameter was not in the list of displayable characters. The display will be blanked. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a05ddffe49e505638382affaa0426b272" name="a05ddffe49e505638382affaa0426b272"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a05ddffe49e505638382affaa0426b272">&#9670;&#160;</a></span>getDigitsQty()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t SevenSegDisplays::getDigitsQty </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets quantity of digits, or ports, of the display. </p>
+<p>The quantity of digits -ports- the display have available. The object instantiation requires a <b>physical display object</b> as parameter, and such information is requested from that object. Each time this class is instantiated the object is created with the needed resources -display memory buffer, auxiliary buffers, etc.), and the range of values displayable are calculated based on the display's ports quantity parameter, and that value is the one returned by this method.</p>
+<dl class="section return"><dt>Returns</dt><dd>The number indicating the quantity of digits of the instantiated display. </dd></dl>
 
 </div>
 </div>
@@ -367,7 +470,7 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Gets the greatest integer number value displayable by the display. </p>
-<p>The value is calculated according to the quantity of digits -ports- the display has as indicated at the object instantiation.</p>
+<p>The value is calculated according to the quantity of digits -ports- the display has as retrieved from the underlying hardware at the object instantiation.</p>
 <dl class="section return"><dt>Returns</dt><dd>The greatest integer value display capability. </dd></dl>
 
 </div>
@@ -388,9 +491,72 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Gets the minimum integer number value displayable by the display. </p>
-<p>The value is calculated according to the quantity of digits -ports- the display has as indicated at the object instantiation.</p>
-<dl class="section return"><dt>Returns</dt><dd>The greatest integer value display capability.</dd></dl>
-<dl class="section note"><dt>Note</dt><dd>The use of the leftmost port to represent the <b>-</b> (minus) sign is considered. </dd></dl>
+<p>The value is calculated according to the quantity of digits -ports- the display has as retrieved from the underlying hardware at the object instantiation.</p>
+<dl class="section return"><dt>Returns</dt><dd>The smallest integer value display capability.</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>The use of one port to represent the <b>-</b> (minus) sign is considered in the value calculation. </dd></dl>
+
+</div>
+</div>
+<a id="a8faca0f757c0477f59a73668b6041689" name="a8faca0f757c0477f59a73668b6041689"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8faca0f757c0477f59a73668b6041689">&#9670;&#160;</a></span>getInstanceNbr()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t SevenSegDisplays::getInstanceNbr </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets the instantiation number it was given to the object. </p>
+<p>Each time the class is instantiated the created object receives a serial instantiation number that can be used in order to easily identify each object in case of need.</p>
+<dl class="section return"><dt>Returns</dt><dd>The instantiation serial number of the object. </dd></dl>
+
+</div>
+</div>
+<a id="a66d298970031a709ee5bad045a8356fb" name="a66d298970031a709ee5bad045a8356fb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a66d298970031a709ee5bad045a8356fb">&#9670;&#160;</a></span>getMaxBlinkRate()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned long SevenSegDisplays::getMaxBlinkRate </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets the maximum value the blink rates for the <a class="el" href="#a576676d89b46d8d3752fc8d36fbcac2c" title="Makes the display blink the contents it is showing.">blink()</a> and blink(const unsigned long, const unsigned long) might take. </p>
+<p>The speed at witch the physical displays might be turned on and off are limited. In the case of this parameter a too much high value might avoid the blinking strobe effect of being perceived, giving the sensation that the display is fixed on, or was cleared from values. So a higher limit is imposed.</p>
+<dl class="section return"><dt>Returns</dt><dd>The maximum value that might be used as a <a class="el" href="#a576676d89b46d8d3752fc8d36fbcac2c" title="Makes the display blink the contents it is showing.">blink()</a> function parameter. </dd></dl>
+
+</div>
+</div>
+<a id="a9bc655b23f3edd12f2b127441e4e1310" name="a9bc655b23f3edd12f2b127441e4e1310"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9bc655b23f3edd12f2b127441e4e1310">&#9670;&#160;</a></span>getMinBlinkRate()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned long SevenSegDisplays::getMinBlinkRate </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets the minimum values the blink rates for the <a class="el" href="#a576676d89b46d8d3752fc8d36fbcac2c" title="Makes the display blink the contents it is showing.">blink()</a> and blink(const unsigned long, const unsigned long) might take. </p>
+<p>The speed at witch the physical displays might be turned on and off are limited. In the case of this parameter a too much low value might avoid the blinking strobe effect of being perceived, or be not toleated by the underlying hardware, giving the sensation that the display is fixed on, or was cleared from values. So a lower limit is imposed.</p>
+<dl class="section return"><dt>Returns</dt><dd>The minimum value that might be used as a <a class="el" href="#a576676d89b46d8d3752fc8d36fbcac2c" title="Makes the display blink the contents it is showing.">blink()</a> function parameter. </dd></dl>
 
 </div>
 </div>
@@ -418,6 +584,153 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section note"><dt>Note</dt><dd>The condition to be blank is that all the display ports are exhibiting the _space character, not to be confused with '\0' </dd></dl>
+
+</div>
+</div>
+<a id="a60fbaa5167e7f5de53b48855a67f5c17" name="a60fbaa5167e7f5de53b48855a67f5c17"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a60fbaa5167e7f5de53b48855a67f5c17">&#9670;&#160;</a></span>isBlinking()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool SevenSegDisplays::isBlinking </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets if the display is in <b>blinking mode</b>. </p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">true</td><td>The display is set to blink. </td></tr>
+    <tr><td class="paramname">false</td><td>The display is set not to blink. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a718219a5716845dfa413f62218c575a7" name="a718219a5716845dfa413f62218c575a7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a718219a5716845dfa413f62218c575a7">&#9670;&#160;</a></span>isWaiting()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool SevenSegDisplays::isWaiting </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets if the display is in <b>waiting mode</b>. </p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">true</td><td>The display is set in waiting mode. </td></tr>
+    <tr><td class="paramname">false</td><td>The display is not set in waiting mode.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>Any <b><a class="el" href="#aa40acb9d92f5a832d0ba1d22a03f395e" title="Displays a string of text.">print()</a></b> method invoked stops a running waiting mode. </dd></dl>
+
+</div>
+</div>
+<a id="a9f790df925c994efb27f0ce1c39014dd" name="a9f790df925c994efb27f0ce1c39014dd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9f790df925c994efb27f0ce1c39014dd">&#9670;&#160;</a></span>noBlink()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool SevenSegDisplays::noBlink </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Stops the display blinking, if it was doing so, leaving the display turned on. </p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">true</td><td>The display was set to blink, and the blinking is stopped. </td></tr>
+    <tr><td class="paramname">false</td><td>The display was not set to blink, no changes have been done. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a2e6d2565f90dc6acf546934dde557471" name="a2e6d2565f90dc6acf546934dde557471"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2e6d2565f90dc6acf546934dde557471">&#9670;&#160;</a></span>noWait()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool SevenSegDisplays::noWait </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Stops the <b>waiting mode</b> in process. </p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">true</td><td>The display was set to wait, and the waiting is stopped. </td></tr>
+    <tr><td class="paramname">false</td><td>The display was not set to wait, no changes will be done. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="aa40acb9d92f5a832d0ba1d22a03f395e" name="aa40acb9d92f5a832d0ba1d22a03f395e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa40acb9d92f5a832d0ba1d22a03f395e">&#9670;&#160;</a></span>print()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool SevenSegDisplays::print </td>
+          <td>(</td>
+          <td class="paramtype">std::string</td>          <td class="paramname"><span class="paramname"><em>text</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Displays a string of text. </p>
+<p>Displays the string text if it contains all <b>displayable</b> characters, which are the ones included in the following list: <b>0123456789AabCcdEeFGHhIiJLlnOoPqrStUuY-_.</b> and the <b>space</b>. There are other 3 characters that can be represented in the display, but the conversion from a character to use while programming is "host language setting dependent", so those where assigned to available ASCII non displayable characters of easy access in any keyboard layout in most languages, they can be used as part of the text string to display, and they are:</p>
+<p>= Builds a character formed by lighting the lower 2 horizontal segments of the digit display, can be described as a "lower equal" symbol.</p>
+<p>~ Builds a character formed by lighting the 3 horizontal segments of the digit display, can be described as an "equivalent" symbol.</p>
+<p><em>*</em> (asterisk) Builds a character by lighting the upper 4 segments, forming a little square, can be described as the "degrees" symbol or º.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">text</td><td>String, up to <b>DigitsQty</b> -see <a class="el" href="#a05ddffe49e505638382affaa0426b272" title="Gets quantity of digits, or ports, of the display.">getDigitsQty()</a>- displayable characters long PLUS usable dots, all characters included in the representable characters list. Each valid character might be followed by a "." if needed, without being counted as a character, even spaces and special chars. If two or more consecutive dots are passed, an intermediate space is considered to be included between each pair of them, and that space counts as one of the available characters to display.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">true</td><td>The text could be represented. </td></tr>
+    <tr><td class="paramname">false</td><td>The text couldn't be represented, and the display will be blanked.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>Several reasons might be causing a string to not display, including:<ul>
+<li>The inclusion of a character not part of the <b>displayable list</b>.</li>
+<li>The text is longer than the object's DigitsQty (dots are not included in the count).</li>
+<li>The use of two or more consecutive "." -dots- which implies the addition of a space between them not taken into the account of the text lenght. </li>
+</ul>
+</dd></dl>
 
 </div>
 </div>
