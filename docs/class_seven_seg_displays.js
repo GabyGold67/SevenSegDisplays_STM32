@@ -20,5 +20,11 @@ var class_seven_seg_displays =
     [ "isWaiting", "class_seven_seg_displays.html#a718219a5716845dfa413f62218c575a7", null ],
     [ "noBlink", "class_seven_seg_displays.html#a9f790df925c994efb27f0ce1c39014dd", null ],
     [ "noWait", "class_seven_seg_displays.html#a2e6d2565f90dc6acf546934dde557471", null ],
-    [ "print", "class_seven_seg_displays.html#aa40acb9d92f5a832d0ba1d22a03f395e", null ]
+    [ "print", "class_seven_seg_displays.html#a57d180fb4339fe2359cc864660a765ac", null ],
+    [ "print", "class_seven_seg_displays.html#a4858a1c2efaf8a7d0e67297948937d7c", null ],
+    [ "print", "class_seven_seg_displays.html#aa40acb9d92f5a832d0ba1d22a03f395e", null ],
+    [ "resetBlinkMask", "class_seven_seg_displays.html#a71a1b9852c21835fa110ce0e64a0590e", null ],
+    [ "setBlinkMask", "class_seven_seg_displays.html#adbf4a53a706c00d9a237991e234a9353", null ],
+    [ "setBlinkRate", "class_seven_seg_displays.html#a5156b178ce490d7b5e1207aa3baa85dc", null ],
+    [ "setWaitChar", "class_seven_seg_displays.html#a806a5ed32988ec7d82b65157b56b538e", null ]
 ];

@@ -353,11 +353,74 @@ public:
      *
      */
     bool print(std::string text);
+    /**
+     * @brief Displays an integer value.
+     *
+     *  The value will be displayed as long as the length of the representation fits the available digits of the display
+     *
+     * @param value The integer value to display which must be in the range (-1)*(pow(10, (dspDigits - 1)) - 1) <= value <= (pow(10, dspDigits) - 1)
+     * @param rgtAlgn (Optional, if not specified the default value, **false**, will be assumed) Indicates if the represented value must be displayed right aligned, with the unneeded heading characters being completed with spaces or zeros, depending in the **zeroPad** optional parameter. When a negative value is displayed and it's less than (dspDigits - 1) digits long, a right aligned display will keep the '-' sign in the leftmost position, and the free space to the leftmost digit will be filled with spaces or zeros, depending in the **zeroPad** optional parameter.
+     * @param zeroPad (Optional, if not specified the default value, false, will be assumed) indicates if the heading free spaces of the integer right aligned displayed must be filled with zeros (true) or spaces (false). In the case of a negative integer the spaces or zeros will fill the gap between the '-' sign kept in the leftmost position, and the first digit.
+     *
+     * @retval true: The value could be represented.
+     * @retval false: The value couldn't be represented, and the display will be blanked.
+     *
+     */
     bool print(const int32_t &value, bool rgtAlgn = false, bool zeroPad = false);
+    /**
+     * @brief Displays a floating point value.
+     *
+     * The value will be displayed as long as the length representation fits the available space of the display. If the integer part of value is not in the displayable range or if the sum of the spaces needed by the integer part plus the indicated decimal places to display is greater than the available digits space, the method will fail.
+     *
+     * @param value The floating point value to display, which must be in the range ((-1)*(pow(10, ((dspDigits - decPlaces) - 1)) - 1)) <= value <= (pow(10, (dspDigits - decPlaces)) - 1).
+     * @param decPlaces Decimal places to be displayed after the decimal point, ranging 0 <= decPlaces < dspDigits, selecting 0 value will display the number as an integer, with no '.' displayed. In any case the only modification that will be applied if value has a decimal part longer than the decPlaces number of digits is **truncation**, if any other rounding criteria is desired the developer must apply it to **value** before calling this method.
+     * @param rgtAlgn Right alignement, see print(const int32_t, bool, bool)
+     * @param zeroPad Zero padding, see print(const int32_t, bool, bool)
+     *
+     * @retval true: The value could be represented.
+     * @retval false: The value couldn't be represented, and the display will be blanked.
+     */
     bool print(const double &value, const unsigned int &decPlaces, bool rgtAlgn = false, bool zeroPad = false);
+    /**
+     * @brief Resets the blinking mask.
+     *
+     * The blinking mask configures which digits of the display will be affected by the blink() method, resetting the mask will restore the original setting by which all the digits of the display will be affected when **blinking mode** is active.
+     *
+     */
     void resetBlinkMask();
+    /**
+     * @brief Modifies the blinking mask.
+     *
+     * The blinking mask indicates which digits will be involved after a blink() method is invoked. Indicating true for a digit makes it blink when the method is called, indicating false makes it display steady independently of the others. The parameter is positional referenced to the display, and for ease of use the index numbers of the parameter array indicate their position relative to the rightmost digit (blnkPort0). The mask might be reset to its original value (all digits set to blink) by using this method with all array's elements set to **true** or by using the resetBlinkMask() method.
+     *
+     * @param newBlnkMsk A pointer to a boolean array the size of DigitsQty long, the first element of the array corresponding to the leftmost display port, the following element representing the next display port to it's left. A true value in the array element will set the corresponding display port to blink when the blink() methods are invoked, a false will make it's displayed value steady.
+     */
     void setBlinkMask(const bool* newBlnkMsk);
+    /**
+     * @brief Changes the time parameters to use for the display blinking the contents it shows.
+     *
+     * The parameters change will take immediate effect, either if the display is already blinking or not, in the latter case the parameters will be the ones used when a blink() method is called without parameters. The blinking will be **symmetrical** if only one parameter is passed, **asymmetrical** if two different parameters are passed, meaning that the time the display shows the contents and the time the display is blank will be equal (symmetrical) or not (asymmetrical), depending of those two parameters. The blink rate set will be kept after a `noBlink()` or new `blink()` without parameters call is done, until it is modified with a new `setBlinkRate()` call, or it is restarted by a `blink()` with parameters.
+     *
+     * @note To restart the blinking with a `blink()` the service must first be stopped, as the method makes no changes if the blinking service was already running.
+     *
+     * @param newOnRate Contains the time (in milliseconds) the display must stay on, the value must be in the range minBlinkRate <= onRate <= maxBlinkRate. Those built-in values can be known by the use of the `getMinBlinkRate()` and the `getMaxBlinkRate()` methods.
+     * @param newOffRate (Optional) Contains the time (in milliseconds) the display must stay off, the value must be in the range minBlinkRate <= offRate <= maxBlinkRate. Those built-in values can be known by the use of the `getMinBlinkRate()` and the `getMaxBlinkRate()` methods. If no offRate value is provided the method will assume it's a symmetric blink call and use a value of offRate equal to the value passed by onRate.
+     *
+     * @retval true: If the parameter or parameters passed are within the valid range, and the change will take effect immediately.
+	  * @retval false: One or more of the parameters passed were out of range. The rate change would not be made for none of the parameters.
+     *
+     */
     bool setBlinkRate(const unsigned long &newOnRate, const unsigned long &newOffRate = 0);
+    /**
+     * @brief Sets the character to use when the display is in **wait mode**.
+     *
+     * The parameters change will take immediate effect, either if the display is already in wait mode or not. The new character will be changed for further calls of the method until a new setWaitChar() is invoked with a valid argument.
+     *
+     * @param newChar A character the display must use for symbolizing the progress, the value must be in the displayable characters list as explained in the print(std::string) method.
+     *
+     * @retval true: If the character passed is whitin the displayable characters range, and the change will take effect immediately.
+     * @retval false: The parameter passed was invalid, i.e. it was a non displayable character. In this case the character change will fail.
+     */
     bool setWaitChar (const char &newChar);
     bool setWaitRate(const unsigned long &newWaitRate);
     bool wait();
