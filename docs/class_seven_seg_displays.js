@@ -26,5 +26,10 @@ var class_seven_seg_displays =
     [ "resetBlinkMask", "class_seven_seg_displays.html#a71a1b9852c21835fa110ce0e64a0590e", null ],
     [ "setBlinkMask", "class_seven_seg_displays.html#adbf4a53a706c00d9a237991e234a9353", null ],
     [ "setBlinkRate", "class_seven_seg_displays.html#a5156b178ce490d7b5e1207aa3baa85dc", null ],
-    [ "setWaitChar", "class_seven_seg_displays.html#a806a5ed32988ec7d82b65157b56b538e", null ]
+    [ "setWaitChar", "class_seven_seg_displays.html#a806a5ed32988ec7d82b65157b56b538e", null ],
+    [ "setWaitRate", "class_seven_seg_displays.html#acd0f00d24dbbaadec3fb06ffb991914c", null ],
+    [ "wait", "class_seven_seg_displays.html#ae00a0275a3fa0c1858e475d3e2f1272d", null ],
+    [ "wait", "class_seven_seg_displays.html#a25fe31c0ee20fd4dfb96730b05776c28", null ],
+    [ "write", "class_seven_seg_displays.html#a7e034e7918ccdc5c0ff93af667fecbc6", null ],
+    [ "write", "class_seven_seg_displays.html#ab1c77aee430974cc460d259e600668ba", null ]
 ];

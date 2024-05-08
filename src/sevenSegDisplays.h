@@ -418,14 +418,65 @@ public:
      *
      * @param newChar A character the display must use for symbolizing the progress, the value must be in the displayable characters list as explained in the print(std::string) method.
      *
-     * @retval true: If the character passed is whitin the displayable characters range, and the change will take effect immediately.
+     * @retval true: If the character passed is within the displayable characters range, and the change will take effect immediately.
      * @retval false: The parameter passed was invalid, i.e. it was a non displayable character. In this case the character change will fail.
      */
-    bool setWaitChar (const char &newChar);
+    bool setWaitChar(const char &newChar);
+    /**
+     * @brief Changes the time parameter to use for the display to show the "in-progress bar" advancement.
+     *
+     * The parameters change will take immediate effect, either if the display is already in wait mode or not, in the latter case the parameter will be used in the next `wait()` method call without parameters. The wait rate set will be kept until it is modified with a new `setWaitRate()` call, or it is restarted by a `wait(const unsigned long)` with parameters. Note that to restart the waiting with a `wait()` the service must first be stopped, as the method makes no changes if the waiting service was already running.
+     *
+     * @param newWaitRate The time (in milliseconds) the display must take to advance the next character symbolizing the progress, the value must be in the range minBlinkRate <= newWaitRate <= maxBlinkRate. (See `getMinBlinkRate()`and `getMaxBlinkRate()` methods).
+     *
+     * @retval true: The parameter passed is within the valid range, and the change takes immediate effect.
+     * @retval false: The parameter passed is out of range, the rate change would not be made.
+     *
+     */
     bool setWaitRate(const unsigned long &newWaitRate);
+    /**
+     * @brief Makes the display show a "simple animated progress bar".
+     *
+     * The simple animation mechanism has as it's main purpose to show the final user the system is working and not in any "hang" situation. As in most O.S. progress bar animation, the sequence starts with  a blank display and a defined character is added from left to right at a configured pace, until all the ports are lit, starting over with the display blanking. The rate at which the characters are added and the character used for display are both configurable (see `setWaitChar(const char)` and setWaitRate(const unsigned long) for details).
+     *
+     * @retval true: The display was not in **waiting mode** and the required timer could be attached. The **waiting mode** is started.
+     * @retval false: The display was in **waiting mode**, no change was made.
+     * @retval false: The timer couldn't be attached, the display wasn't set to **wait mode**
+     */
     bool wait();
+    /**
+     * @brief  Makes the display show a "simple animated progress bar".
+     *
+     * See `wait()` for details.
+     *
+     * @param newWaitRate The time (in milliseconds) the display must take to advance the next character symbolizing the progress, the value must be in the range minBlinkRate <= newWaitRate <= maxBlinkRate. (See `getMinBlinkRate()`and `getMaxBlinkRate()` methods).
+     * @retval true: The display was not in **waiting mode** and the required timer could be attached. The **waiting mode** is started.
+     * @retval false: The display was in **waiting mode**, no change was made.
+     * @retval false: The parameter passed is out of range, the display wasn't set to **wait mode**
+     * @retval false: The timer couldn't be attached, the display wasn't set to **wait mode**
+     */
     bool wait(const unsigned long &newWaitRate);
+    /**
+     * @brief Prints one character to the display, at a defined port, without affecting the rest of the characters displayed.
+     *
+     * @param segments An integer value representing which segments to turn on and which off to get the graphic representation of a character in the seven segment display.
+     * @param port An integer value representing the digit where the character will be set, being the range of valid values 0 <= port <= (dspDigits - 1), the 0 value is the rightmost digit, the 1 value the second from the right and so on.
+     * @retval true: The parameters are within the acceptable range, in this case 0 <= port <= (dspDigits - 1).
+     * @retval false: The port value was outside the acceptable range.
+     *
+     * @note The corresponding value can be looked up in the **_charLeds[]** array definition in the header file of the library. In the case of a common cathode display the values there listed must be complemented. Any other uint8_t (char or unsigned short int is the same here) value is admissible, but the displayed result might not be easily recognized as a known ASCII character.
+     */
     bool write(const uint8_t &segments, const uint8_t &port);
+    /**
+     * @brief Prints one character to the display, at a defined port, without affecting the rest of the characters displayed.
+     *
+     * @param character A single character string that must be displayable, as defined in the `print()` method.
+     * @param port An integer value representing the digit where the character will be set, being the range of valid values 0 <= port <= (dspDigits - 1), the 0 value is the rightmost digit, the 1 value the second from the right and so on.
+     *
+     * @retval true:**character** is a displayable one char string, and **port** value is in the range 0 <= value <= (dspDigits - 1).
+     * @retval: false: The **character** was not "displayable" or the **port** value was out of range.
+     *
+     */
     bool write(const std::string &character, const uint8_t &port);
 
 };
@@ -442,8 +493,19 @@ private:
 public:
     ClickCounter(uint8_t ccSclk, uint8_t ccRclk, uint8_t ccDio, bool rgthAlgn = true, bool zeroPad = false, bool commAnode = true, const uint8_t dspDigits = 4);
     ~ClickCounter();
+    /**
+     * @brief See SevenSegDisplays::blink()
+     */
     bool blink();
+    /**
+     * @brief See SevenSegDisplays::blink(const unsigned long, const unsigned long)
+     *
+     */
     bool blink(const unsigned long &onRate, const unsigned long &offRate = 0);
+    /**
+     * @brief See SevenSegDisplays::clear()
+     *
+     */
     void clear();
     bool countBegin(int32_t startVal = 0);  //To be analyzed it's current need
     bool countDown(int32_t qty = 1);
@@ -454,6 +516,10 @@ public:
     bool countUp(int32_t qty = 1);
     int32_t getCount();
     int32_t getStartVal();
+    /**
+     * @brief See SevenSegDisplays::noBlink()
+     *
+     */
     bool noBlink();
     bool setBlinkRate(const unsigned long &newOnRate, const unsigned long &newOffRate = 0);
     bool updDisplay();  //To be analyzed it's current need

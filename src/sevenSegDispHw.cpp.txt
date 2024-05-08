@@ -1,16 +1,3 @@
-SevenSegDispHw::SevenSegDispHw(gpioPinId_t* ioPins, uint8_t dspDigits, bool commAnode)
-:_ioPins{ioPins}, _digitPosPtr{new uint8_t[dspDigits]}, _dspDigitsQty {dspDigits}, _commAnode {commAnode}
-{
-    _dspHwInstNbr = _dspHwSerialNum++;
-    for (uint8_t i{0}; i < _dspDigitsQty; i++){
-        *(_digitPosPtr + i) = i;
-    }
-}
-
-SevenSegDispHw::~SevenSegDispHw() {
-    delete [] _digitPosPtr;
-}
-
 bool SevenSegDispHw::getCommAnode(){
 
     return _commAnode;

@@ -39,10 +39,13 @@
 
 
 //===========================>> BEGIN User type definitions
+#ifndef GPIOPINID_T
+#define GPIOPINID_T
 struct gpioPinId_t{	// Type used to keep GPIO pin identification as a single parameter, as platform independent as possible
-	GPIO_TypeDef* portId;
-	uint16_t pinNum;
+	GPIO_TypeDef* portId;	/**< The port identification as a pointer to a GPIO_TypeDef information structure*/
+	uint16_t pinNum;	/**< The number of pin represented as a one bit set binary with the set bit position indicating the pin number*/
 };
+#endif	//GPIOPINID_T
 //===========================>> END User type definitions
 
 //===========================>> BEGIN General use function prototypes
@@ -64,8 +67,29 @@ protected:
     // virtual void send(uint8_t* digitsBuffer);  //===================>> To be implemented
     // virtual void send(const uint8_t &segments, const uint8_t &port);  //===================>> To be implemented
 public:
+    /**
+     * @brief Default constructor
+     *
+     * class SevenSegDispHw
+     *
+     */
     SevenSegDispHw();
+    /**
+     * @brief Class constructor
+     *
+     * @param ioPins Pointer to a gpioPinId_t array with the needed MCU pins identification to drive the hardware display
+     * @param dspDigits Display's length, digits quantity
+     * @param commAnode Boolean indicating the leds display wiring, either **common anode** (true) or **common cathode** (false)
+     *
+     * @class SevenSegDispHw
+     */
     SevenSegDispHw(gpioPinId_t* ioPins, uint8_t dspDigits = 4, bool commAnode = true);
+    /**
+     * @brief Class virtual destructor
+     *
+     * @classs SevenSegDispHw
+     *
+     */
     ~SevenSegDispHw();
     bool getCommAnode();
     uint8_t* getDspBuffPtr();

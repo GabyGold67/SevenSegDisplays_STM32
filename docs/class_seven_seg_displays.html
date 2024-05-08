@@ -108,7 +108,7 @@ Collaboration diagram for SevenSegDisplays:</div>
 <map name="a_seven_seg_displays_coll__map" id="a_seven_seg_displays_coll__map">
 <area shape="rect" title="Implements a seven segment display object." alt="" coords="64,235,193,261"/>
 <area shape="poly" title=" " alt="" coords="210,238,220,248,212,258,194,262,193,257,209,253,214,248,206,242"/>
-<area shape="rect" href="class_seven_seg_disp_hw.html" title=" " alt="" coords="5,112,129,139"/>
+<area shape="rect" href="class_seven_seg_disp_hw.html" title="Class constructor." alt="" coords="5,112,129,139"/>
 <area shape="poly" title=" " alt="" coords="68,154,71,182,81,209,92,222,105,232,102,236,88,226,77,212,66,183,63,155"/>
 <area shape="rect" href="structgpio_pin_id__t.html" title=" " alt="" coords="23,13,108,40"/>
 <area shape="poly" title=" " alt="" coords="69,56,69,112,64,112,63,56"/>
@@ -204,6 +204,21 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a806a5ed32988ec7d82b65157b56b538e" id="r_a806a5ed32988ec7d82b65157b56b538e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a806a5ed32988ec7d82b65157b56b538e">setWaitChar</a> (const char &amp;newChar)</td></tr>
 <tr class="memdesc:a806a5ed32988ec7d82b65157b56b538e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the character to use when the display is in <b>wait mode</b>.  <br /></td></tr>
 <tr class="separator:a806a5ed32988ec7d82b65157b56b538e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acd0f00d24dbbaadec3fb06ffb991914c" id="r_acd0f00d24dbbaadec3fb06ffb991914c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#acd0f00d24dbbaadec3fb06ffb991914c">setWaitRate</a> (const unsigned long &amp;newWaitRate)</td></tr>
+<tr class="memdesc:acd0f00d24dbbaadec3fb06ffb991914c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Changes the time parameter to use for the display to show the "in-progress bar" advancement.  <br /></td></tr>
+<tr class="separator:acd0f00d24dbbaadec3fb06ffb991914c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae00a0275a3fa0c1858e475d3e2f1272d" id="r_ae00a0275a3fa0c1858e475d3e2f1272d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae00a0275a3fa0c1858e475d3e2f1272d">wait</a> ()</td></tr>
+<tr class="memdesc:ae00a0275a3fa0c1858e475d3e2f1272d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes the display show a "simple animated progress bar".  <br /></td></tr>
+<tr class="separator:ae00a0275a3fa0c1858e475d3e2f1272d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a25fe31c0ee20fd4dfb96730b05776c28" id="r_a25fe31c0ee20fd4dfb96730b05776c28"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a25fe31c0ee20fd4dfb96730b05776c28">wait</a> (const unsigned long &amp;newWaitRate)</td></tr>
+<tr class="memdesc:a25fe31c0ee20fd4dfb96730b05776c28"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes the display show a "simple animated progress bar".  <br /></td></tr>
+<tr class="separator:a25fe31c0ee20fd4dfb96730b05776c28"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7e034e7918ccdc5c0ff93af667fecbc6" id="r_a7e034e7918ccdc5c0ff93af667fecbc6"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7e034e7918ccdc5c0ff93af667fecbc6">write</a> (const std::string &amp;character, const uint8_t &amp;port)</td></tr>
+<tr class="memdesc:a7e034e7918ccdc5c0ff93af667fecbc6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prints one character to the display, at a defined port, without affecting the rest of the characters displayed.  <br /></td></tr>
+<tr class="separator:a7e034e7918ccdc5c0ff93af667fecbc6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab1c77aee430974cc460d259e600668ba" id="r_ab1c77aee430974cc460d259e600668ba"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab1c77aee430974cc460d259e600668ba">write</a> (const uint8_t &amp;segments, const uint8_t &amp;port)</td></tr>
+<tr class="memdesc:ab1c77aee430974cc460d259e600668ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prints one character to the display, at a defined port, without affecting the rest of the characters displayed.  <br /></td></tr>
+<tr class="separator:ab1c77aee430974cc460d259e600668ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Implements a seven segment display object. </p>
@@ -956,11 +971,182 @@ Public Member Functions</h2></td></tr>
 </dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">true</td><td>If the character passed is whitin the displayable characters range, and the change will take effect immediately. </td></tr>
+    <tr><td class="paramname">true</td><td>If the character passed is within the displayable characters range, and the change will take effect immediately. </td></tr>
     <tr><td class="paramname">false</td><td>The parameter passed was invalid, i.e. it was a non displayable character. In this case the character change will fail. </td></tr>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="acd0f00d24dbbaadec3fb06ffb991914c" name="acd0f00d24dbbaadec3fb06ffb991914c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acd0f00d24dbbaadec3fb06ffb991914c">&#9670;&#160;</a></span>setWaitRate()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool SevenSegDisplays::setWaitRate </td>
+          <td>(</td>
+          <td class="paramtype">const unsigned long &amp;</td>          <td class="paramname"><span class="paramname"><em>newWaitRate</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Changes the time parameter to use for the display to show the "in-progress bar" advancement. </p>
+<p>The parameters change will take immediate effect, either if the display is already in wait mode or not, in the latter case the parameter will be used in the next <code><a class="el" href="#ae00a0275a3fa0c1858e475d3e2f1272d" title="Makes the display show a &quot;simple animated progress bar&quot;.">wait()</a></code> method call without parameters. The wait rate set will be kept until it is modified with a new <code><a class="el" href="#acd0f00d24dbbaadec3fb06ffb991914c" title="Changes the time parameter to use for the display to show the &quot;in-progress bar&quot; advancement.">setWaitRate()</a></code> call, or it is restarted by a <code>wait(const unsigned long)</code> with parameters. Note that to restart the waiting with a <code><a class="el" href="#ae00a0275a3fa0c1858e475d3e2f1272d" title="Makes the display show a &quot;simple animated progress bar&quot;.">wait()</a></code> the service must first be stopped, as the method makes no changes if the waiting service was already running.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">newWaitRate</td><td>The time (in milliseconds) the display must take to advance the next character symbolizing the progress, the value must be in the range minBlinkRate &lt;= newWaitRate &lt;= maxBlinkRate. (See <code><a class="el" href="#a9bc655b23f3edd12f2b127441e4e1310" title="Gets the minimum values the blink rates for the blink() and blink(const unsigned long,...">getMinBlinkRate()</a></code>and <code><a class="el" href="#a66d298970031a709ee5bad045a8356fb" title="Gets the maximum value the blink rates for the blink() and blink(const unsigned long,...">getMaxBlinkRate()</a></code> methods).</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">true</td><td>The parameter passed is within the valid range, and the change takes immediate effect. </td></tr>
+    <tr><td class="paramname">false</td><td>The parameter passed is out of range, the rate change would not be made. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ae00a0275a3fa0c1858e475d3e2f1272d" name="ae00a0275a3fa0c1858e475d3e2f1272d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae00a0275a3fa0c1858e475d3e2f1272d">&#9670;&#160;</a></span>wait() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool SevenSegDisplays::wait </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Makes the display show a "simple animated progress bar". </p>
+<p>The simple animation mechanism has as it's main purpose to show the final user the system is working and not in any "hang" situation. As in most O.S. progress bar animation, the sequence starts with a blank display and a defined character is added from left to right at a configured pace, until all the ports are lit, starting over with the display blanking. The rate at which the characters are added and the character used for display are both configurable (see <code>setWaitChar(const char)</code> and setWaitRate(const unsigned long) for details).</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">true</td><td>The display was not in <b>waiting mode</b> and the required timer could be attached. The <b>waiting mode</b> is started. </td></tr>
+    <tr><td class="paramname">false</td><td>The display was in <b>waiting mode</b>, no change was made. </td></tr>
+    <tr><td class="paramname">false</td><td>The timer couldn't be attached, the display wasn't set to <b>wait mode</b> </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a25fe31c0ee20fd4dfb96730b05776c28" name="a25fe31c0ee20fd4dfb96730b05776c28"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a25fe31c0ee20fd4dfb96730b05776c28">&#9670;&#160;</a></span>wait() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool SevenSegDisplays::wait </td>
+          <td>(</td>
+          <td class="paramtype">const unsigned long &amp;</td>          <td class="paramname"><span class="paramname"><em>newWaitRate</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Makes the display show a "simple animated progress bar". </p>
+<p>See <code><a class="el" href="#ae00a0275a3fa0c1858e475d3e2f1272d" title="Makes the display show a &quot;simple animated progress bar&quot;.">wait()</a></code> for details.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">newWaitRate</td><td>The time (in milliseconds) the display must take to advance the next character symbolizing the progress, the value must be in the range minBlinkRate &lt;= newWaitRate &lt;= maxBlinkRate. (See <code><a class="el" href="#a9bc655b23f3edd12f2b127441e4e1310" title="Gets the minimum values the blink rates for the blink() and blink(const unsigned long,...">getMinBlinkRate()</a></code>and <code><a class="el" href="#a66d298970031a709ee5bad045a8356fb" title="Gets the maximum value the blink rates for the blink() and blink(const unsigned long,...">getMaxBlinkRate()</a></code> methods). </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">true</td><td>The display was not in <b>waiting mode</b> and the required timer could be attached. The <b>waiting mode</b> is started. </td></tr>
+    <tr><td class="paramname">false</td><td>The display was in <b>waiting mode</b>, no change was made. </td></tr>
+    <tr><td class="paramname">false</td><td>The parameter passed is out of range, the display wasn't set to <b>wait mode</b> </td></tr>
+    <tr><td class="paramname">false</td><td>The timer couldn't be attached, the display wasn't set to <b>wait mode</b> </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a7e034e7918ccdc5c0ff93af667fecbc6" name="a7e034e7918ccdc5c0ff93af667fecbc6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7e034e7918ccdc5c0ff93af667fecbc6">&#9670;&#160;</a></span>write() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool SevenSegDisplays::write </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>character</em>, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t &amp;</td>          <td class="paramname"><span class="paramname"><em>port</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Prints one character to the display, at a defined port, without affecting the rest of the characters displayed. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">character</td><td>A single character string that must be displayable, as defined in the <code><a class="el" href="#aa40acb9d92f5a832d0ba1d22a03f395e" title="Displays a string of text.">print()</a></code> method. </td></tr>
+    <tr><td class="paramname">port</td><td>An integer value representing the digit where the character will be set, being the range of valid values 0 &lt;= port &lt;= (dspDigits - 1), the 0 value is the rightmost digit, the 1 value the second from the right and so on.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">true:**character**</td><td>is a displayable one char string, and <b>port</b> value is in the range 0 &lt;= value &lt;= (dspDigits - 1). </td></tr>
+    <tr><td class="paramname"></td><td>false: The <b>character</b> was not "displayable" or the <b>port</b> value was out of range. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ab1c77aee430974cc460d259e600668ba" name="ab1c77aee430974cc460d259e600668ba"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab1c77aee430974cc460d259e600668ba">&#9670;&#160;</a></span>write() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool SevenSegDisplays::write </td>
+          <td>(</td>
+          <td class="paramtype">const uint8_t &amp;</td>          <td class="paramname"><span class="paramname"><em>segments</em>, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t &amp;</td>          <td class="paramname"><span class="paramname"><em>port</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Prints one character to the display, at a defined port, without affecting the rest of the characters displayed. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">segments</td><td>An integer value representing which segments to turn on and which off to get the graphic representation of a character in the seven segment display. </td></tr>
+    <tr><td class="paramname">port</td><td>An integer value representing the digit where the character will be set, being the range of valid values 0 &lt;= port &lt;= (dspDigits - 1), the 0 value is the rightmost digit, the 1 value the second from the right and so on. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">true</td><td>The parameters are within the acceptable range, in this case 0 &lt;= port &lt;= (dspDigits - 1). </td></tr>
+    <tr><td class="paramname">false</td><td>The port value was outside the acceptable range.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>The corresponding value can be looked up in the **_charLeds[]** array definition in the header file of the library. In the case of a common cathode display the values there listed must be complemented. Any other uint8_t (char or unsigned short int is the same here) value is admissible, but the displayed result might not be easily recognized as a known ASCII character. </dd></dl>
 
 </div>
 </div>
