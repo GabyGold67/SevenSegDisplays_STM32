@@ -15,7 +15,8 @@ SevenSegDisplays::SevenSegDisplays()
 SevenSegDisplays::SevenSegDisplays(SevenSegDispHw dspUndrlHw)
 :_dspUndrlHw{dspUndrlHw}
 {
-   if(_instancesLstPtr == nullptr){
+	_dspUndrlHwPtr = &_dspUndrlHw;
+	if(_instancesLstPtr == nullptr){
       _instancesLstPtr = new SevenSegDisplays*[_dspPtrArrLngth](); //Initializes with all pointers value of 0, it might refuse to evaluate to nullptr, lookout!!
       for(int i{0}; i < _dspPtrArrLngth; i++)
          *(_instancesLstPtr + i) = nullptr;
@@ -55,6 +56,11 @@ SevenSegDisplays::~SevenSegDisplays(){
         }
     }
     --_displaysCount;
+}
+
+bool SevenSegDisplays::begin(){
+
+	return _dspUndrlHwPtr-> begin();
 }
 
 bool SevenSegDisplays::blink(){
@@ -216,6 +222,11 @@ bool SevenSegDisplays::doubleGauge(const int &levelLeft, const int &levelRight, 
     }
 
     return displayable;
+}
+
+bool SevenSegDisplays::end(){
+
+	return _dspUndrlHwPtr -> end();
 }
 
 bool SevenSegDisplays::gauge(const int &level, char label){

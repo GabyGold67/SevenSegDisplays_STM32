@@ -65,6 +65,7 @@ protected:
     uint8_t* _dspBuffPtr{nullptr};
     uint8_t _dspDigitsQty{};
     SevenSegDispHw _dspUndrlHw{};
+    SevenSegDispHw* _dspUndrlHwPtr{};
     SevenSegDisplays* _dspInstance;
     uint16_t _dspInstNbr{0};
     int32_t _dspValMax{};
@@ -479,6 +480,8 @@ public:
      */
     bool write(const std::string &character, const uint8_t &port);
 
+    bool begin();
+    bool end();
 };
 
 //============================================================> Class declarations separator
