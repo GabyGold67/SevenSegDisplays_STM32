@@ -21,21 +21,6 @@
    return;
 }*/
 
-void SevenSegDynamic::refresh(){
-//   bool tmpLogic {true};
-   uint8_t tmpDigToSend{0};
-
-    for (int i {0}; i < _dspDigitsQty; i++){
-        tmpDigToSend = *(_dspBuffPtr + ((i + _firstRefreshed) % _dspDigitsQty));
-        // send(tmpDigToSend, uint8_t(1) << *(_digitPosPtr + ((i + _firstRefreshed) % _dspDigitsQty)));
-    }
-    ++_firstRefreshed;
-    if (_firstRefreshed == _dspDigitsQty)
-        _firstRefreshed = 0;
-
-    return;
-}
-
 // void SevenSegDynamic::send(uint8_t content){    // Implementation is hardware dependant (subclasses) protocol!!
 //
 //     return;
@@ -48,89 +33,18 @@ void SevenSegDynamic::refresh(){
 
 //============================================================> Class methods separator
 
-void SevenSegDynHC595::send(uint8_t content){
-    for (int i {7}; i >= 0; i--){   //Send each of the 8 bits representing the character
-        if (content & 0x80)
-//            digitalWrite(*(_ioPins + _dio), HIGH);
-      	  HAL_GPIO_WritePin(*(_ioPins + _dio)->portId, *(_ioPins + _dio)->pinNum, GPIO_PIN_SET);
-        else
-//            digitalWrite(*(_ioPins + _dio), LOW);
-      	  HAL_GPIO_WritePin(*(_ioPins + _dio)->portId, *(_ioPins + _dio)->pinNum, GPIO_PIN_RESET);
-
-        content <<= 1;
-//        digitalWrite(*(_ioPins + _sclk), LOW);
-   	  HAL_GPIO_WritePin(*(_ioPins + _sclk)->portId, *(_ioPins + _sclk)->pinNum, GPIO_PIN_RESET);
-//        digitalWrite(*(_ioPins + _sclk), HIGH);
-   	  HAL_GPIO_WritePin(*(_ioPins + _sclk)->portId, *(_ioPins + _sclk)->pinNum, GPIO_PIN_SET);
-    }
-
-    return;
-
-}
-
-void SevenSegDynHC595::send(const uint8_t &segments, const uint8_t &port){
-
-//    digitalWrite(*(_ioPins + _rclk), LOW);
-	  HAL_GPIO_WritePin(*(_ioPins + _rclk)->portId, *(_ioPins + _rclk)->pinNum, GPIO_PIN_RESET);
-    send(segments);
-    send(port);
-//    digitalWrite(*(_ioPins + _rclk), HIGH);
-	  HAL_GPIO_WritePin(*(_ioPins + _rclk)->portId, *(_ioPins + _rclk)->pinNum, GPIO_PIN_SET);
-
-   return;
-}
-
-void SevenSegDynHC595::tmrCbRefreshHC595(TimerHandle_t rfrshTmrCbArg){
-    SevenSegDynHC595* SevenSegUndrlHC595 = (SevenSegDynHC595*) rfrshTmrCbArg;
-    //Timer Callback to keep the display lit by calling this display's refresh() method
-
-    SevenSegUndrlHC595->refresh();
-
-    return;
-}
-
 //============================================================> Class methods separator
-
-SevenSegDynDummy::SevenSegDynDummy(gpioPinId_t* ioPins, uint8_t dspDigits, bool commAnode)
-{
-    _ioPins = ioPins;
-    _dspDigitsQty = dspDigits;
-    _commAnode = commAnode;
-    //Configure to send the message to the serial terminal in the fashion of Serial.begin(9600);
-
-}
-
-SevenSegDynDummy::~SevenSegDynDummy()
-{
-
-}
-
+SevenSegDynDummy::SevenSegDynDummy(gpioPinId_t* ioPins, uint8_t dspDigits, bool commAnode){}
+SevenSegDynDummy::~SevenSegDynDummy(){}
 //============================================================> Class methods separator
-
-// SevenSegStatic::SevenSegStatic() {}
-
+// SevenSegStatic::SevenSegStatic(){}
 SevenSegStatic::~SevenSegStatic() {}
-
 //============================================================> Class methods separator
-
-// SevenSegTM1637::SevenSegTM1637() {}
-
+// SevenSegTM1637::SevenSegTM1637(){}
 SevenSegTM1637::~SevenSegTM1637() {}
-
 //============================================================> Class methods separator
-
-SevenSegStatHC595::SevenSegStatHC595() {}
-
-SevenSegStatHC595::~SevenSegStatHC595() {}
-
+SevenSegStatHC595::SevenSegStatHC595(){}
+SevenSegStatHC595::~SevenSegStatHC595(){}
 //============================================================> Class methods separator
-
-SevenSegStatDummy::SevenSegStatDummy(gpioPinId_t* ioPins, uint8_t dspDigits, bool commAnode)
-{
-    _ioPins = ioPins;
-    _dspDigitsQty = dspDigits;
-    _commAnode = commAnode;
-    //Configure to send the message to the serial terminal in the fashion of Serial.begin(9600);
-}
-
+SevenSegStatDummy::SevenSegStatDummy(gpioPinId_t* ioPins, uint8_t dspDigits, bool commAnode){}
 SevenSegStatDummy::~SevenSegStatDummy(){}

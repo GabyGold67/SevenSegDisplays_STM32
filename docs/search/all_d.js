@@ -1,5 +1,17 @@
 var searchData=
 [
-  ['wait_0',['wait',['../class_seven_seg_displays.html#ae00a0275a3fa0c1858e475d3e2f1272d',1,'SevenSegDisplays::wait()'],['../class_seven_seg_displays.html#a25fe31c0ee20fd4dfb96730b05776c28',1,'SevenSegDisplays::wait(const unsigned long &amp;newWaitRate)']]],
-  ['write_1',['write',['../class_seven_seg_displays.html#ab1c77aee430974cc460d259e600668ba',1,'SevenSegDisplays::write(const uint8_t &amp;segments, const uint8_t &amp;port)'],['../class_seven_seg_displays.html#a7e034e7918ccdc5c0ff93af667fecbc6',1,'SevenSegDisplays::write(const std::string &amp;character, const uint8_t &amp;port)']]]
+  ['segment_20displays_20library_0',['A hardware independent Seven Segment Displays library',['../index.html#a-hardware-independent-seven-segment-displays-library',1,'']]],
+  ['setblinkmask_1',['setBlinkMask',['../class_seven_seg_displays.html#adbf4a53a706c00d9a237991e234a9353',1,'SevenSegDisplays']]],
+  ['setblinkrate_2',['setBlinkRate',['../class_seven_seg_displays.html#a5156b178ce490d7b5e1207aa3baa85dc',1,'SevenSegDisplays']]],
+  ['setdigitsorder_3',['setDigitsOrder',['../class_seven_seg_disp_hw.html#aee6d67c3bdd719b05ac6e7d8d250d43f',1,'SevenSegDispHw']]],
+  ['setdspbuffptr_4',['setDspBuffPtr',['../class_seven_seg_disp_hw.html#afc7402bad588be4ea2c7aedaf870f9ff',1,'SevenSegDispHw']]],
+  ['setwaitchar_5',['setWaitChar',['../class_seven_seg_displays.html#a806a5ed32988ec7d82b65157b56b538e',1,'SevenSegDisplays']]],
+  ['setwaitrate_6',['setWaitRate',['../class_seven_seg_displays.html#acd0f00d24dbbaadec3fb06ffb991914c',1,'SevenSegDisplays']]],
+  ['seven_20segment_20displays_20library_7',['A hardware independent Seven Segment Displays library',['../index.html#a-hardware-independent-seven-segment-displays-library',1,'']]],
+  ['sevensegdisphw_8',['SevenSegDispHw',['../class_seven_seg_disp_hw.html',1,'SevenSegDispHw'],['../class_seven_seg_disp_hw.html#a31e3b1f101170f21c7d247f72536ff8c',1,'SevenSegDispHw::SevenSegDispHw()']]],
+  ['sevensegdisplays_9',['SevenSegDisplays',['../class_seven_seg_displays.html',1,'SevenSegDisplays'],['../class_seven_seg_displays.html#a87ed4d92a689123ea5443fbfb10a3864',1,'SevenSegDisplays::SevenSegDisplays()'],['../class_seven_seg_displays.html#a667dc425877769e610f33f70055158cb',1,'SevenSegDisplays::SevenSegDisplays(SevenSegDispHw dspUndrlHw)']]],
+  ['sevensegdisplays_20library_20for_20stm32_10',['SevenSegDisplays Library for STM32',['../index.html',1,'']]],
+  ['sevensegdynamic_11',['SevenSegDynamic',['../class_seven_seg_dynamic.html',1,'SevenSegDynamic'],['../class_seven_seg_dynamic.html#abedb355df58457668af91dac91b17cc6',1,'SevenSegDynamic::SevenSegDynamic()']]],
+  ['sevensegdynhc595_12',['SevenSegDynHC595',['../class_seven_seg_dyn_h_c595.html',1,'']]],
+  ['stm32_13',['SevenSegDisplays Library for STM32',['../index.html',1,'']]]
 ];

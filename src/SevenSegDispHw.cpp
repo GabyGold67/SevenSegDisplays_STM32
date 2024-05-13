@@ -84,7 +84,16 @@ void SevenSegDispHw::setDspBuffPtr(uint8_t* newDspBuffPtr){
 
 //============================================================> Class methods separator
 
-SevenSegDynamic::SevenSegDynamic(){}
+SevenSegDynamic::SevenSegDynamic()
+{
+
+}
+
+SevenSegDynamic::SevenSegDynamic(gpioPinId_t* ioPins, uint8_t dspDigits, bool commAnode)
+:SevenSegDispHw(ioPins, dspDigits, commAnode)
+{
+
+}
 
 SevenSegDynamic::~SevenSegDynamic()
 {
@@ -93,12 +102,17 @@ SevenSegDynamic::~SevenSegDynamic()
    }
 }
 
-bool SevenSegDynamic::begin(){
+bool SevenSegDynamic::begin(const unsigned long &rfrsFrq){
 	bool result {false};
    BaseType_t tmrModResult {pdFAIL};
+   TickType_t tmrRfrshFrqInTcks{0};
 
 	//Verify if the timer service was attached by checking if the Timer Handle is valid (also verify the timer was started)
 	if (!_svnSgDynTmrHndl){
+		if (rfrsFrq)	//Calculate the Timer Period
+			tmrRfrshFrqInTcks = pdMS_TO_TICKS(rfrsFrq);
+		else
+			tmrRfrshFrqInTcks = pdMS_TO_TICKS(static_cast<int>(1000/(30 * _dspDigitsQty)));
 		//Create a valid unique Name for identifying the timer created for this Dynamic Display
 		std::string _svnSgDynSerNumStr{ "00" + std::to_string((int)_dspHwInstNbr) };
 		_svnSgDynSerNumStr = _svnSgDynSerNumStr.substr(_svnSgDynSerNumStr.length() - 2, 2);
@@ -107,7 +121,7 @@ bool SevenSegDynamic::begin(){
 		//Initialize the Display refresh timer. Considering each digit to be refreshed at 30 Hz in turn, the freq might be (Max qty of digits * 30Hz)
 		_dspRfrshTmrHndl = xTimerCreate(
 							_svnSgDynRfrshTmrName.c_str(),
-							pdMS_TO_TICKS((int)(1000/(30 * _dspDigitsQty))),
+							tmrRfrshFrqInTcks,	//Timer period
 							pdTRUE,  //Autoreload
 							this,   //TimerID, data to be passed to the callback function
 							tmrCbRefreshDyn  //Callback function
@@ -142,13 +156,7 @@ bool SevenSegDynamic::end() {
 
 void SevenSegDynamic::tmrCbRefreshDyn(TimerHandle_t rfrshTmrCbArg){
 	SevenSegDispHw* argObj = (SevenSegDispHw*)pvTimerGetTimerID(rfrshTmrCbArg);
-   //Timer Callback to keep the display lit by calling each display's fastRefresh() method
-
-   /*    for(uint8_t i {0}; i < _dspPtrArrLngth; i++){
-        // if (*(_instancesLstPtr + i) != nullptr)
-            // (*(_instancesLstPtr + i)) -> fastRefresh();
-    }
-*/
+   //Timer Callback to keep the display lit by calling the display's refresh() method
 	argObj -> refresh();
 
     return;
@@ -157,32 +165,67 @@ void SevenSegDynamic::tmrCbRefreshDyn(TimerHandle_t rfrshTmrCbArg){
 //============================================================> Class methods separator
 
 SevenSegDynHC595::SevenSegDynHC595(gpioPinId_t* ioPins, uint8_t dspDigits, bool commAnode)
-:_sclk{ioPins[_sclkArgPos]}, _rclk{ioPins[_rclkArgPos]}, _dio{ioPins[_dioArgPos]}
+:SevenSegDynamic(ioPins, dspDigits, commAnode), _sclk{ioPins[_sclkArgPos]}, _rclk{ioPins[_rclkArgPos]}, _dio{ioPins[_dioArgPos]}
 {
-	 _commAnode = commAnode;
+//	_dspDigitsQty = dspDigits;
+//	_commAnode = commAnode;
+//	SevenSegDispHw(ioPins, dspDigits, commAnode);
+
+
 	//Set the declared GPIO pins
 	 setGPIOPinAsOutput(_sclk);
 	 setGPIOPinAsOutput(_rclk);
 	 setGPIOPinAsOutput(_dio);
 
-    begin();
+	 HAL_GPIO_WritePin(_rclk.portId, _rclk.pinNum, GPIO_PIN_SET); // _rclk (data latched) will be lowered to let data in
+	 HAL_GPIO_WritePin(_sclk.portId, _sclk.pinNum, GPIO_PIN_RESET);	//The _sclk  must start lowered (as data will be taken at rise flank)
 }
 
 SevenSegDynHC595::~SevenSegDynHC595(){}
 
 void SevenSegDynHC595::refresh(){
-//   bool tmpLogic {true};
    uint8_t tmpDigToSend{0};
+   uint8_t tmpPosToSend{0};
 
     for (int i {0}; i < _dspDigitsQty; i++){
         tmpDigToSend = *(_dspBuffPtr + ((i + _firstRefreshed) % _dspDigitsQty));
-        send(tmpDigToSend, uint8_t(1) << *(_digitPosPtr + ((i + _firstRefreshed) % _dspDigitsQty)));
+        tmpPosToSend = uint8_t(1) << *(_digitPosPtr + ((i + _firstRefreshed) % _dspDigitsQty));
+//        send(tmpDigToSend, uint8_t(1) << *(_digitPosPtr + ((i + _firstRefreshed) % _dspDigitsQty)));
+        send(tmpDigToSend, tmpPosToSend);
     }
     ++_firstRefreshed;
     if (_firstRefreshed == _dspDigitsQty)
         _firstRefreshed = 0;
 
     return;
+}
+
+void SevenSegDynHC595::send(uint8_t content){
+	bool prevPnLvl {false};
+
+	HAL_GPIO_WritePin(_dio.portId, _dio.pinNum, GPIO_PIN_RESET);	//Ensuring starting state of the data out pin
+
+	for (int i {7}; i >= 0; i--){   //Send each of the 8 bits representing the character
+		if (((content & 0x80)!=0) xor prevPnLvl){
+			HAL_GPIO_TogglePin(_dio.portId, _dio.pinNum);
+			prevPnLvl = !prevPnLvl;
+		}
+		HAL_GPIO_WritePin(_sclk.portId, _sclk.pinNum, GPIO_PIN_SET);	//Rising edge to accept data presented
+		content <<= 1;
+		HAL_GPIO_WritePin(_sclk.portId, _sclk.pinNum, GPIO_PIN_RESET); //Lower back for next bit to be presented
+	}
+
+	return;
+}
+
+void SevenSegDynHC595::send(const uint8_t &segments, const uint8_t &port){
+
+	HAL_GPIO_WritePin(_rclk.portId, _rclk.pinNum, GPIO_PIN_RESET);	//Set the shift register to accept data
+	send(segments);
+	send(port);
+	HAL_GPIO_WritePin(_rclk.portId, _rclk.pinNum, GPIO_PIN_SET);	//Set the shift register to show latched data
+
+   return;
 }
 
 //============================================================> Generic use functions
@@ -197,6 +240,8 @@ bool setGPIOPinAsOutput(const gpioPinId_t &outPin){
 	  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
 	  GPIO_InitStruct.Pull = GPIO_NOPULL;
 	  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+//	  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_MEDIUM;
+//	  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
 	  HAL_GPIO_Init(outPin.portId, &GPIO_InitStruct);
 
 	  return true;

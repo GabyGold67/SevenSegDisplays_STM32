@@ -29,6 +29,7 @@ var NAVTREE =
       [ "A hardware independent Seven Segment Displays library", "index.html#a-hardware-independent-seven-segment-displays-library", null ],
       [ "Class List", "annotated.html", "annotated_dup" ],
       [ "Class Index", "classes.html", null ],
+      [ "Class Hierarchy", "hierarchy.html", "hierarchy" ],
       [ "Class Members", "functions.html", [
         [ "All", "functions.html", null ],
         [ "Functions", "functions_func.html", null ],

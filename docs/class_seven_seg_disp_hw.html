@@ -102,6 +102,18 @@ $(function(){initNavTree('class_seven_seg_disp_hw.html',''); initResizable(); })
 <p>Class constructor.  
  <a href="#details">More...</a></p>
 <div class="dynheader">
+Inheritance diagram for SevenSegDispHw:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_seven_seg_disp_hw__inherit__graph.png" border="0" usemap="#a_seven_seg_disp_hw_inherit__map" alt="Inheritance graph"/></div>
+<map name="a_seven_seg_disp_hw_inherit__map" id="a_seven_seg_disp_hw_inherit__map">
+<area shape="rect" title="Class constructor." alt="" coords="14,5,138,32"/>
+<area shape="rect" href="class_seven_seg_dynamic.html" title=" " alt="" coords="11,80,141,107"/>
+<area shape="poly" title=" " alt="" coords="79,48,79,80,73,80,73,48"/>
+<area shape="rect" href="class_seven_seg_dyn_h_c595.html" title=" " alt="" coords="5,155,147,181"/>
+<area shape="poly" title=" " alt="" coords="79,122,79,154,73,154,73,122"/>
+</map>
+<center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
+<div class="dynheader">
 Collaboration diagram for SevenSegDispHw:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_seven_seg_disp_hw__coll__graph.png" border="0" usemap="#a_seven_seg_disp_hw_coll__map" alt="Collaboration graph"/></div>
@@ -120,14 +132,38 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a148b7eb20201e4dd6b7841857de93145" id="r_a148b7eb20201e4dd6b7841857de93145"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a148b7eb20201e4dd6b7841857de93145">~SevenSegDispHw</a> ()</td></tr>
 <tr class="memdesc:a148b7eb20201e4dd6b7841857de93145"><td class="mdescLeft">&#160;</td><td class="mdescRight">Class virtual destructor.  <br /></td></tr>
 <tr class="separator:a148b7eb20201e4dd6b7841857de93145"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a920ac7fdf9ea5a75380fa7dca6808368" id="r_a920ac7fdf9ea5a75380fa7dca6808368"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a920ac7fdf9ea5a75380fa7dca6808368">begin</a> (const unsigned long &amp;rfrsFrq=0)</td></tr>
+<tr class="memdesc:a920ac7fdf9ea5a75380fa7dca6808368"><td class="mdescLeft">&#160;</td><td class="mdescRight">Starts the timer and/or services needed to keep the display updated.  <br /></td></tr>
+<tr class="separator:a920ac7fdf9ea5a75380fa7dca6808368"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9d62ef5055a48f8b8f0d4a12c526a600" id="r_a9d62ef5055a48f8b8f0d4a12c526a600"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9d62ef5055a48f8b8f0d4a12c526a600">end</a> ()</td></tr>
+<tr class="memdesc:a9d62ef5055a48f8b8f0d4a12c526a600"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stops the timer and/or services needed to keep the display updated.  <br /></td></tr>
+<tr class="separator:a9d62ef5055a48f8b8f0d4a12c526a600"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5b9379b7b6ca6946813fd643d28d74f4" id="r_a5b9379b7b6ca6946813fd643d28d74f4"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5b9379b7b6ca6946813fd643d28d74f4">getCommAnode</a> ()</td></tr>
+<tr class="memdesc:a5b9379b7b6ca6946813fd643d28d74f4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the display leds wiring scheme setting for the object.  <br /></td></tr>
+<tr class="separator:a5b9379b7b6ca6946813fd643d28d74f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a17e903934d148f0d2c47da7ceb0982c7" id="r_a17e903934d148f0d2c47da7ceb0982c7"><td class="memItemLeft" align="right" valign="top">uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a17e903934d148f0d2c47da7ceb0982c7">getDspBuffPtr</a> ()</td></tr>
+<tr class="memdesc:a17e903934d148f0d2c47da7ceb0982c7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the pointer to the display's data buffer.  <br /></td></tr>
+<tr class="separator:a17e903934d148f0d2c47da7ceb0982c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a64ce74f4368bf5cd1edbbd520df551d9" id="r_a64ce74f4368bf5cd1edbbd520df551d9"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a64ce74f4368bf5cd1edbbd520df551d9">getDspDigits</a> ()</td></tr>
+<tr class="memdesc:a64ce74f4368bf5cd1edbbd520df551d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the Display's length in digits quantity (dspDigitsQty attribute).  <br /></td></tr>
+<tr class="separator:a64ce74f4368bf5cd1edbbd520df551d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a123b7cf1f60cc67994995460346e699c" id="r_a123b7cf1f60cc67994995460346e699c"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a123b7cf1f60cc67994995460346e699c">refresh</a> ()</td></tr>
+<tr class="memdesc:a123b7cf1f60cc67994995460346e699c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Keep the dynamic type displays running.  <br /></td></tr>
+<tr class="separator:a123b7cf1f60cc67994995460346e699c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aee6d67c3bdd719b05ac6e7d8d250d43f" id="r_aee6d67c3bdd719b05ac6e7d8d250d43f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aee6d67c3bdd719b05ac6e7d8d250d43f">setDigitsOrder</a> (uint8_t *newOrderPtr)</td></tr>
+<tr class="memdesc:aee6d67c3bdd719b05ac6e7d8d250d43f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a display ports sorting order.  <br /></td></tr>
+<tr class="separator:aee6d67c3bdd719b05ac6e7d8d250d43f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afc7402bad588be4ea2c7aedaf870f9ff" id="r_afc7402bad588be4ea2c7aedaf870f9ff"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afc7402bad588be4ea2c7aedaf870f9ff">setDspBuffPtr</a> (uint8_t *newDspBuffPtr)</td></tr>
+<tr class="memdesc:afc7402bad588be4ea2c7aedaf870f9ff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the pointer to the display's data buffer.  <br /></td></tr>
+<tr class="separator:afc7402bad588be4ea2c7aedaf870f9ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Class constructor. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">ioPins</td><td>Pointer to a <a class="el" href="structgpio_pin_id__t.html">gpioPinId_t</a> array with the needed MCU pins identification to drive the hardware display </td></tr>
-    <tr><td class="paramname">dspDigits</td><td>Display's length, digits quantity </td></tr>
-    <tr><td class="paramname">commAnode</td><td>Boolean indicating the leds display wiring, either <b>common anode</b> (true) or <b>common cathode</b> (false) </td></tr>
+    <tr><td class="paramname">ioPins</td><td>Pointer to a <a class="el" href="structgpio_pin_id__t.html">gpioPinId_t</a> array with the needed MCU pins identification to drive the hardware display. </td></tr>
+    <tr><td class="paramname">dspDigits</td><td>Display's length in digits quantity (dspDigitsQty attribute). </td></tr>
+    <tr><td class="paramname">commAnode</td><td>Indicates the display leds wiring scheme, either <b>common anode</b> (true) or <b>common cathode</b> (fa.lse) </td></tr>
   </table>
   </dd>
 </dl>
@@ -169,6 +205,250 @@ Public Member Functions</h2></td></tr>
 
 <p>Class virtual destructor. </p>
 <p>@classs <a class="el" href="class_seven_seg_disp_hw.html" title="Class constructor.">SevenSegDispHw</a> </p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="a920ac7fdf9ea5a75380fa7dca6808368" name="a920ac7fdf9ea5a75380fa7dca6808368"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a920ac7fdf9ea5a75380fa7dca6808368">&#9670;&#160;</a></span>begin()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual bool SevenSegDispHw::begin </td>
+          <td>(</td>
+          <td class="paramtype">const unsigned long &amp;</td>          <td class="paramname"><span class="paramname"><em>rfrsFrq</em><span class="paramdefsep"> = </span><span class="paramdefval">0</span></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Starts the timer and/or services needed to keep the display updated. </p>
+<p>For dynamic displays a timer is needed to keep the cinematic effect for having all the digits lit. For static displays sets the corresponding communication channels to update the display every time the display buffer contents change</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">rfrsFrq</td><td>Refreshing frequency of the dynamic display in milliseconds.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">true</td><td>The timer or update services were activated without issues. </td></tr>
+    <tr><td class="paramname">false</td><td>The timer or update services activation failed. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Reimplemented in <a class="el" href="class_seven_seg_dynamic.html#a14d4becfe17e3d41eb74397334770021">SevenSegDynamic</a>.</p>
+
+</div>
+</div>
+<a id="a9d62ef5055a48f8b8f0d4a12c526a600" name="a9d62ef5055a48f8b8f0d4a12c526a600"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9d62ef5055a48f8b8f0d4a12c526a600">&#9670;&#160;</a></span>end()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual bool SevenSegDispHw::end </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Stops the timer and/or services needed to keep the display updated. </p>
+<p>For dynamic displays the needed timer will be stopped and deleted. For static displays sets the corresponding communication channels are disabled.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">true</td><td>The timer or update services were deactivated without issues. </td></tr>
+    <tr><td class="paramname">false</td><td>The timer or update services deactivation failed. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Reimplemented in <a class="el" href="class_seven_seg_dynamic.html#ad33484426e9171966895857c9b7afcc4">SevenSegDynamic</a>.</p>
+
+</div>
+</div>
+<a id="a5b9379b7b6ca6946813fd643d28d74f4" name="a5b9379b7b6ca6946813fd643d28d74f4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5b9379b7b6ca6946813fd643d28d74f4">&#9670;&#160;</a></span>getCommAnode()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool SevenSegDispHw::getCommAnode </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets the display leds wiring scheme setting for the object. </p>
+<p>The display leds wiring scheme indicates how the individual led segment in a port (digit) are interconnected, either <b>common anode</b> (true) or <b>common cathode</b> (false). This wiring arrange affects the data to be sent to the digit, as one configuration needs a positive voltage level (pin set, or logic true) to get the segment lit, while the other needs ground (0v, pin reset, or logic false) to get the segment lit</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">true</td><td>the object is configured to instantiate a common anode display </td></tr>
+    <tr><td class="paramname">false</td><td>the object is configured to instantiate a common cathode display </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a17e903934d148f0d2c47da7ceb0982c7" name="a17e903934d148f0d2c47da7ceb0982c7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a17e903934d148f0d2c47da7ceb0982c7">&#9670;&#160;</a></span>getDspBuffPtr()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t * SevenSegDispHw::getDspBuffPtr </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets the pointer to the display's data buffer. </p>
+<p>The display's data buffer is the array of unsigned short int (byte) that holds the value to be exhibited in each display's port.</p>
+<dl class="section return"><dt>Returns</dt><dd>A pointer to the display's data buffer. </dd></dl>
+
+</div>
+</div>
+<a id="a64ce74f4368bf5cd1edbbd520df551d9" name="a64ce74f4368bf5cd1edbbd520df551d9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a64ce74f4368bf5cd1edbbd520df551d9">&#9670;&#160;</a></span>getDspDigits()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t SevenSegDispHw::getDspDigits </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets the Display's length in digits quantity (dspDigitsQty attribute). </p>
+<dl class="section return"><dt>Returns</dt><dd>The display's available display ports. </dd></dl>
+
+</div>
+</div>
+<a id="a123b7cf1f60cc67994995460346e699c" name="a123b7cf1f60cc67994995460346e699c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a123b7cf1f60cc67994995460346e699c">&#9670;&#160;</a></span>refresh()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void SevenSegDispHw::refresh </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Keep the dynamic type displays running. </p>
+<p>The dynamic technology displays need to be periodically refreshed, as it can actively turn on only one digit at a time, so to keep all the digits visible the driving code must activate periodically each digit one by one independently to generate a "cinematic effect". </p>
+
+<p>Reimplemented in <a class="el" href="class_seven_seg_dynamic.html#a3899c8aac0d1c4796aa83ac9fd542761">SevenSegDynamic</a>, and <a class="el" href="class_seven_seg_dyn_h_c595.html#aac82d90cd9721464b1aeed64a57ececd">SevenSegDynHC595</a>.</p>
+
+</div>
+</div>
+<a id="aee6d67c3bdd719b05ac6e7d8d250d43f" name="aee6d67c3bdd719b05ac6e7d8d250d43f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aee6d67c3bdd719b05ac6e7d8d250d43f">&#9670;&#160;</a></span>setDigitsOrder()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool SevenSegDispHw::setDigitsOrder </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t *</td>          <td class="paramname"><span class="paramname"><em>newOrderPtr</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sets a display ports sorting order. </p>
+<p>Different 7 segments displays are differently wired, while some follow the logic of ordering the ports designated number port from left to right, some do it the opposite way and some use different patterns based on hardware implementation decisions. The library implements a mechanism to provide the instantiated object to relate the positions on object's display buffer to the positions on the display hardware through a "translation array". This array has the size of the display instantiated, and each array element is meant to hold the number of the corresponding display port, being the first element of the array (array[0]) the corresponding to the leftmost display digit, array[1], the next to it's right and so on. The array is default defined in the constructor as (0, 1, 2,...) that is the most usual implementation found. If the order needs to be changed the <code><a class="el" href="#aee6d67c3bdd719b05ac6e7d8d250d43f" title="Sets a display ports sorting order.">setDigitsOrder()</a></code> method is the way to set a new mapping.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">newOrderPtr</td><td>Pointer to the "translation array".</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">true</td><td>All of the elements of the array were in the accepted range. The change was performed </td></tr>
+    <tr><td class="paramname">false</td><td>At least one of the values of the array passed were out of range. The change wasn't performed.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>Each value in the array passed as argument will be checked against the _dspDigits value to ensure that they are all in the range acceptable, 0 &lt;= value &lt;= _dspDigits - 1. If one of the values is out of the valid range no change will be done. Please note that no checking will be done to ensure all of the array values are different. A repeated value will be accepted. leading to unexpected display due to superimposing digits and not included digits. </dd></dl>
+
+</div>
+</div>
+<a id="afc7402bad588be4ea2c7aedaf870f9ff" name="afc7402bad588be4ea2c7aedaf870f9ff"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afc7402bad588be4ea2c7aedaf870f9ff">&#9670;&#160;</a></span>setDspBuffPtr()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SevenSegDispHw::setDspBuffPtr </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t *</td>          <td class="paramname"><span class="paramname"><em>newDspBuffPtr</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sets the pointer to the display's data buffer. </p>
+<p>The display's data buffer is the array of unsigned short int (byte) that holds the value to be exhibited in each display's port. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">newDspBuffPtr</td><td>Pointer to the designated display's data buffer</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section warning"><dt>Warning</dt><dd>The method just sets the value of the pointer and has no involvement in other tasks, such as:<ul>
+<li>The deletion of previously assigned buffer memory space.</li>
+<li>The creation of the new buffer space</li>
+<li>Checking the legitimacy of the pointer address. </li>
+</ul>
+</dd></dl>
 
 </div>
 </div>

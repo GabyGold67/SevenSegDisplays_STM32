@@ -25,7 +25,7 @@ SevenSegDisplays::SevenSegDisplays(SevenSegDispHw dspUndrlHw)
       _dspDigitsQty = _dspUndrlHw.getDspDigits(); //Now that we know the display size in digits, we can build the needed arrays for data
       _dspBuffPtr  = new uint8_t[_dspDigitsQty];
       _blinkMaskPtr = new bool[_dspDigitsQty];
-      _dspUndrlHw.setDspBuffPtr(_dspBuffPtr); //Indicate the hardware where de data to display is located
+      _dspUndrlHw.setDspBuffPtr(_dspBuffPtr); //Indicate the hardware where the data to display is located
       _dspInstNbr = _dspSerialNum++; //This value is always incremented, as it's not related to the active objects but to amount of different displays created
       ++_displaysCount;  //This keeps the count of instantiated SevenSegDisplays objects
       _dspInstance = this;

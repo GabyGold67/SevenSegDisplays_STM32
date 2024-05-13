@@ -142,9 +142,34 @@ public:
      * - Checking the legitimacy of the pointer address.
      */
     void setDspBuffPtr(uint8_t* newDspBuffPtr);
-
-    virtual bool begin(){return true;};
+    /**
+     * @brief Starts the timer and/or services needed to keep the display updated
+     *
+     * For dynamic displays a timer is needed to keep the cinematic effect for having all the digits lit.
+     * For static displays sets the corresponding communication channels to update the display every time the display buffer contents change
+     *
+     * @param rfrsFrq Refreshing frequency of the dynamic display in milliseconds.
+     *
+     * @retval true: The timer or update services were activated without issues.
+     * @retval false: The timer or update services activation failed.
+     */
+    virtual bool begin(const unsigned long &rfrsFrq = 0){return true;};
+    /**
+     * @brief Stops the timer and/or services needed to keep the display updated
+     *
+     * For dynamic displays the needed timer will be stopped and deleted.
+     * For static displays sets the corresponding communication channels are disabled.
+     *
+     * @retval true: The timer or update services were deactivated without issues.
+     * @retval false: The timer or update services deactivation failed.
+     */
     virtual bool end(){return true;};
+    /**
+     * @brief Keep the dynamic type displays running
+     *
+     * The dynamic technology displays need to be periodically refreshed, as it can actively turn on only one digit at a time, so to keep all the digits visible the driving code must activate periodically each digit one by one independently to generate a "cinematic effect".
+     *
+     */
     virtual void refresh(){};
 };
 
@@ -165,6 +190,8 @@ public:
      * class SevenSegDynamic
      */
     SevenSegDynamic();
+    SevenSegDynamic(gpioPinId_t* ioPins, uint8_t dspDigits, bool commAnode);
+
     /**
      * @brief Virtual class destructor
      *
@@ -172,7 +199,8 @@ public:
      *
      */
     ~SevenSegDynamic();
-    virtual bool begin();
+
+    virtual bool begin(const unsigned long &rfrsFrq = 0);
     virtual bool end();
 };
 
@@ -189,13 +217,11 @@ private:
     gpioPinId_t _dio{};
 protected:
     virtual void refresh();
-//    void send(uint8_t content);
-//    void send(const uint8_t &segments, const uint8_t &port);
 public:
     SevenSegDynHC595(gpioPinId_t* ioPins, uint8_t dspDigits, bool commAnode);
     ~SevenSegDynHC595();
-//    bool begin();
-//    bool stop();
+    void send(uint8_t content);
+    void send(const uint8_t &segments, const uint8_t &port);
 };
 
 #endif /* _SEVENSEGDISPHW_H_ */

@@ -2,11 +2,11 @@
 <area shape="rect" id="Node000001" title="Implements a seven segment display object." alt="" coords="64,235,193,261"/>
 <area shape="poly" id="edge3_Node000001_Node000001" title=" " alt="" coords="210,238,220,248,212,258,194,262,193,257,209,253,214,248,206,242"/>
 <area shape="rect" id="Node000002" href="$class_seven_seg_disp_hw.html" title="Class constructor." alt="" coords="5,112,129,139"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="68,154,71,182,81,209,92,222,105,232,102,236,88,226,77,212,66,183,63,155"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="64,154,64,182,72,209,83,222,98,232,95,237,80,226,68,212,59,183,59,154"/>
 <area shape="rect" id="Node000003" href="$structgpio_pin_id__t.html" title=" " alt="" coords="23,13,108,40"/>
 <area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="69,56,69,112,64,112,63,56"/>
 <area shape="rect" id="Node000004" title=" " alt="" coords="154,112,233,139"/>
-<area shape="poly" id="edge4_Node000001_Node000004" title=" " alt="" coords="187,155,161,212,143,236,139,232,157,209,183,153"/>
+<area shape="poly" id="edge4_Node000001_Node000004" title=" " alt="" coords="190,154,180,183,165,212,145,236,141,232,161,209,175,181,184,152"/>
 <area shape="rect" id="Node000005" title=" " alt="" coords="132,5,258,48"/>
 <area shape="poly" id="edge5_Node000004_Node000005" title=" " alt="" coords="197,64,197,112,191,112,192,64"/>
 </map>
