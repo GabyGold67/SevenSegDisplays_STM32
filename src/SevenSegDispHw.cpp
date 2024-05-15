@@ -43,6 +43,16 @@ SevenSegDispHw::~SevenSegDispHw() {
     delete [] _digitPosPtr;
 }
 
+bool SevenSegDispHw::begin(const unsigned long int &rfrsFrq){
+
+	return true;
+}
+
+bool SevenSegDispHw::end(){
+
+	return true;
+}
+
 bool SevenSegDispHw::getCommAnode(){
 
     return _commAnode;
@@ -86,13 +96,11 @@ void SevenSegDispHw::setDspBuffPtr(uint8_t* newDspBuffPtr){
 
 SevenSegDynamic::SevenSegDynamic()
 {
-
 }
 
 SevenSegDynamic::SevenSegDynamic(gpioPinId_t* ioPins, uint8_t dspDigits, bool commAnode)
 :SevenSegDispHw(ioPins, dspDigits, commAnode)
 {
-
 }
 
 SevenSegDynamic::~SevenSegDynamic()
@@ -102,7 +110,7 @@ SevenSegDynamic::~SevenSegDynamic()
    }
 }
 
-bool SevenSegDynamic::begin(const unsigned long &rfrsFrq){
+bool SevenSegDynamic::begin(const unsigned long int &rfrsFrq){
 	bool result {false};
    BaseType_t tmrModResult {pdFAIL};
    TickType_t tmrRfrshFrqInTcks{0};
@@ -155,7 +163,7 @@ bool SevenSegDynamic::end() {
 }
 
 void SevenSegDynamic::tmrCbRefreshDyn(TimerHandle_t rfrshTmrCbArg){
-	SevenSegDispHw* argObj = (SevenSegDispHw*)pvTimerGetTimerID(rfrshTmrCbArg);
+	SevenSegDynamic* argObj = (SevenSegDynamic*)pvTimerGetTimerID(rfrshTmrCbArg);
    //Timer Callback to keep the display lit by calling the display's refresh() method
 	argObj -> refresh();
 
@@ -226,6 +234,66 @@ void SevenSegDynHC595::send(const uint8_t &segments, const uint8_t &port){
 	HAL_GPIO_WritePin(_rclk.portId, _rclk.pinNum, GPIO_PIN_SET);	//Set the shift register to show latched data
 
    return;
+}
+
+bool SevenSegDynHC595::begin(const unsigned long &rfrsFrq){
+	bool result {false};
+   BaseType_t tmrModResult {pdFAIL};
+   TickType_t tmrRfrshFrqInTcks{0};
+
+	//Verify if the timer service was attached by checking if the Timer Handle is valid (also verify the timer was started)
+	if (!_svnSgDynTmrHndl){
+		if (rfrsFrq)	//Calculate the Timer Period
+			tmrRfrshFrqInTcks = pdMS_TO_TICKS(rfrsFrq);
+		else
+			tmrRfrshFrqInTcks = pdMS_TO_TICKS(static_cast<int>(1000/(30 * _dspDigitsQty)));
+		//Create a valid unique Name for identifying the timer created for this Dynamic Display
+		std::string _svnSgDynSerNumStr{ "00" + std::to_string((int)_dspHwInstNbr) };
+		_svnSgDynSerNumStr = _svnSgDynSerNumStr.substr(_svnSgDynSerNumStr.length() - 2, 2);
+		std::string _svnSgDynRfrshTmrName {"DynDsp"};
+		_svnSgDynRfrshTmrName = _svnSgDynRfrshTmrName + _svnSgDynSerNumStr + "rfrsh_tmr";
+		//Initialize the Display refresh timer. Considering each digit to be refreshed at 30 Hz in turn, the freq might be (Max qty of digits * 30Hz)
+		_dspRfrshTmrHndl = xTimerCreate(
+							_svnSgDynRfrshTmrName.c_str(),
+							tmrRfrshFrqInTcks,	//Timer period
+							pdTRUE,  //Autoreload
+							this,   //TimerID, data to be passed to the callback function
+							tmrCbRefreshDyn  //Callback function
+		);
+		if((_dspRfrshTmrHndl != NULL) && (!xTimerIsTimerActive(_dspRfrshTmrHndl))){
+			tmrModResult = xTimerStart(_dspRfrshTmrHndl, portMAX_DELAY);
+			if (tmrModResult == pdPASS)
+				result = true;
+		}
+	}
+
+	return result;
+}
+
+bool SevenSegDynHC595::end() {
+    bool result {false};
+    BaseType_t tmrModResult {pdFAIL};
+
+    if(_dspRfrshTmrHndl){   //if the timer still exists and is running, stop and delete
+   	 tmrModResult = xTimerStop(_dspRfrshTmrHndl, portMAX_DELAY);
+   	 if(tmrModResult == pdPASS){
+   		 tmrModResult = xTimerDelete(_dspRfrshTmrHndl, portMAX_DELAY);
+      	 if(tmrModResult == pdPASS){
+				 _dspRfrshTmrHndl = NULL;
+				 result = true;
+      	 }
+   	 }
+    }
+
+    return result;
+}
+
+void SevenSegDynHC595::tmrCbRefreshDyn(TimerHandle_t rfrshTmrCbArg){
+	SevenSegDynHC595* argObj = (SevenSegDynHC595*)pvTimerGetTimerID(rfrshTmrCbArg);
+   //Timer Callback to keep the display lit by calling the display's refresh() method
+	argObj -> refresh();
+
+    return;
 }
 
 //============================================================> Generic use functions

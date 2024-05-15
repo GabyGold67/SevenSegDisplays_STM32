@@ -9,9 +9,7 @@
 #ifndef _SEVENSEGDISPHW_H_
 #define _SEVENSEGDISPHW_H_
 
-#include <stdint.h>
 #include <string>
-#include <stdio.h>
 //===========================>> Next lines included for developing purposes, corresponding headers must be provided for the production platform/s
 //#include "stm32f4xx_hal.h"
 //#include "stm32f4xx_hal_gpio.h"
@@ -54,6 +52,14 @@ uint8_t singleBitPosNum(uint16_t mask);
 
 //============================================================> Class declarations separator
 
+/**
+ * @brief Implements a generic Seven Segments LEDs hardware interface to displays the logically generated characters
+ *
+ * This class implements all methods and attributes common to a large variety of seven segments led displays hardware.
+ * Specific hardware specific methods and attributes will be included in corresponding subclasses defintions.
+ *
+ * @class SevenSegDispHw
+ */
 class SevenSegDispHw{
     static uint8_t _dspHwSerialNum;
 protected:
@@ -153,7 +159,8 @@ public:
      * @retval true: The timer or update services were activated without issues.
      * @retval false: The timer or update services activation failed.
      */
-    virtual bool begin(const unsigned long &rfrsFrq = 0){return true;};
+//    bool begin(const unsigned long &rfrsFrq = 0){return true;};
+    bool begin(const unsigned long int &rfrsFrq = 0);
     /**
      * @brief Stops the timer and/or services needed to keep the display updated
      *
@@ -163,7 +170,7 @@ public:
      * @retval true: The timer or update services were deactivated without issues.
      * @retval false: The timer or update services deactivation failed.
      */
-    virtual bool end(){return true;};
+    bool end();
     /**
      * @brief Keep the dynamic type displays running
      *
@@ -175,6 +182,16 @@ public:
 
 //============================================================> Class declarations separator
 
+/**
+ * @brief Implements a generic Seven Segments LEDs dynamic hardware interface to displays the logically generated characters
+ *
+ * This class implements all methods and attributes common to **dynamic** hardware, including but not limited to
+ * - Direct display digit manipulation with no driver chips.
+ * - Shift registers arrays, with one shift register driving the leds of a port to turn on, one or more shift registers to select the port being lit.
+ * Hardware specific methods and attributes will be included in corresponding subclasses.
+ *
+ * @class SevenSegDynamic
+ */
 class SevenSegDynamic: public SevenSegDispHw{
 protected:
     TimerHandle_t _dspRfrshTmrHndl{NULL};
@@ -199,15 +216,21 @@ public:
      *
      */
     ~SevenSegDynamic();
-
-    virtual bool begin(const unsigned long &rfrsFrq = 0);
+    bool begin(const unsigned long int &rfrsFrq = 0);
     virtual bool end();
 };
 
 //============================================================> Class declarations separator
 
+/**
+ * @brief Implements specific Seven Segments LEDs dynamic hardware based on 74HC595 shift register array
+ *
+ * The hardware targeted is implemented as a two shift register matrix, one for the leds segments to be lit, one for the port selection
+ * The display implemented with this arrangement is capable of driving from 2 and up to 8 ports displays
+ *
+ * @class SevenSegDynHC595
+ */
 class SevenSegDynHC595: public SevenSegDynamic{
-//    static void tmrCbRefreshHC595(TimerHandle_t rfrshTmrCbArg);  //Will easily fail in subclasses calls, check it!!
 private:
     const uint8_t _sclkArgPos {0};
     const uint8_t _rclkArgPos {1};
@@ -217,9 +240,12 @@ private:
     gpioPinId_t _dio{};
 protected:
     virtual void refresh();
+    static void tmrCbRefreshDyn(TimerHandle_t rfrshTmrCbArg);
 public:
     SevenSegDynHC595(gpioPinId_t* ioPins, uint8_t dspDigits, bool commAnode);
     ~SevenSegDynHC595();
+    bool begin(const unsigned long int &rfrsFrq = 0);
+    virtual bool end();
     void send(uint8_t content);
     void send(const uint8_t &segments, const uint8_t &port);
 };

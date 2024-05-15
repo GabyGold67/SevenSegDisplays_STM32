@@ -99,17 +99,17 @@ $(function(){initNavTree('class_seven_seg_disp_hw.html',''); initResizable(); })
 </div><!--header-->
 <div class="contents">
 
-<p>Class constructor.  
+<p>Implements a generic Seven Segments LEDs hardware interface to displays the logically generated characters.  
  <a href="#details">More...</a></p>
 <div class="dynheader">
 Inheritance diagram for SevenSegDispHw:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_seven_seg_disp_hw__inherit__graph.png" border="0" usemap="#a_seven_seg_disp_hw_inherit__map" alt="Inheritance graph"/></div>
 <map name="a_seven_seg_disp_hw_inherit__map" id="a_seven_seg_disp_hw_inherit__map">
-<area shape="rect" title="Class constructor." alt="" coords="14,5,138,32"/>
-<area shape="rect" href="class_seven_seg_dynamic.html" title=" " alt="" coords="11,80,141,107"/>
+<area shape="rect" title="Implements a generic Seven Segments LEDs hardware interface to displays the logically generated chara..." alt="" coords="14,5,138,32"/>
+<area shape="rect" href="class_seven_seg_dynamic.html" title="Implements a generic Seven Segments LEDs dynamic hardware interface to displays the logically generat..." alt="" coords="11,80,141,107"/>
 <area shape="poly" title=" " alt="" coords="79,48,79,80,73,80,73,48"/>
-<area shape="rect" href="class_seven_seg_dyn_h_c595.html" title=" " alt="" coords="5,155,147,181"/>
+<area shape="rect" href="class_seven_seg_dyn_h_c595.html" title="Implements specific Seven Segments LEDs dynamic hardware based on 74HC595 shift register array." alt="" coords="5,155,147,181"/>
 <area shape="poly" title=" " alt="" coords="79,122,79,154,73,154,73,122"/>
 </map>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
@@ -118,7 +118,7 @@ Collaboration diagram for SevenSegDispHw:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_seven_seg_disp_hw__coll__graph.png" border="0" usemap="#a_seven_seg_disp_hw_coll__map" alt="Collaboration graph"/></div>
 <map name="a_seven_seg_disp_hw_coll__map" id="a_seven_seg_disp_hw_coll__map">
-<area shape="rect" title="Class constructor." alt="" coords="5,96,129,123"/>
+<area shape="rect" title="Implements a generic Seven Segments LEDs hardware interface to displays the logically generated chara..." alt="" coords="5,96,129,123"/>
 <area shape="rect" href="structgpio_pin_id__t.html" title=" " alt="" coords="24,5,110,32"/>
 <area shape="poly" title=" " alt="" coords="70,48,70,95,64,95,64,48"/>
 </map>
@@ -132,12 +132,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a148b7eb20201e4dd6b7841857de93145" id="r_a148b7eb20201e4dd6b7841857de93145"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a148b7eb20201e4dd6b7841857de93145">~SevenSegDispHw</a> ()</td></tr>
 <tr class="memdesc:a148b7eb20201e4dd6b7841857de93145"><td class="mdescLeft">&#160;</td><td class="mdescRight">Class virtual destructor.  <br /></td></tr>
 <tr class="separator:a148b7eb20201e4dd6b7841857de93145"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a920ac7fdf9ea5a75380fa7dca6808368" id="r_a920ac7fdf9ea5a75380fa7dca6808368"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a920ac7fdf9ea5a75380fa7dca6808368">begin</a> (const unsigned long &amp;rfrsFrq=0)</td></tr>
-<tr class="memdesc:a920ac7fdf9ea5a75380fa7dca6808368"><td class="mdescLeft">&#160;</td><td class="mdescRight">Starts the timer and/or services needed to keep the display updated.  <br /></td></tr>
-<tr class="separator:a920ac7fdf9ea5a75380fa7dca6808368"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9d62ef5055a48f8b8f0d4a12c526a600" id="r_a9d62ef5055a48f8b8f0d4a12c526a600"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9d62ef5055a48f8b8f0d4a12c526a600">end</a> ()</td></tr>
-<tr class="memdesc:a9d62ef5055a48f8b8f0d4a12c526a600"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stops the timer and/or services needed to keep the display updated.  <br /></td></tr>
-<tr class="separator:a9d62ef5055a48f8b8f0d4a12c526a600"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab32455e7d707826aa82d515fe85c1840" id="r_ab32455e7d707826aa82d515fe85c1840"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab32455e7d707826aa82d515fe85c1840">begin</a> (const unsigned long int &amp;rfrsFrq=0)</td></tr>
+<tr class="memdesc:ab32455e7d707826aa82d515fe85c1840"><td class="mdescLeft">&#160;</td><td class="mdescRight">Starts the timer and/or services needed to keep the display updated.  <br /></td></tr>
+<tr class="separator:ab32455e7d707826aa82d515fe85c1840"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a10ef7e4db6af3dbbcdeb48331d94f2e2" id="r_a10ef7e4db6af3dbbcdeb48331d94f2e2"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a10ef7e4db6af3dbbcdeb48331d94f2e2">end</a> ()</td></tr>
+<tr class="memdesc:a10ef7e4db6af3dbbcdeb48331d94f2e2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stops the timer and/or services needed to keep the display updated.  <br /></td></tr>
+<tr class="separator:a10ef7e4db6af3dbbcdeb48331d94f2e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5b9379b7b6ca6946813fd643d28d74f4" id="r_a5b9379b7b6ca6946813fd643d28d74f4"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5b9379b7b6ca6946813fd643d28d74f4">getCommAnode</a> ()</td></tr>
 <tr class="memdesc:a5b9379b7b6ca6946813fd643d28d74f4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the display leds wiring scheme setting for the object.  <br /></td></tr>
 <tr class="separator:a5b9379b7b6ca6946813fd643d28d74f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -158,7 +158,9 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:afc7402bad588be4ea2c7aedaf870f9ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Class constructor. </p>
+<div class="textblock"><p>Implements a generic Seven Segments LEDs hardware interface to displays the logically generated characters. </p>
+<p>Class constructor.</p>
+<p>This class implements all methods and attributes common to a large variety of seven segments led displays hardware. Specific hardware specific methods and attributes will be included in corresponding subclasses defintions.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">ioPins</td><td>Pointer to a <a class="el" href="structgpio_pin_id__t.html">gpioPinId_t</a> array with the needed MCU pins identification to drive the hardware display. </td></tr>
@@ -184,7 +186,7 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Default constructor. </p>
-<p>class <a class="el" href="class_seven_seg_disp_hw.html" title="Class constructor.">SevenSegDispHw</a> </p>
+<p>class <a class="el" href="class_seven_seg_disp_hw.html" title="Implements a generic Seven Segments LEDs hardware interface to displays the logically generated chara...">SevenSegDispHw</a> </p>
 
 </div>
 </div>
@@ -204,32 +206,24 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Class virtual destructor. </p>
-<p>@classs <a class="el" href="class_seven_seg_disp_hw.html" title="Class constructor.">SevenSegDispHw</a> </p>
+<p>@classs <a class="el" href="class_seven_seg_disp_hw.html" title="Implements a generic Seven Segments LEDs hardware interface to displays the logically generated chara...">SevenSegDispHw</a> </p>
 
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a920ac7fdf9ea5a75380fa7dca6808368" name="a920ac7fdf9ea5a75380fa7dca6808368"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a920ac7fdf9ea5a75380fa7dca6808368">&#9670;&#160;</a></span>begin()</h2>
+<a id="ab32455e7d707826aa82d515fe85c1840" name="ab32455e7d707826aa82d515fe85c1840"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab32455e7d707826aa82d515fe85c1840">&#9670;&#160;</a></span>begin()</h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual bool SevenSegDispHw::begin </td>
+          <td class="memname">bool SevenSegDispHw::begin </td>
           <td>(</td>
-          <td class="paramtype">const unsigned long &amp;</td>          <td class="paramname"><span class="paramname"><em>rfrsFrq</em><span class="paramdefsep"> = </span><span class="paramdefval">0</span></span></td><td>)</td>
+          <td class="paramtype">const unsigned long int &amp;</td>          <td class="paramname"><span class="paramname"><em>rfrsFrq</em><span class="paramdefsep"> = </span><span class="paramdefval">0</span></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
 <p>Starts the timer and/or services needed to keep the display updated. </p>
@@ -248,31 +242,21 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Reimplemented in <a class="el" href="class_seven_seg_dynamic.html#a14d4becfe17e3d41eb74397334770021">SevenSegDynamic</a>.</p>
-
 </div>
 </div>
-<a id="a9d62ef5055a48f8b8f0d4a12c526a600" name="a9d62ef5055a48f8b8f0d4a12c526a600"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9d62ef5055a48f8b8f0d4a12c526a600">&#9670;&#160;</a></span>end()</h2>
+<a id="a10ef7e4db6af3dbbcdeb48331d94f2e2" name="a10ef7e4db6af3dbbcdeb48331d94f2e2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a10ef7e4db6af3dbbcdeb48331d94f2e2">&#9670;&#160;</a></span>end()</h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual bool SevenSegDispHw::end </td>
+          <td class="memname">bool SevenSegDispHw::end </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
 <p>Stops the timer and/or services needed to keep the display updated. </p>
@@ -284,8 +268,6 @@ Public Member Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-
-<p>Reimplemented in <a class="el" href="class_seven_seg_dynamic.html#ad33484426e9171966895857c9b7afcc4">SevenSegDynamic</a>.</p>
 
 </div>
 </div>

@@ -1,12 +1,14 @@
 var class_seven_seg_displays =
 [
-    [ "SevenSegDisplays", "class_seven_seg_displays.html#a87ed4d92a689123ea5443fbfb10a3864", null ],
     [ "SevenSegDisplays", "class_seven_seg_displays.html#a667dc425877769e610f33f70055158cb", null ],
+    [ "SevenSegDisplays", "class_seven_seg_displays.html#ada6d89fb083fd8a5a2ce603b3b1f5e43", null ],
     [ "~SevenSegDisplays", "class_seven_seg_displays.html#aad6eac4fa55968318f6d0c1e4e80cb8e", null ],
+    [ "begin", "class_seven_seg_displays.html#add7e74143b675a533853b26bdb9394a0", null ],
     [ "blink", "class_seven_seg_displays.html#a576676d89b46d8d3752fc8d36fbcac2c", null ],
     [ "blink", "class_seven_seg_displays.html#ade8596c25d7c6f2976422ef71a565508", null ],
     [ "clear", "class_seven_seg_displays.html#a67a533e8239853768391bfe513fc318e", null ],
     [ "doubleGauge", "class_seven_seg_displays.html#aa74bbf6a2436ea01c170459ef1da5fbe", null ],
+    [ "end", "class_seven_seg_displays.html#aa712f19de96a9503c804bf4492040781", null ],
     [ "gauge", "class_seven_seg_displays.html#a6fea06785902000457c1105c78d85093", null ],
     [ "gauge", "class_seven_seg_displays.html#aa00c8c2fbca4a0068590ef62de28f198", null ],
     [ "getDigitsQty", "class_seven_seg_displays.html#a05ddffe49e505638382affaa0426b272", null ],

@@ -1,5 +1,5 @@
 <map id="SevenSegDispHw" name="SevenSegDispHw">
-<area shape="rect" id="Node000001" title="Class constructor." alt="" coords="5,96,129,123"/>
+<area shape="rect" id="Node000001" title="Implements a generic Seven Segments LEDs hardware interface to displays the logically generated chara..." alt="" coords="5,96,129,123"/>
 <area shape="rect" id="Node000002" href="$structgpio_pin_id__t.html" title=" " alt="" coords="24,5,110,32"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="70,48,70,95,64,95,64,48"/>
 </map>

@@ -1,12 +1,12 @@
 <map id="SevenSegDisplays" name="SevenSegDisplays">
-<area shape="rect" id="Node000001" title="Implements a seven segment display object." alt="" coords="64,235,193,261"/>
-<area shape="poly" id="edge3_Node000001_Node000001" title=" " alt="" coords="210,238,220,248,212,258,194,262,193,257,209,253,214,248,206,242"/>
-<area shape="rect" id="Node000002" href="$class_seven_seg_disp_hw.html" title="Class constructor." alt="" coords="5,112,129,139"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="64,154,64,182,72,209,83,222,98,232,95,237,80,226,68,212,59,183,59,154"/>
-<area shape="rect" id="Node000003" href="$structgpio_pin_id__t.html" title=" " alt="" coords="23,13,108,40"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="69,56,69,112,64,112,63,56"/>
-<area shape="rect" id="Node000004" title=" " alt="" coords="154,112,233,139"/>
-<area shape="poly" id="edge4_Node000001_Node000004" title=" " alt="" coords="190,154,180,183,165,212,145,236,141,232,161,209,175,181,184,152"/>
-<area shape="rect" id="Node000005" title=" " alt="" coords="132,5,258,48"/>
-<area shape="poly" id="edge5_Node000004_Node000005" title=" " alt="" coords="197,64,197,112,191,112,192,64"/>
+<area shape="rect" id="Node000001" title="Implements a seven segment display object." alt="" coords="68,235,197,261"/>
+<area shape="poly" id="edge3_Node000001_Node000001" title=" " alt="" coords="214,238,224,248,216,258,198,262,197,257,213,253,218,248,210,242"/>
+<area shape="rect" id="Node000002" href="$class_seven_seg_disp_hw.html" title="Implements a generic Seven Segments LEDs hardware interface to displays the logically generated chara..." alt="" coords="5,112,129,139"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="62,154,59,182,67,209,78,222,93,232,91,236,75,226,62,212,54,183,56,154"/>
+<area shape="rect" id="Node000003" href="$structgpio_pin_id__t.html" title=" " alt="" coords="24,13,110,40"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="70,56,70,112,64,112,64,56"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="157,112,236,139"/>
+<area shape="poly" id="edge4_Node000001_Node000004" title=" " alt="" coords="193,154,183,183,169,212,149,236,145,232,165,209,178,181,188,153"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="134,5,259,48"/>
+<area shape="poly" id="edge5_Node000004_Node000005" title=" " alt="" coords="199,64,199,112,194,112,194,64"/>
 </map>

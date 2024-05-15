@@ -8,24 +8,27 @@ SevenSegDisplays** SevenSegDisplays::_instancesLstPtr = nullptr;
 TimerHandle_t SevenSegDisplays::_blinkTmrHndl = NULL;
 TimerHandle_t SevenSegDisplays::_waitTmrHndl = NULL;
 
-SevenSegDisplays::SevenSegDisplays()
+SevenSegDisplays::SevenSegDisplays(SevenSegDispHw dspUndrlHw)
+:SevenSegDisplays{&dspUndrlHw}
 {
 }
 
-SevenSegDisplays::SevenSegDisplays(SevenSegDispHw dspUndrlHw)
-:_dspUndrlHw{dspUndrlHw}
+SevenSegDisplays::SevenSegDisplays(SevenSegDispHw* dspUndrlHwPtr)
+:_dspUndrlHwPtr{dspUndrlHwPtr}
 {
-	_dspUndrlHwPtr = &_dspUndrlHw;
+//	_dspUndrlHwPtr = &_dspUndrlHw;
 	if(_instancesLstPtr == nullptr){
       _instancesLstPtr = new SevenSegDisplays*[_dspPtrArrLngth](); //Initializes with all pointers value of 0, it might refuse to evaluate to nullptr, lookout!!
       for(int i{0}; i < _dspPtrArrLngth; i++)
          *(_instancesLstPtr + i) = nullptr;
    }
    if(_displaysCount < _dspPtrArrLngth){
-      _dspDigitsQty = _dspUndrlHw.getDspDigits(); //Now that we know the display size in digits, we can build the needed arrays for data
+//      _dspDigitsQty = _dspUndrlHw.getDspDigits(); //Now that we know the display size in digits, we can build the needed arrays for data
+      _dspDigitsQty = _dspUndrlHwPtr->getDspDigits(); //Now that we know the display size in digits, we can build the needed arrays for data
       _dspBuffPtr  = new uint8_t[_dspDigitsQty];
       _blinkMaskPtr = new bool[_dspDigitsQty];
-      _dspUndrlHw.setDspBuffPtr(_dspBuffPtr); //Indicate the hardware where the data to display is located
+//      _dspUndrlHw.setDspBuffPtr(_dspBuffPtr); //Indicate the hardware where the data to display is located
+      _dspUndrlHwPtr->setDspBuffPtr(_dspBuffPtr); //Indicate the hardware where the data to display is located
       _dspInstNbr = _dspSerialNum++; //This value is always incremented, as it's not related to the active objects but to amount of different displays created
       ++_displaysCount;  //This keeps the count of instantiated SevenSegDisplays objects
       _dspInstance = this;
@@ -557,8 +560,7 @@ void SevenSegDisplays::setAttrbts(){
    }
    --_dspValMax;
 
-//   if (!_dspUndrlHw.getCommAnode()) {
-	if(false){
+   if (!_dspUndrlHwPtr->getCommAnode()) {
 		_waitChar = ~_waitChar;
       _space = ~_space;
       _dot = ~_dot;
@@ -840,11 +842,10 @@ bool SevenSegDisplays::write(const std::string &character, const uint8_t &port){
 
 //============================================================> Class methods separator
 
-ClickCounter::ClickCounter(uint8_t ccSclk, uint8_t ccRclk, uint8_t ccDio, bool rgthAlgn, bool zeroPad, bool commAnode, const uint8_t dspDigits)
-:_display()
-// :_display(ccSclk, ccRclk, ccDio, commAnode, dspDigits), _countRgthAlgn {rgthAlgn}, _countZeroPad {zeroPad}
+ClickCounter::ClickCounter(SevenSegDisplays* newDisplay)
+:_displayPtr{newDisplay}
 {
-    //Class constructor
+//    Class constructor
 }
 
 ClickCounter::~ClickCounter(){
@@ -853,16 +854,16 @@ ClickCounter::~ClickCounter(){
 
 bool ClickCounter::blink(){
 
-    return _display.blink();
+    return _displayPtr->blink();
 }
 
 bool ClickCounter::blink(const unsigned long &onRate, const unsigned long &offRate){
 
-    return _display.blink(onRate, offRate);
+    return _displayPtr->blink(onRate, offRate);
 }
 
 void ClickCounter::clear(){
-    _display.clear();
+	_displayPtr->clear();
 
     return;
 }
@@ -870,7 +871,7 @@ void ClickCounter::clear(){
 bool ClickCounter::countBegin(int32_t startVal){
    bool result{false};
 
-    if ((startVal >= _display.getDspValMin()) && (startVal <= _display.getDspValMax())){
+    if ((startVal >= _displayPtr->getDspValMin()) && (startVal <= _displayPtr->getDspValMax())){
         // if (_display.begin() == true){
             result = countRestart(startVal);
             if (result)
@@ -884,7 +885,7 @@ bool ClickCounter::countDown(int32_t qty){
     bool result {false};
     qty = abs(qty);
 
-    if((_count - qty) >= _display.getDspValMin()){
+    if((_count - qty) >= _displayPtr->getDspValMin()){
         _count -= qty;
         result = updDisplay();
     }
@@ -900,7 +901,7 @@ bool ClickCounter::countReset(){
 bool ClickCounter::countRestart(int32_t restartValue){
    bool result{false};
 
-   if ((restartValue >= _display.getDspValMin()) && (restartValue <= _display.getDspValMax())){
+   if ((restartValue >= _displayPtr->getDspValMin()) && (restartValue <= _displayPtr->getDspValMax())){
       _count = restartValue;
       result = updDisplay();
    }
@@ -929,7 +930,7 @@ bool ClickCounter::countUp(int32_t qty){
     bool result {false};
     qty = abs(qty);
 
-    if((_count + qty) <= _display.getDspValMax()){
+    if((_count + qty) <= _displayPtr->getDspValMax()){
         _count += qty;
         result = updDisplay();
     }
@@ -949,15 +950,15 @@ int32_t ClickCounter::getStartVal(){
 
 bool ClickCounter::noBlink(){
 
-    return _display.noBlink();
+    return _displayPtr->noBlink();
 }
 
 bool ClickCounter::setBlinkRate(const unsigned long &newOnRate, const unsigned long &newOffRate){
 
-    return _display.setBlinkRate(newOnRate, newOffRate);
+    return _displayPtr->setBlinkRate(newOnRate, newOffRate);
 }
 
 bool ClickCounter::updDisplay(){
 
-    return _display.print(_count, _countRgthAlgn, _countZeroPad);
+    return _displayPtr->print(_count, _countRgthAlgn, _countZeroPad);
 }

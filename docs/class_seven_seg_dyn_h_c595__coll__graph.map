@@ -1,8 +1,8 @@
 <map id="SevenSegDynHC595" name="SevenSegDynHC595">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,248,147,275"/>
-<area shape="rect" id="Node000002" href="$class_seven_seg_dynamic.html" title=" " alt="" coords="11,172,141,199"/>
+<area shape="rect" id="Node000001" title="Implements specific Seven Segments LEDs dynamic hardware based on 74HC595 shift register array." alt="" coords="5,248,147,275"/>
+<area shape="rect" id="Node000002" href="$class_seven_seg_dynamic.html" title="Implements a generic Seven Segments LEDs dynamic hardware interface to displays the logically generat..." alt="" coords="11,172,141,199"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="79,214,79,248,73,248,73,214"/>
-<area shape="rect" id="Node000003" href="$class_seven_seg_disp_hw.html" title="Class constructor." alt="" coords="14,96,138,123"/>
+<area shape="rect" id="Node000003" href="$class_seven_seg_disp_hw.html" title="Implements a generic Seven Segments LEDs hardware interface to displays the logically generated chara..." alt="" coords="14,96,138,123"/>
 <area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="79,138,79,172,73,172,73,138"/>
 <area shape="rect" id="Node000004" href="$structgpio_pin_id__t.html" title=" " alt="" coords="33,5,119,32"/>
 <area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="79,48,79,95,73,95,73,48"/>

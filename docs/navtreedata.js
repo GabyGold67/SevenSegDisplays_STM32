@@ -26,7 +26,7 @@ var NAVTREE =
 [
   [ "SevenSegDisplays Library for STM32", "index.html", [
     [ "Classes", "annotated.html", [
-      [ "A hardware independent Seven Segment Displays library", "index.html#a-hardware-independent-seven-segment-displays-library", null ],
+      [ "A hardware agnostic Seven Segment Displays library", "index.html#a-hardware-agnostic-seven-segment-displays-library", null ],
       [ "Class List", "annotated.html", "annotated_dup" ],
       [ "Class Index", "classes.html", null ],
       [ "Class Hierarchy", "hierarchy.html", "hierarchy" ],
