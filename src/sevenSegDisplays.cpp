@@ -8,11 +8,6 @@ SevenSegDisplays** SevenSegDisplays::_instancesLstPtr = nullptr;
 TimerHandle_t SevenSegDisplays::_blinkTmrHndl = NULL;
 TimerHandle_t SevenSegDisplays::_waitTmrHndl = NULL;
 
-SevenSegDisplays::SevenSegDisplays(SevenSegDispHw dspUndrlHw)
-:SevenSegDisplays{&dspUndrlHw}
-{
-}
-
 SevenSegDisplays::SevenSegDisplays(SevenSegDispHw* dspUndrlHwPtr)
 :_dspUndrlHwPtr{dspUndrlHwPtr}
 {
@@ -63,7 +58,7 @@ SevenSegDisplays::~SevenSegDisplays(){
 
 bool SevenSegDisplays::begin(){
 
-	return _dspUndrlHwPtr-> begin();
+	return _dspUndrlHwPtr->begin();
 }
 
 bool SevenSegDisplays::blink(){
@@ -479,7 +474,6 @@ bool SevenSegDisplays::print(const double &value, const unsigned int &decPlaces,
    bool displayable{true};
    std::string readOut{""};
    std::string pad{""};
-   int start{0};
 
    if (decPlaces == 0)
       displayable = print(int(value), rgtAlgn, zeroPad);
@@ -495,8 +489,13 @@ bool SevenSegDisplays::print(const double &value, const unsigned int &decPlaces,
       if (value < 0 && value > -1)
          readOut = "-";
       readOut += std::to_string(int(value)) + ".";
-      start = std::to_string(value).find('.') + 1;
-      readOut += (std::to_string(value) + _zeroPadding).substr(start, start + decPlaces);
+      int32_t powFactor = 1;
+      for (uint8_t i{0}; i < decPlaces; i++)
+         powFactor *= 10;
+      if(value < 0)
+      	readOut += std::to_string((-1)*(int((value - int(value))*powFactor)));
+      else
+         readOut += std::to_string(int((value - int(value))*powFactor));
       if (rgtAlgn) {
          if (readOut.length() < static_cast<unsigned int>(_dspDigitsQty + 1)) {
             if (value < 0)

@@ -43,7 +43,7 @@ SevenSegDispHw::~SevenSegDispHw() {
     delete [] _digitPosPtr;
 }
 
-bool SevenSegDispHw::begin(const unsigned long int &rfrsFrq){
+bool SevenSegDispHw::begin(const unsigned long int &rfrshFrq){
 
 	return true;
 }
@@ -110,15 +110,17 @@ SevenSegDynamic::~SevenSegDynamic()
    }
 }
 
-bool SevenSegDynamic::begin(const unsigned long int &rfrsFrq){
+bool SevenSegDynamic::begin(const unsigned long int &rfrshFrq){
 	bool result {false};
    BaseType_t tmrModResult {pdFAIL};
    TickType_t tmrRfrshFrqInTcks{0};
 
-	//Verify if the timer service was attached by checking if the Timer Handle is valid (also verify the timer was started)
+   SevenSegDispHw::begin();
+
+   //Verify if the timer service was attached by checking if the Timer Handle is valid (also verify the timer was started)
 	if (!_svnSgDynTmrHndl){
-		if (rfrsFrq)	//Calculate the Timer Period
-			tmrRfrshFrqInTcks = pdMS_TO_TICKS(rfrsFrq);
+		if (rfrshFrq)	//Calculate the Timer Period
+			tmrRfrshFrqInTcks = pdMS_TO_TICKS(rfrshFrq);
 		else
 			tmrRfrshFrqInTcks = pdMS_TO_TICKS(static_cast<int>(1000/(30 * _dspDigitsQty)));
 		//Create a valid unique Name for identifying the timer created for this Dynamic Display
@@ -175,11 +177,6 @@ void SevenSegDynamic::tmrCbRefreshDyn(TimerHandle_t rfrshTmrCbArg){
 SevenSegDynHC595::SevenSegDynHC595(gpioPinId_t* ioPins, uint8_t dspDigits, bool commAnode)
 :SevenSegDynamic(ioPins, dspDigits, commAnode), _sclk{ioPins[_sclkArgPos]}, _rclk{ioPins[_rclkArgPos]}, _dio{ioPins[_dioArgPos]}
 {
-//	_dspDigitsQty = dspDigits;
-//	_commAnode = commAnode;
-//	SevenSegDispHw(ioPins, dspDigits, commAnode);
-
-
 	//Set the declared GPIO pins
 	 setGPIOPinAsOutput(_sclk);
 	 setGPIOPinAsOutput(_rclk);
@@ -236,15 +233,15 @@ void SevenSegDynHC595::send(const uint8_t &segments, const uint8_t &port){
    return;
 }
 
-bool SevenSegDynHC595::begin(const unsigned long &rfrsFrq){
+bool SevenSegDynHC595::begin(const unsigned long int &rfrshFrq){
 	bool result {false};
    BaseType_t tmrModResult {pdFAIL};
    TickType_t tmrRfrshFrqInTcks{0};
 
 	//Verify if the timer service was attached by checking if the Timer Handle is valid (also verify the timer was started)
 	if (!_svnSgDynTmrHndl){
-		if (rfrsFrq)	//Calculate the Timer Period
-			tmrRfrshFrqInTcks = pdMS_TO_TICKS(rfrsFrq);
+		if (rfrshFrq)	//Calculate the Timer Period
+			tmrRfrshFrqInTcks = pdMS_TO_TICKS(rfrshFrq);
 		else
 			tmrRfrshFrqInTcks = pdMS_TO_TICKS(static_cast<int>(1000/(30 * _dspDigitsQty)));
 		//Create a valid unique Name for identifying the timer created for this Dynamic Display

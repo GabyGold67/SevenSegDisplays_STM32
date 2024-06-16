@@ -14,9 +14,10 @@
 //#include "stm32f4xx_hal.h"
 //#include "stm32f4xx_hal_gpio.h"
 //===========================>> Previous lines included for developing purposes, corresponding headers must be provided for the production platform/s
-#define MCU_SPEC 1
 
-#ifdef MCU_SPEC
+#ifndef MCU_SPEC
+	#define MCU_SPEC 1
+
 	#ifndef __STM32F4xx_HAL_H
 		#include "stm32f4xx_hal.h"
 	#endif
@@ -160,7 +161,7 @@ public:
      * @retval false: The timer or update services activation failed.
      */
 //    bool begin(const unsigned long &rfrsFrq = 0){return true;};
-    bool begin(const unsigned long int &rfrsFrq = 0);
+    virtual bool begin(const unsigned long int &rfrshFrq = 0);
     /**
      * @brief Stops the timer and/or services needed to keep the display updated
      *
@@ -216,7 +217,7 @@ public:
      *
      */
     ~SevenSegDynamic();
-    bool begin(const unsigned long int &rfrsFrq = 0);
+    virtual bool begin(const unsigned long int &rfrshFrq = 0);
     virtual bool end();
 };
 
@@ -244,7 +245,7 @@ protected:
 public:
     SevenSegDynHC595(gpioPinId_t* ioPins, uint8_t dspDigits, bool commAnode);
     ~SevenSegDynHC595();
-    bool begin(const unsigned long int &rfrsFrq = 0);
+    virtual bool begin(const unsigned long int &rfrshFrq = 0);
     virtual bool end();
     void send(uint8_t content);
     void send(const uint8_t &segments, const uint8_t &port);

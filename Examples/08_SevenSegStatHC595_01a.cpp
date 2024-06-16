@@ -41,24 +41,19 @@
 UART_HandleTypeDef huart2;
 
 /* USER CODE BEGIN PV */
-//gpioPinId_t ledOnPC00{GPIOC, 0b001};
-//gpioPinId_t ledOnPC01{GPIOC, 0b010};
-//gpioPinId_t ledOnPA04{GPIOA, 0b010000};
 TaskHandle_t tstDefTaskHandle {NULL};
-TaskHandle_t tstWhlOnTskHndl {NULL};
 BaseType_t xReturned;
-
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_USART2_UART_Init(void);
-void tstDefTaskExec(void *pvParameters);
-void tstWhlOnTaskExec(void *pvParameters);
+void Error_Handler(void);
 
 /* USER CODE BEGIN PFP */
-
+void tstDefTaskExec(void *pvParameters);
+/* USER CODE END PFP */
 
 /**
   * @brief  The application entry point.
@@ -67,7 +62,6 @@ void tstWhlOnTaskExec(void *pvParameters);
 int main(void)
 {
   /* USER CODE BEGIN 1 */
-
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -79,7 +73,6 @@ int main(void)
   SystemClock_Config();
 
   /* USER CODE BEGIN SysInit */
-
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
@@ -88,7 +81,6 @@ int main(void)
 
   /* Create the thread(s) */
   /* USER CODE BEGIN RTOS_THREADS */
-  /* add threads, ... */
   xReturned = xTaskCreate(
 		  tstDefTaskExec, //taskFunction
 		  "TstMainTask", //Task function legible name
@@ -96,7 +88,6 @@ int main(void)
 		  NULL,	//Parameters to pass as arguments to the taskFunction
 		  configTIMER_TASK_PRIORITY,	//Set to the same priority level as the software timers
 		  &tstDefTaskHandle);
-
   /* USER CODE END RTOS_THREADS */
 
   /* Start scheduler */
@@ -106,7 +97,6 @@ int main(void)
   /* Infinite loop */
   while (1)
   {
-
   }
 }
 
@@ -184,7 +174,7 @@ static void MX_USART2_UART_Init(void)
   */
 static void MX_GPIO_Init(void)
 {
-  GPIO_InitTypeDef GPIO_InitStruct = {0};
+//  GPIO_InitTypeDef GPIO_InitStruct = {0};
 /* USER CODE BEGIN MX_GPIO_Init_1 */
 /* USER CODE END MX_GPIO_Init_1 */
 
@@ -193,30 +183,20 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOH_CLK_ENABLE();
   __HAL_RCC_GPIOA_CLK_ENABLE();
   __HAL_RCC_GPIOB_CLK_ENABLE();
-
-  /*Configure GPIO pin Output Level for tstLedOnBoard*/
-  HAL_GPIO_WritePin(tstLedOnBoard_GPIO_Port, tstLedOnBoard_Pin, GPIO_PIN_RESET);
-
-  /*Configure GPIO pin : tstMpbOnBoard_Pin */
-  GPIO_InitStruct.Pin = tstMpbOnBoard_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-  GPIO_InitStruct.Pull = GPIO_PULLUP;
-  HAL_GPIO_Init(tstMpbOnBoard_GPIO_Port, &GPIO_InitStruct);
-
-  /*Configure GPIO pin : tstLedOnBoard_Pin */
-  GPIO_InitStruct.Pin = tstLedOnBoard_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(tstLedOnBoard_GPIO_Port, &GPIO_InitStruct);
-
 }
 
 /* USER CODE BEGIN 4 */
+/* USER CODE BEGIN tstDefTaskExec */
+/**
+  * @brief  Function implementing the Test Default Task Executable (tstDefTaskExec) thread.
+  * @param  argument: Not used
+  * @retval None
+  */
 void tstDefTaskExec(void *pvParameters)
 {
-	gpioPinId_t myDspPins[]{{GPIOA, 1 << 5}, {GPIOA, 1 << 6}, {GPIOB, 1 << 12}};
-	uint8_t tmpDispData[]{0x91, 0x83, 0xA0, 0xC2};	//The display buffer loaded with "YbaG" 
+//	gpioPinId_t myDspPins[]{{GPIOA, 1 << 5}, {GPIOA, 1 << 6}, {GPIOB, 1 << 12}};	//This line and the next are equivalent
+	gpioPinId_t myDspPins[]{{GPIOA, GPIO_PIN_5}, {GPIOA, GPIO_PIN_6}, {GPIOB, GPIO_PIN_12}};
+	uint8_t tmpDispData[]{0x91, 0x83, 0xA0, 0xC2};	//The display buffer loaded with "YbaG"
 	SevenSegDynHC595 myDspHw(myDspPins, 4 , true);
 
 	myDspHw.setDspBuffPtr(tmpDispData);
@@ -224,18 +204,20 @@ void tstDefTaskExec(void *pvParameters)
 
 	for(;;)
 	{
-		vTaskDelay(1);
+		vTaskDelay(1000);
+		tmpDispData[0] = 0xFF;
+		tmpDispData[1] = 0xE3 - 0x80;
+		tmpDispData[2] = 0xA0;
+		tmpDispData[3] = 0x8C;
+
+		vTaskDelay(1000);
+		tmpDispData[0] = 0x91;
+		tmpDispData[1] = 0x83;
+		tmpDispData[2] = 0xA0;
+		tmpDispData[3] = 0xC2;
 	}
 }
-
 /* USER CODE END 4 */
-
-/* USER CODE BEGIN Header_StartDefaultTask */
-/**
-  * @brief  Function implementing the defaultTask thread.
-  * @param  argument: Not used
-  * @retval None
-  */
 
 /**
   * @brief  Period elapsed callback in non blocking mode
@@ -248,13 +230,11 @@ void tstDefTaskExec(void *pvParameters)
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
   /* USER CODE BEGIN Callback 0 */
-
   /* USER CODE END Callback 0 */
   if (htim->Instance == TIM9) {
     HAL_IncTick();
   }
   /* USER CODE BEGIN Callback 1 */
-
   /* USER CODE END Callback 1 */
 }
 
