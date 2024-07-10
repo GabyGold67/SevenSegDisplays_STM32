@@ -264,4 +264,7 @@ public:
     void send(const uint8_t &segments, const uint8_t &port);
 };
 
+
+};
+
 #endif /* _SEVENSEGDISPHW_H_ */

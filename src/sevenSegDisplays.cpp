@@ -69,47 +69,45 @@ bool SevenSegDisplays::blink(){
    bool result {false};
    BaseType_t tmrModResult {pdFAIL};
 
-   if(!_waiting){   //If the display is waiting the blinking option is blocked out as they are mutually exclusive, as both simultaneous has no logical use!
-      if (!_blinking){
-      	if(_blinkTmrHndl == NULL){
-      		// The blinking timer was never created (the display hasn't been set to blink before), first step: create it
-            //Create a valid unique Name for identifying the timer created
-            std::string blnkTmrNameStr{ "Disp" };
-            std::string dspSerialNumStr{ "00" + std::to_string(_dspSerialNum) };
-            dspSerialNumStr = dspSerialNumStr.substr(dspSerialNumStr.length() - 2, 2);
-            blnkTmrNameStr = blnkTmrNameStr + dspSerialNumStr + "blnk_tmr";	// The HR name for the thimer with the structure "DispXXblnk_tmr" created
-				_blinkTmrHndl = xTimerCreate(	//Creation of the blinker timer
-					blnkTmrNameStr.c_str(),
-					pdMS_TO_TICKS(_blinkRatesGCD),
-					pdTRUE,  //Autoreload
-					_dspInstance,   //TimerID, data to be passed to the callback function
-					tmrCbBlink  //Callback function
-				);
-				_dspAuxBuffPtr = new uint8_t[_dspDigitsQty];
-				//saveDspBuff();	// Not needed, it's done as part of the updBlinkState callback action
-				_blinkShowOn = false;
+	if (!_blinking){
+		//Create a valid unique Name for identifying the timer created
+		std::string blnkTmrNameStr{ "Disp" };
+		std::string dspSerialNumStr{ "00" + std::to_string(_dspSerialNum) };
+		dspSerialNumStr = dspSerialNumStr.substr(dspSerialNumStr.length() - 2, 2);
+		blnkTmrNameStr = blnkTmrNameStr + dspSerialNumStr + "blnk_tmr";	// The HR name for the thimer with the structure "DispXXblnk_tmr" created
+
+		if(!_blinkTmrHndl){
+			_blinkTmrHndl = xTimerCreate(	//Creation of the blinker timer
+				blnkTmrNameStr.c_str(),
+				pdMS_TO_TICKS(_blinkRatesGCD),
+				pdTRUE,  //Autoreload
+				_dspInstance,   //TimerID, data to be passed to the callback function
+				tmrCbBlink  //Callback function
+			);
+		}
+		if(_blinkTmrHndl && (!xTimerIsTimerActive(_blinkTmrHndl))){
+			// The timer was created, but it wasn't active. Prepare to start the timer
+         if(_waiting)   //If the display is waiting the blinking option doesn't achieve the desired effect, waiting is here disabled
+         	noWait();
+         _dspAuxBuffPtr = new uint8_t[_dspDigitsQty];
+			//saveDspBuff();	// Not needed, it's done as part of the updBlinkState callback action
+			_blinkShowOn = false;
+			_blinkTimer = 0;  //Start the blinking pace timer...
+
+			tmrModResult = xTimerStart(_blinkTmrHndl, portMAX_DELAY);	//There's no certainty the timer period wasn't changed while the timer was stopped, so it's being restarted with the current period with the next lines
+			if (tmrModResult == pdPASS){
 				_blinking = true;
-				_blinkTimer = 0;  //Start the blinking pace timer...
+				result = true;
 			}
-
-      	// At this point timer handled by _blinkTmrHndl exists, for sure
-         if(!xTimerIsTimerActive(_blinkTmrHndl)){
-				// The timer was created, but it wasn't active. Start the timer
-				// tmrModResult = xTimerStart(_blinkTmrHndl, portMAX_DELAY);	//There's no certainty the timer period wasn't changed while the timer was stopped, so it's being restarted with the current period with the next lines
-            tmrModResult = xTimerChangePeriod(_blinkTmrHndl,
-                           (_blinkRatesGCD/portTICK_PERIOD_MS),
-                           portMAX_DELAY
-                           );
-
-				if (tmrModResult == pdPASS){
-					result = true;
-				}
-         }
-      }
-      else{	// Was already blinking, the result is true
-      	result = true;
-      }
-    }
+			else{
+				//xTimerStart failed, avoid memory leaking by returning unused buffer space
+				delete [] _dspAuxBuffPtr;
+			}
+		}
+	}
+	else{	// Was already blinking, the result is true
+		result = true;
+	}
 
    return result;
 }
@@ -117,13 +115,11 @@ bool SevenSegDisplays::blink(){
 bool SevenSegDisplays::blink(const unsigned long &onRate, const unsigned long &offRate){
    bool result {false};
 
-   if(!_waiting){
-      if (!_blinking){
-			result = setBlinkRate(onRate, offRate);
-			if (result)
-				result = blink();
-      }
-   }
+	if (!_blinking){
+		result = setBlinkRate(onRate, offRate);
+		if (result)
+			result = blink();
+	}
 
    return result;
 }
@@ -351,17 +347,21 @@ bool SevenSegDisplays::noBlink(){
 
     //Stops the blinking timer, frees the _dspAuxPtr pointed memory, cleans flags
     if(_blinking){
-      if(_blinkTmrHndl){   //Verify the timer handle is still valid
-         tmrModResult = xTimerStop(_blinkTmrHndl, portMAX_DELAY);
-         if(tmrModResult == pdPASS){
-            restoreDspBuff();
-            _blinkTimer = 0;
-            _blinkShowOn = true;
-            _dspBuffChng = true;    //Signal for the hardware refresh mechanism
-            _blinking = false;
-				result = true;
-         }
+		_blinking = false;
+		if(_blinkTmrHndl){   //Verify the timer handle is still valid
+			tmrModResult = xTimerStop(_blinkTmrHndl, portMAX_DELAY);
+			if(tmrModResult == pdPASS)
+				tmrModResult = xTimerDelete(_blinkTmrHndl, portMAX_DELAY);
+			if(tmrModResult == pdPASS)
+				_blinkTmrHndl = NULL;
       }
+		restoreDspBuff();
+      delete [] _dspAuxBuffPtr;
+      _dspAuxBuffPtr = nullptr;
+		_blinkTimer = 0;
+		_blinkShowOn = true;
+		_dspBuffChng = true;    //Signal for the hardware refresh mechanism
+		result = true;
    }
 
    return result;
@@ -607,7 +607,7 @@ bool SevenSegDisplays::setBlinkRate(const unsigned long &newOnRate, const unsign
 
             if(_blinking){ // If it's active and running modify the timer taking care of the blinking
                tmrModResult = xTimerChangePeriod(_blinkTmrHndl,
-                              (_blinkRatesGCD/portTICK_PERIOD_MS),		// pdMS_TO_TICKS(_blinkRatesGCD)
+                              pdMS_TO_TICKS(_blinkRatesGCD),
                               portMAX_DELAY
                               );
                if(tmrModResult == pdFAIL)
@@ -681,23 +681,6 @@ void SevenSegDisplays::tmrCbWait(TimerHandle_t waitTmrCbArg){
 }
 
 void SevenSegDisplays::updBlinkState(){
-    //The use of a xTimer that keeps flip-floping the _blinkShowOn value is better suited for symmetrical blinking, but not for asymmetrical cases.
-
-    // _ Confirm the condition _blinking
-        // _blinking = true
-            // _ calculate time elapsed since last _blinkShowOn change
-            // if ((_blinkShowOn && _blinkTimer > _blinkOnRate) ||(!_blinkShowOn && _blinkTimer > _blinkOffRate))
-                //Swap _blinkShowOn
-                //Reset _blinkTimer
-                // if (_blinkShowOn)
-                    //Retrieve full lit buffer (from _dspAuxBuffer to _dspBuffer)
-                    //Blank Aux buffer
-                // else
-                    //Save _dspBuffer to _dspAuxBuffer
-                    //Blank designated positions of the _dspBuffer
-        //blinking = false
-            //Abnormal situation, define if stops the timer or/and other corrective measures
-
    if (_blinking == true){
       if (_blinkShowOn == false) {
          if (_blinkTimer == 0){
@@ -759,29 +742,27 @@ bool SevenSegDisplays::wait(){
    bool result {false};
    BaseType_t tmrModResult {pdFAIL};
 
-   if(!_waiting){   //If the display is waiting the blinking option is blocked out as they are mutually excluyent, as both simultaneous has no logical use!
+   if(!_waiting){   //If the display is waiting the blinking option is blocked out as they are mutually exclusive, as both simultaneous has no logical use!
       //Create a valid unique Name for identifying the timer created
-//      char waitTmrName[15];	//To Be Replaced by a std::string
       std::string waitTmrNameStr{ "Disp" };
       std::string dspSerialNumStr{ "00" + std::to_string(_dspSerialNum) };
-
       dspSerialNumStr = dspSerialNumStr.substr(dspSerialNumStr.length() - 2, 2);
       waitTmrNameStr = waitTmrNameStr + dspSerialNumStr + "wait_tmr";
 
       if (!_waitTmrHndl){
-            _waitTmrHndl = xTimerCreate(
-               waitTmrNameStr.c_str(),
-               pdMS_TO_TICKS(_waitRate),
-               pdTRUE,  //Autoreload
-               _dspInstance,   //TimerID, data to be passed to the callback function
-               tmrCbWait  //Callback function
-            );
+			_waitTmrHndl = xTimerCreate(
+				waitTmrNameStr.c_str(),
+				pdMS_TO_TICKS(_waitRate),
+				pdTRUE,  //Autoreload
+				_dspInstance,   //TimerID, data to be passed to the callback function
+				tmrCbWait  //Callback function
+			);
       }
       if(_waitTmrHndl && (!xTimerIsTimerActive(_waitTmrHndl))){
-            // The timer was created, but it wasn't started. Start the timer
-            tmrModResult = xTimerStart(_waitTmrHndl, portMAX_DELAY);
-            if (tmrModResult == pdPASS)
-               result = true;
+			// The timer was created, but it wasn't started. Start the timer
+			tmrModResult = xTimerStart(_waitTmrHndl, portMAX_DELAY);
+			if (tmrModResult == pdPASS)
+				result = true;
       }
 
       if (_blinking)
@@ -798,24 +779,30 @@ bool SevenSegDisplays::wait(){
 }
 
 bool SevenSegDisplays::wait(const unsigned long &newWaitRate){
-   bool result {true};
+   bool result {false};
 
-   if (!_waiting){
-      if(_waitRate != newWaitRate){
-         if ((newWaitRate >= _minBlinkRate) && (newWaitRate <= _maxBlinkRate))
-            _waitRate = newWaitRate;
-         else
-            result = false;
-      }
-      if (result == true)
-         wait();
-   }
-   else{
-      result = false;
+   if (!_blinking){
+		if (!_waiting){
+			if(_waitRate != newWaitRate){
+				if ((newWaitRate >= _minBlinkRate) && (newWaitRate <= _maxBlinkRate)){
+					_waitRate = newWaitRate;
+					result = true;
+				}
+				if (result){
+					result = wait();
+				}
+			}
+		}
+		else{
+			if(_waitRate == newWaitRate){
+				result = true;
+			}
+		}
    }
 
    return result;
 }
+
 
 bool SevenSegDisplays::write(const uint8_t &segments, const uint8_t &port){
    bool result {false};
