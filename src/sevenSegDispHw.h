@@ -265,6 +265,4 @@ public:
 };
 
 
-};
-
 #endif /* _SEVENSEGDISPHW_H_ */
