@@ -32,19 +32,3 @@
 // }
 
 //============================================================> Class methods separator
-
-//============================================================> Class methods separator
-SevenSegDynDummy::SevenSegDynDummy(gpioPinId_t* ioPins, uint8_t dspDigits, bool commAnode){}
-SevenSegDynDummy::~SevenSegDynDummy(){}
-//============================================================> Class methods separator
-// SevenSegStatic::SevenSegStatic(){}
-SevenSegStatic::~SevenSegStatic() {}
-//============================================================> Class methods separator
-// SevenSegTM1637::SevenSegTM1637(){}
-SevenSegTM1637::~SevenSegTM1637() {}
-//============================================================> Class methods separator
-SevenSegStatHC595::SevenSegStatHC595(){}
-SevenSegStatHC595::~SevenSegStatHC595(){}
-//============================================================> Class methods separator
-SevenSegStatDummy::SevenSegStatDummy(gpioPinId_t* ioPins, uint8_t dspDigits, bool commAnode){}
-SevenSegStatDummy::~SevenSegStatDummy(){}

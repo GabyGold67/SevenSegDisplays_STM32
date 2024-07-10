@@ -1,49 +1,73 @@
 /**
- * @file		: SevenSegDispHw.h
- * @brief	: Header file for SevenSegDispHw library classes
- *
- * @author	: Gabriel D. Goldman
- * @date		: Created on: Nov 16, 2023
- */
+  ******************************************************************************
+  * @file		: SevenSegDispHw.h
+  * @brief	: Header file for SevenSegDispHw library classes
+  *
+  * @details The library builds Seven Segment Display hardware classes. Each class will provide the hardware specific implementation for the methods required by all hardware displays:
+  * - Hardware pins configuration
+  * - Communications protocol implementation
+  * - Turn on, turn off, suspend, restart
+  * - Brightness control
+  * - Non-standard display amenities:
+  * 	- Colons
+  * 	- Apostrophes
+  * 	- Non-standard icons
+  *	- Display color change
+  *
+  * @author	: Gabriel D. Goldman
+  * @version v1.0.0
+  * @date		: Created on: 16/11/2023
+  * 			: Last modification:	11/06/2024
+  * @copyright GPL-3.0 license
+  *
+  * @note FreeRTOS Kernel V10.3.1, some implementations have been limited to comply to the services provided by the version.
+  ******************************************************************************
+  * @attention	This library was developed as part of the refactoring process for an industrial machines security enforcement and control (hardware & firmware update). As such every class included complies **AT LEAST** with the provision of the attributes and methods to make the hardware & firmware replacement transparent to the controlled machines. Generic use attribute and methods were added to extend the usability to other projects and application environments, but no fitness nor completeness of those are given but for the intended refactoring project.
+  * **Use of this library is under your own responsibility**
+  *
+  ******************************************************************************
+  */
 
 #ifndef _SEVENSEGDISPHW_H_
 #define _SEVENSEGDISPHW_H_
 
 #include <string>
 //===========================>> Next lines included for developing purposes, corresponding headers must be provided for the production platform/s
-//#include "stm32f4xx_hal.h"
-//#include "stm32f4xx_hal_gpio.h"
-//===========================>> Previous lines included for developing purposes, corresponding headers must be provided for the production platform/s
-
 #ifndef MCU_SPEC
 	#define MCU_SPEC 1
-
 	#ifndef __STM32F4xx_HAL_H
 		#include "stm32f4xx_hal.h"
 	#endif
-
 	#ifndef __STM32F4xx_HAL_GPIO_H
 		#include "stm32f4xx_hal_gpio.h"
 	#endif
 #endif
+//===========================>> Previous lines included for developing purposes, corresponding headers must be provided for the production platform/s
 
-//===========================>> Next lines used to avoid CMSIS wrappers
+
+//===========================>> BEGIN libraries used to avoid CMSIS wrappers
 #include "FreeRTOS.h"
 #include "task.h"
 #include "timers.h"
 //#include "queue.h"
 //#include "semphr.h"
 //#include "event_groups.h"
-//===========================>> Previous lines used to avoid CMSIS wrappers
-
+//===========================>> END libraries used to avoid CMSIS wrappers
 
 //===========================>> BEGIN User type definitions
 #ifndef GPIOPINID_T
-#define GPIOPINID_T
-struct gpioPinId_t{	// Type used to keep GPIO pin identification as a single parameter, as platform independent as possible
-	GPIO_TypeDef* portId;	/**< The port identification as a pointer to a GPIO_TypeDef information structure*/
-	uint16_t pinNum;	/**< The number of pin represented as a one bit set binary with the set bit position indicating the pin number*/
-};
+	#define GPIOPINID_T
+	/**
+	 * @brief Type used to keep GPIO pin identification as a single parameter, independently of the platform requirements.
+	 *
+	 * GPIO pin identification is hardware and development environment framework dependents, for some platforms it needs one, some two, some more parameters, and each one of these parameters' type depends once again on the platform. This type is provided to define each pin referenced as a single parameter for class methods and attributes declarations, as platform independent as possible.
+	 *
+	 * @struct gpioPinId_t
+	 */
+	struct gpioPinId_t{
+		GPIO_TypeDef* portId;	/**< The port identification as a pointer to a GPIO_TypeDef information structure*/
+		uint16_t pinNum;	/**< The number of pin represented as a one bit set binary with the set bit position indicating the pin number*/
+	};
 #endif	//GPIOPINID_T
 //===========================>> END User type definitions
 
@@ -57,7 +81,7 @@ uint8_t singleBitPosNum(uint16_t mask);
  * @brief Implements a generic Seven Segments LEDs hardware interface to displays the logically generated characters
  *
  * This class implements all methods and attributes common to a large variety of seven segments led displays hardware.
- * Specific hardware specific methods and attributes will be included in corresponding subclasses defintions.
+ * Specific hardware methods and attributes will be included in corresponding subclasses definitions.
  *
  * @class SevenSegDispHw
  */
@@ -79,7 +103,6 @@ public:
      * @brief Default constructor
      *
      * class SevenSegDispHw
-     *
      */
     SevenSegDispHw();
     /**
@@ -95,8 +118,7 @@ public:
     /**
      * @brief Class virtual destructor
      *
-     * @classs SevenSegDispHw
-     *
+     * @class SevenSegDispHw
      */
     ~SevenSegDispHw();
     /**
@@ -114,7 +136,6 @@ public:
      * The display's data buffer is the array of unsigned short int (byte) that holds the value to be exhibited in each display's port.
      *
      * @return A pointer to the display's data buffer.
-     *
      */
     uint8_t* getDspBuffPtr();
     /**
@@ -134,7 +155,6 @@ public:
      * @retval false: At least one of the values of the array passed were out of range. The change wasn't performed.
      *
      * @note Each value in the array passed as argument will be checked against the _dspDigits value to ensure that they are all in the range acceptable, 0 <= value <= _dspDigits - 1. If one of the values is out of the valid range no change will be done. Please note that no checking will be done to ensure all of the array values are different. A repeated value will be accepted. leading to unexpected display due to superimposing digits and not included digits.
-     *
      */
     bool setDigitsOrder(uint8_t* newOrderPtr);
     /**
@@ -160,7 +180,6 @@ public:
      * @retval true: The timer or update services were activated without issues.
      * @retval false: The timer or update services activation failed.
      */
-//    bool begin(const unsigned long &rfrsFrq = 0){return true;};
     virtual bool begin(const unsigned long int &rfrshFrq = 0);
     /**
      * @brief Stops the timer and/or services needed to keep the display updated
@@ -204,17 +223,11 @@ protected:
 public:
     /**
      * @brief Default class constructor
-     *
-     * class SevenSegDynamic
      */
     SevenSegDynamic();
     SevenSegDynamic(gpioPinId_t* ioPins, uint8_t dspDigits, bool commAnode);
-
     /**
      * @brief Virtual class destructor
-     *
-     * class SevenSegDynamic
-     *
      */
     ~SevenSegDynamic();
     virtual bool begin(const unsigned long int &rfrshFrq = 0);

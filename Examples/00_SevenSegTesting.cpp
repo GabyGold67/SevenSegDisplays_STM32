@@ -3,7 +3,8 @@
   * @file	: 00_SevenSegTesting.cpp
   * @brief  : Test for the SevenSegDisplays_STM32 library SevenSegDisplays class
   *
-  * 	The test instantiates a DbncdDlydMPBttn object using:
+  * 	The test instantiates a SevenSegDisplays class object using a SevenSegDynHC595 class object as argument:
+  * 	The SevenSegDynHC595 class object as uses the following argument:
   * 		- A digital output to GPIO_PA05 to be used by the display sclk
   * 		- A digital output to GPIO_PA06 to be used by the display rclk
   * 		- A digital output to GPIO_PB12 to be used by the display dio
@@ -11,7 +12,7 @@
   * 	@author	: Gabriel D. Goldman
   *
   * 	@date	: 	08/05/2024 First release
-  * 				08/05/2024 Last update
+  * 				14/06/2024 Last update
   *
   ******************************************************************************
   * @attention	This file is part of the Examples folder for the MPBttnAsSwitch_ESP32
@@ -20,13 +21,17 @@
   ******************************************************************************
   */
 
-#define MCU_SPEC 1 //====================================>>Ponerle antes el #ifndef
+#ifndef MCU_SPEC
+	#define MCU_SPEC 1
+
 	#ifndef __STM32F4xx_HAL_H
 		#include "stm32f4xx_hal.h"
 	#endif
+
 	#ifndef __STM32F4xx_HAL_GPIO_H
 		#include "stm32f4xx_hal_gpio.h"
 	#endif
+#endif
 
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
@@ -48,11 +53,7 @@
 UART_HandleTypeDef huart2;
 
 /* USER CODE BEGIN PV */
-//gpioPinId_t ledOnPC00{GPIOC, 0b001};
-//gpioPinId_t ledOnPC01{GPIOC, 0b010};
-//gpioPinId_t ledOnPA04{GPIOA, 0b010000};
 TaskHandle_t tstDefTaskHandle {NULL};
-TaskHandle_t tstWhlOnTskHndl {NULL};
 BaseType_t xReturned;
 
 /* USER CODE END PV */
@@ -61,11 +62,11 @@ BaseType_t xReturned;
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_USART2_UART_Init(void);
-void tstDefTaskExec(void *pvParameters);
-void tstWhlOnTaskExec(void *pvParameters);
+void Error_Handler(void);
 
 /* USER CODE BEGIN PFP */
-
+void tstDefTaskExec(void *pvParameters);
+/* USER CODE END PFP */
 
 /**
   * @brief  The application entry point.
@@ -74,7 +75,6 @@ void tstWhlOnTaskExec(void *pvParameters);
 int main(void)
 {
   /* USER CODE BEGIN 1 */
-
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -86,7 +86,6 @@ int main(void)
   SystemClock_Config();
 
   /* USER CODE BEGIN SysInit */
-
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
@@ -95,7 +94,6 @@ int main(void)
 
   /* Create the thread(s) */
   /* USER CODE BEGIN RTOS_THREADS */
-  /* add threads, ... */
   xReturned = xTaskCreate(
 		  tstDefTaskExec, //taskFunction
 		  "TstMainTask", //Task function legible name
@@ -103,7 +101,6 @@ int main(void)
 		  NULL,	//Parameters to pass as arguments to the taskFunction
 		  configTIMER_TASK_PRIORITY,	//Set to the same priority level as the software timers
 		  &tstDefTaskHandle);
-
   /* USER CODE END RTOS_THREADS */
 
   /* Start scheduler */
@@ -113,7 +110,6 @@ int main(void)
   /* Infinite loop */
   while (1)
   {
-
   }
 }
 
@@ -191,7 +187,7 @@ static void MX_USART2_UART_Init(void)
   */
 static void MX_GPIO_Init(void)
 {
-  GPIO_InitTypeDef GPIO_InitStruct = {0};
+//  GPIO_InitTypeDef GPIO_InitStruct = {0};
 /* USER CODE BEGIN MX_GPIO_Init_1 */
 /* USER CODE END MX_GPIO_Init_1 */
 
@@ -200,55 +196,54 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOH_CLK_ENABLE();
   __HAL_RCC_GPIOA_CLK_ENABLE();
   __HAL_RCC_GPIOB_CLK_ENABLE();
-
-  /*Configure GPIO pin Output Level for tstLedOnBoard*/
-  HAL_GPIO_WritePin(tstLedOnBoard_GPIO_Port, tstLedOnBoard_Pin, GPIO_PIN_RESET);
-
-  /*Configure GPIO pin : tstMpbOnBoard_Pin */
-  GPIO_InitStruct.Pin = tstMpbOnBoard_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-  GPIO_InitStruct.Pull = GPIO_PULLUP;
-  HAL_GPIO_Init(tstMpbOnBoard_GPIO_Port, &GPIO_InitStruct);
-
-  /*Configure GPIO pin : tstLedOnBoard_Pin */
-  GPIO_InitStruct.Pin = tstLedOnBoard_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(tstLedOnBoard_GPIO_Port, &GPIO_InitStruct);
-
 }
 
 /* USER CODE BEGIN 4 */
 void tstDefTaskExec(void *pvParameters)
 {
 //---------------------------_sclk-------------_rclk-----------_dio
-	gpioPinId_t myDspPins[]{{GPIOA, 1 << 5}, {GPIOA, 1 << 6}, {GPIOB, 1 << 12}};
+//	gpioPinId_t myDspPins[]{{GPIOA, 1 << 5}, {GPIOA, 1 << 6}, {GPIOB, 1 << 12}};
+
+	gpioPinId_t myDspPins[]{{GPIOA, GPIO_PIN_5}, {GPIOA, GPIO_PIN_6}, {GPIOB, GPIO_PIN_12}};
 	SevenSegDynHC595 myDspHw(myDspPins, 4 , true);
 
-//	SevenSegDisplays mySevenSegDisp(&myDspHw);	//FAILS!! Gaby
-	SevenSegDisplays mySevenSegDisp(myDspHw);
+	SevenSegDisplays mySevenSegDisp(&myDspHw);
 
-//	mySevenSegDisp.begin();	//FAILS!! Gaby
-	myDspHw.begin();
-
-	mySevenSegDisp.print("Gaby");
+	mySevenSegDisp.begin();
 
 	for(;;)
 	{
-		vTaskDelay(1);
+		mySevenSegDisp.print("GabY");
+		vTaskDelay(1000);
+		mySevenSegDisp.blink();
+		mySevenSegDisp.print("Pau.G.");
+		vTaskDelay(3000);
+		mySevenSegDisp.noBlink();
+//		mySevenSegDisp.print(321);
+//		vTaskDelay(1000);
+//		mySevenSegDisp.print(321, true);
+//		vTaskDelay(1000);
+//		mySevenSegDisp.print(321, true, true);
+//		vTaskDelay(1000);
+//		mySevenSegDisp.print("87.6.5");
+//		vTaskDelay(1000);
+//		mySevenSegDisp.print(2.3456,1);
+//		vTaskDelay(1000);
+//		mySevenSegDisp.print(2.3456,1, true);
+//		vTaskDelay(1000);
+//		mySevenSegDisp.print(2.3456,1, true, true);
+//		vTaskDelay(1000);
+//		mySevenSegDisp.print(-2.3456,1);
+//		vTaskDelay(1000);
+//		mySevenSegDisp.print(-2.3456,1, true);
+//		vTaskDelay(1000);
+//		mySevenSegDisp.print(-2.3456,1, true, true);
+//		vTaskDelay(1000);
 	}
 }
-
 /* USER CODE END 4 */
 
 /* USER CODE BEGIN Header_StartDefaultTask */
-/**
-  * @brief  Function implementing the defaultTask thread.
-  * @param  argument: Not used
-  * @retval None
-  */
-
 /**
   * @brief  Period elapsed callback in non blocking mode
   * @note   This function is called  when TIM9 interrupt took place, inside
@@ -260,13 +255,11 @@ void tstDefTaskExec(void *pvParameters)
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
   /* USER CODE BEGIN Callback 0 */
-
   /* USER CODE END Callback 0 */
   if (htim->Instance == TIM9) {
     HAL_IncTick();
   }
   /* USER CODE BEGIN Callback 1 */
-
   /* USER CODE END Callback 1 */
 }
 

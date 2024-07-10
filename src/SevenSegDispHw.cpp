@@ -296,18 +296,24 @@ void SevenSegDynHC595::tmrCbRefreshDyn(TimerHandle_t rfrshTmrCbArg){
 //============================================================> Generic use functions
 
 bool setGPIOPinAsOutput(const gpioPinId_t &outPin){
-
-	  GPIO_InitTypeDef GPIO_InitStruct = {0};
+//	The commented out code is the "old verbose style" of a struct initialization, vs the tidier less error prone New Style
+//	  GPIO_InitTypeDef pinInit = {0};
 
 	  HAL_GPIO_WritePin(outPin.portId, outPin.pinNum, GPIO_PIN_RESET);
 
-	  GPIO_InitStruct.Pin = outPin.pinNum;
-	  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-	  GPIO_InitStruct.Pull = GPIO_NOPULL;
-	  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-//	  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_MEDIUM;
-//	  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
-	  HAL_GPIO_Init(outPin.portId, &GPIO_InitStruct);
+/*	  pinInit.Pin = outPin.pinNum;
+	  pinInit.Mode = GPIO_MODE_OUTPUT_PP;
+	  pinInit.Pull = GPIO_NOPULL;
+	  pinInit.Speed = GPIO_SPEED_FREQ_LOW;	// Options include: GPIO_SPEED_FREQ_LOW / GPIO_SPEED_FREQ_MEDIUM / GPIO_SPEED_FREQ_HIGH / GPIO_SPEED_FREQ_VERY_HIGH
+	  HAL_GPIO_Init(outPin.portId, &pinInit);
+*/
+	  GPIO_InitTypeDef pinInit = {
+			  .Pin = outPin.pinNum,
+			  .Mode = GPIO_MODE_OUTPUT_PP,
+			  .Pull = GPIO_NOPULL,
+			  .Speed = GPIO_SPEED_FREQ_LOW
+	  };
+	  HAL_GPIO_Init(outPin.portId, &pinInit);
 
 	  return true;
 }
