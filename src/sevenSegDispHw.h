@@ -264,5 +264,29 @@ public:
     void send(const uint8_t &segments, const uint8_t &port);
 };
 
+//============================================================> Class declarations separator
+
+class SevenSegStatic: public SevenSegDispHw{
+
+public:
+	SevenSegStatic(gpioPinId_t* ioPins, uint8_t dspDigits, bool commAnode);
+	~SevenSegStatic();
+};
+
+//============================================================> Class declarations separator
+
+class SevenSegTM1637: public SevenSegStatic{
+private:
+   const uint8_t _clkArgPos {0};
+   const uint8_t _dioArgPos {1};
+   gpioPinId_t _clk{};
+   gpioPinId_t _dio{};
+
+public:
+	SevenSegTM1637(gpioPinId_t* ioPins, uint8_t dspDigits);
+	~SevenSegTM1637();
+	bool setBrghtnss();
+
+};
 
 #endif /* _SEVENSEGDISPHW_H_ */

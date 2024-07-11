@@ -21,13 +21,13 @@ const uint8_t noName4Bits[4] {0, 1, 2, 3};
 
 //--------------------------------------------------------------- User Function prototypes
 bool setGPIOPinAsOutput(const gpioPinId_t &outPin);
+bool setGPIOPinAsInput(const gpioPinId_t &inPin);
 //--------------------------------------------------------------- User Static variables
 uint8_t SevenSegDispHw::_dspHwSerialNum = 0;
 //============================================================> Class methods separator
 
 SevenSegDispHw::SevenSegDispHw()
 {
-
 }
 
 SevenSegDispHw::SevenSegDispHw(gpioPinId_t* ioPins, uint8_t dspDigits, bool commAnode)
@@ -293,6 +293,23 @@ void SevenSegDynHC595::tmrCbRefreshDyn(TimerHandle_t rfrshTmrCbArg){
     return;
 }
 
+//============================================================> Class methods separator
+SevenSegStatic::SevenSegStatic(gpioPinId_t* ioPins, uint8_t dspDigits, bool commAnode)
+{
+
+}
+
+//============================================================> Class methods separator
+
+SevenSegTM1637::SevenSegTM1637(gpioPinId_t* ioPins, uint8_t dspDigits)
+:SevenSegStatic(ioPins, dspDigits, true), _clk{ioPins[_clkArgPos]}, _dio{ioPins[_dioArgPos]}
+{
+	//Setting pin directions
+	setGPIOPinAsOutput(_clk);
+	setGPIOPinAsOutput(_dio);
+
+
+}
 //============================================================> Generic use functions
 
 bool setGPIOPinAsOutput(const gpioPinId_t &outPin){
@@ -314,6 +331,21 @@ bool setGPIOPinAsOutput(const gpioPinId_t &outPin){
 			  .Speed = GPIO_SPEED_FREQ_LOW
 	  };
 	  HAL_GPIO_Init(outPin.portId, &pinInit);
+
+	  return true;
+}
+
+
+bool setGPIOPinAsInput(const gpioPinId_t &inPin){
+
+	  HAL_GPIO_WritePin(inPin.portId, inPin.pinNum, GPIO_PIN_RESET);
+
+	  GPIO_InitTypeDef pinInit = {
+			  .Pin = inPin.pinNum,
+			  .Mode = GPIO_MODE_INPUT,
+			  .Pull = GPIO_NOPULL,
+	  };
+	  HAL_GPIO_Init(inPin.portId, &pinInit);
 
 	  return true;
 }

@@ -1,3 +1,8 @@
+/**
+  ******************************************************************************
+  * @file	: SevenSegDisplays.h
+  * @brief	: Code file for SevenSegDisplays library classes
+*/
 #include "sevenSegDisplays.h"
 
 uint8_t SevenSegDisplays::_displaysCount = 0;
@@ -5,24 +10,18 @@ uint16_t SevenSegDisplays::_dspSerialNum = 0;
 uint8_t SevenSegDisplays::_dspPtrArrLngth = MAX_DISPLAYS_QTY;
 SevenSegDisplays** SevenSegDisplays::_instancesLstPtr = nullptr;
 
-//TimerHandle_t SevenSegDisplays::_blinkTmrHndl = NULL;
-//TimerHandle_t SevenSegDisplays::_waitTmrHndl = NULL;
-
 SevenSegDisplays::SevenSegDisplays(SevenSegDispHw* dspUndrlHwPtr)
 :_dspUndrlHwPtr{dspUndrlHwPtr}
 {
-//	_dspUndrlHwPtr = &_dspUndrlHw;
 	if(_instancesLstPtr == nullptr){
-      _instancesLstPtr = new SevenSegDisplays*[_dspPtrArrLngth](); //Initializes with all pointers value of 0, it might refuse to evaluate to nullptr, lookout!!
+      _instancesLstPtr = new SevenSegDisplays*[_dspPtrArrLngth](); //Creates the array in memory and then initializes al values to nullptr
       for(int i{0}; i < _dspPtrArrLngth; i++)
          *(_instancesLstPtr + i) = nullptr;
    }
    if(_displaysCount < _dspPtrArrLngth){
-//      _dspDigitsQty = _dspUndrlHw.getDspDigits(); //Now that we know the display size in digits, we can build the needed arrays for data
       _dspDigitsQty = _dspUndrlHwPtr->getDspDigits(); //Now that we know the display size in digits, we can build the needed arrays for data
       _dspBuffPtr  = new uint8_t[_dspDigitsQty];
       _blinkMaskPtr = new bool[_dspDigitsQty];
-//      _dspUndrlHw.setDspBuffPtr(_dspBuffPtr); //Indicate the hardware where the data to display is located
       _dspUndrlHwPtr->setDspBuffPtr(_dspBuffPtr); //Indicate the hardware where the data to display is located
       _dspInstNbr = _dspSerialNum++; //This value is always incremented, as it's not related to the active objects but to amount of different displays created
       ++_displaysCount;  //This keeps the count of instantiated SevenSegDisplays objects
@@ -90,11 +89,13 @@ bool SevenSegDisplays::blink(){
          if(_waiting)   //If the display is waiting the blinking option doesn't achieve the desired effect, waiting is here disabled
          	noWait();
          _dspAuxBuffPtr = new uint8_t[_dspDigitsQty];
-			//saveDspBuff();	// Not needed, it's done as part of the updBlinkState callback action
 			_blinkShowOn = false;
 			_blinkTimer = 0;  //Start the blinking pace timer...
 
-			tmrModResult = xTimerStart(_blinkTmrHndl, portMAX_DELAY);	//There's no certainty the timer period wasn't changed while the timer was stopped, so it's being restarted with the current period with the next lines
+			tmrModResult = xTimerStart(
+					_blinkTmrHndl,
+					portMAX_DELAY
+					);
 			if (tmrModResult == pdPASS){
 				_blinking = true;
 				result = true;
@@ -155,10 +156,11 @@ unsigned long SevenSegDisplays::blinkTmrGCD(unsigned long blnkOnTm, unsigned lon
 void SevenSegDisplays::clear(){
    //Cleans the contents of the internal display buffer (All leds off for all digits)
    if(!_waiting){ // If in waiting condition clearing makes no sense, the mechanism will keep displaying the sequence independently
+      taskENTER_CRITICAL();
       if(_blinking){
          //If the display is blinking the backup buffer will be restored, so the display clearing() would be reverted
          //So BOTH buffers must be cleared, starting by the _dspAuxBuff, and blocking the access to it while clearing takes place
-         for (int i{0}; i < _dspDigitsQty; i++){
+      	for (int i{0}; i < _dspDigitsQty; i++){
             if(*(_dspAuxBuffPtr + i) != _space){
                *(_dspAuxBuffPtr + i) = _space;
             }
@@ -170,6 +172,7 @@ void SevenSegDisplays::clear(){
             _dspBuffChng = true;    //Signal for the hardware refresh mechanism
          }
       }
+   	taskEXIT_CRITICAL();
    }
 
    return;
@@ -242,24 +245,20 @@ bool SevenSegDisplays::gauge(const int &level, char label){
         displayable = false;
     }
     else {
-        readOut += label;
-        if (readOut == "")
-            readOut = " ";
-        switch (level) {
-            case 0:
-                readOut += "   ";
-                break;
-            case 1:
-                readOut += "_  ";
-                break;
-            case 2:
-                readOut += "_= ";
-                break;
-            case 3:
-                readOut += "_=~";
-                break;
-        };
-        displayable = print(readOut);
+   	 switch(level){
+   	 	 case 3:
+   	 		 readOut = "~" + readOut;
+   	 	 case 2:
+   	 		 readOut = "=" + readOut;
+   	 	 case 1:
+   	 		 readOut = "_" + readOut;
+   	 	 case 0:
+   	 		readOut = label + readOut;
+   	 	 default:
+   	 		 break;
+   	 };
+
+   	 displayable = print(readOut);
     }
 
     return displayable;
@@ -360,7 +359,6 @@ bool SevenSegDisplays::noBlink(){
       _dspAuxBuffPtr = nullptr;
 		_blinkTimer = 0;
 		_blinkShowOn = true;
-		_dspBuffChng = true;    //Signal for the hardware refresh mechanism
 		result = true;
    }
 
@@ -385,7 +383,6 @@ bool SevenSegDisplays::noWait(){
       delete [] _dspAuxBuffPtr;
       _dspAuxBuffPtr = nullptr;
       _waitTimer = 0;
-      _dspBuffChng = true;    //Signal for the hardware refresh mechanism
       result = true;
    }
 
@@ -439,8 +436,10 @@ bool SevenSegDisplays::print(std::string text){
          noWait();
       if(printOnBlink)
          noBlink();
+      taskENTER_CRITICAL();
       for (uint8_t i{0}; i < _dspDigitsQty; ++i)
          *(_dspBuffPtr + i) = temp7SegData[i] & tempDpData[i];
+      taskEXIT_CRITICAL();
       if(printOnBlink)
          blink();
       _dspBuffChng = true;
@@ -536,17 +535,23 @@ void SevenSegDisplays::resetBlinkMask(){
 }
 
 void SevenSegDisplays::restoreDspBuff(){
-    for (int i{0}; i < _dspDigitsQty; i++)
-        (*(_dspBuffPtr + i)) = (*(_dspAuxBuffPtr + i));
-   // strncpy((char*)_dspBuffPtr, (char*)_dspAuxBuffPtr, _dspDigitsQty );	//Equivalent single operation option
+   taskENTER_CRITICAL();
+	for (int i{0}; i < _dspDigitsQty; i++){
+   	 if((*(_dspBuffPtr + i)) != (*(_dspAuxBuffPtr + i))){
+      	 (*(_dspBuffPtr + i)) = (*(_dspAuxBuffPtr + i));
+      	 _dspBuffChng = true;
+   	 }
+    }
+	taskEXIT_CRITICAL();
 
     return;
 }
 
 void SevenSegDisplays::saveDspBuff(){
+   taskENTER_CRITICAL();
     for (int i{0}; i < _dspDigitsQty; i++)
         (*(_dspAuxBuffPtr + i)) = (*(_dspBuffPtr + i));
-   // strncpy((char*)_dspAuxBuffPtr, (char*)_dspBuffPtr, _dspDigitsQty );	//Equivalent single operation option
+    taskEXIT_CRITICAL();
 
    return;
 }
@@ -611,7 +616,7 @@ bool SevenSegDisplays::setBlinkRate(const unsigned long &newOnRate, const unsign
                               portMAX_DELAY
                               );
                if(tmrModResult == pdFAIL)
-                  result = false;	// The new period could not be imposed to the timer, BUT the blinker times parameters where already changed. To-Do noted Gaby
+                  result = false;	// The new period could not be imposed to the running timer, BUT the blinker times are set for future use
             }
          }
       }
@@ -656,10 +661,14 @@ bool SevenSegDisplays::setWaitRate(const unsigned long &newWaitRate){
                            portMAX_DELAY
                            );
             if(tmrModResult == pdFAIL)
-               result =  false;
+               result =  true;	//It's completely unneeded but there's not defined answer to the successful change of waitRate but failure in imposing it to a running wait timer.
          }
       }
    }
+   else{
+   	result = true;
+   }
+
    return result;
 }
 
@@ -691,6 +700,7 @@ void SevenSegDisplays::updBlinkState(){
                if(*(_blinkMaskPtr + i))
                   *(_dspBuffPtr + i) = _space;
             _blinkTimer = xTaskGetTickCount() / portTICK_RATE_MS; //Starts the count for the blinkRate control
+            _dspBuffChng = true;
          }
          else if((xTaskGetTickCount() / portTICK_RATE_MS - _blinkTimer) >= _blinkOffRate){
             _blinkTimer = 0;
@@ -720,13 +730,14 @@ void SevenSegDisplays::updWaitState(){
          _waitTimer = xTaskGetTickCount()/portTICK_RATE_MS;
       }
       else if((xTaskGetTickCount()/portTICK_RATE_MS - _waitTimer) >= _waitRate){
-         for (int i{_dspDigitsQty - 1}; i >= 0; i--){
-
+         taskENTER_CRITICAL();
+      	for (int i{_dspDigitsQty - 1}; i >= 0; i--){
             if(( _dspDigitsQty - i) <= _waitCount)
                *(_dspBuffPtr + i) = _waitChar;
             else
                *(_dspBuffPtr + i) = _space;
          }
+      	taskEXIT_CRITICAL();
          _dspBuffChng = true;
          _waitCount++;
          if (_waitCount == (_dspDigitsQty + 1))
@@ -774,9 +785,14 @@ bool SevenSegDisplays::wait(){
       _waiting = true;
       result = true;
     }
+   else{
+   	result = true;
+   }
 
    return result;
 }
+
+Gaby ended checking here!!
 
 bool SevenSegDisplays::wait(const unsigned long &newWaitRate){
    bool result {false};
