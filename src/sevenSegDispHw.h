@@ -51,7 +51,6 @@
 #include "timers.h"
 //#include "queue.h"
 //#include "semphr.h"
-//#include "event_groups.h"
 //===========================>> END libraries used to avoid CMSIS wrappers
 
 //===========================>> BEGIN User type definitions
@@ -229,7 +228,7 @@ public:
     /**
      * @brief Virtual class destructor
      */
-    ~SevenSegDynamic();
+    virtual ~SevenSegDynamic();
     virtual bool begin(const unsigned long int &rfrshFrq = 0);
     virtual bool end();
 };
@@ -270,7 +269,7 @@ class SevenSegStatic: public SevenSegDispHw{
 
 public:
 	SevenSegStatic(gpioPinId_t* ioPins, uint8_t dspDigits, bool commAnode);
-	~SevenSegStatic();
+	virtual ~SevenSegStatic();
 };
 
 //============================================================> Class declarations separator

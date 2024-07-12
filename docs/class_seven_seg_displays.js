@@ -1,6 +1,5 @@
 var class_seven_seg_displays =
 [
-    [ "SevenSegDisplays", "class_seven_seg_displays.html#a667dc425877769e610f33f70055158cb", null ],
     [ "SevenSegDisplays", "class_seven_seg_displays.html#ada6d89fb083fd8a5a2ce603b3b1f5e43", null ],
     [ "~SevenSegDisplays", "class_seven_seg_displays.html#aad6eac4fa55968318f6d0c1e4e80cb8e", null ],
     [ "begin", "class_seven_seg_displays.html#add7e74143b675a533853b26bdb9394a0", null ],

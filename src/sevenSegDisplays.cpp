@@ -1,8 +1,23 @@
 /**
   ******************************************************************************
   * @file	: SevenSegDisplays.h
-  * @brief	: Code file for SevenSegDisplays library classes
-*/
+  * @brief	: Source file for SevenSegDisplays library classes
+  *
+  * @details This library builds Seven Segments LEDs displays independently from the hardware involved to execute the display. The included attributes and methods are hardware agnostic, and the hardware used might be changed by design requirements, and several different hardware display models might be used at the same time with the same methods even if they are based on different driver chips or management technologies.
+  *
+  * @author	: Gabriel D. Goldman
+  * @version v1.0.0
+  * @date	: Created on: 16/11/2023
+  * 			: Last modification:	11/06/2024
+  * @copyright GPL-3.0 license
+  *
+  ******************************************************************************
+  * @attention	This library was developed as part of the refactoring process for an industrial machines security enforcement and control (hardware & firmware update). As such every class included complies **AT LEAST** with the provision of the attributes and methods to make the hardware & firmware replacement transparent to the controlled machines. Generic use attribute and methods were added to extend the usability to other projects and application environments, but no fitness nor completeness of those are given but for the intended refactoring project.
+  * **The use of this library is under your own responsibility**
+  *
+  ******************************************************************************
+  */
+
 #include "sevenSegDisplays.h"
 
 uint8_t SevenSegDisplays::_displaysCount = 0;
@@ -101,8 +116,7 @@ bool SevenSegDisplays::blink(){
 				result = true;
 			}
 			else{
-				//xTimerStart failed, avoid memory leaking by returning unused buffer space
-				delete [] _dspAuxBuffPtr;
+				delete [] _dspAuxBuffPtr;	//xTimerStart failed, avoid memory leaking by returning unused buffer space
 			}
 		}
 	}
@@ -155,9 +169,8 @@ unsigned long SevenSegDisplays::blinkTmrGCD(unsigned long blnkOnTm, unsigned lon
 
 void SevenSegDisplays::clear(){
    //Cleans the contents of the internal display buffer (All leds off for all digits)
-   if(!_waiting){ // If in waiting condition clearing makes no sense, the mechanism will keep displaying the sequence independently
       taskENTER_CRITICAL();
-      if(_blinking){
+      if(_blinking || _waiting){
          //If the display is blinking the backup buffer will be restored, so the display clearing() would be reverted
          //So BOTH buffers must be cleared, starting by the _dspAuxBuff, and blocking the access to it while clearing takes place
       	for (int i{0}; i < _dspDigitsQty; i++){
@@ -173,7 +186,6 @@ void SevenSegDisplays::clear(){
          }
       }
    	taskEXIT_CRITICAL();
-   }
 
    return;
 }
@@ -792,63 +804,52 @@ bool SevenSegDisplays::wait(){
    return result;
 }
 
-Gaby ended checking here!!
-
 bool SevenSegDisplays::wait(const unsigned long &newWaitRate){
    bool result {false};
 
-   if (!_blinking){
-		if (!_waiting){
-			if(_waitRate != newWaitRate){
-				if ((newWaitRate >= _minBlinkRate) && (newWaitRate <= _maxBlinkRate)){
-					_waitRate = newWaitRate;
-					result = true;
-				}
-				if (result){
-					result = wait();
-				}
+   if (!_waiting){
+   	result = setWaitRate(newWaitRate);
+		if (result){
+			if (_blinking){
+				result = noBlink();
+			}
+			if(result){
+				result = wait();
 			}
 		}
-		else{
-			if(_waitRate == newWaitRate){
-				result = true;
-			}
+	}
+
+   return result;
+}
+
+bool SevenSegDisplays::write(const uint8_t &segments, const uint8_t &port){
+   bool result {false};
+   bool writeOnBlink{_blinking};
+
+   if(!_waiting){
+		if (port < _dspDigitsQty){
+			taskENTER_CRITICAL();
+			if(writeOnBlink)
+				noBlink();
+			*(_dspBuffPtr + port) = segments;
+			if(writeOnBlink)
+				blink();
+			taskEXIT_CRITICAL();
+			result = true;
 		}
    }
 
    return result;
 }
 
-
-bool SevenSegDisplays::write(const uint8_t &segments, const uint8_t &port){
-   bool result {false};
-   bool writeOnBlink{_blinking};
-
-   if (port < _dspDigitsQty){
-      if(writeOnBlink)
-         noBlink();
-      *(_dspBuffPtr + port) = segments;
-      if(writeOnBlink)
-         blink();
-      result = true;
-   }
-
-    return result;
-}
-
 bool SevenSegDisplays::write(const std::string &character, const uint8_t &port){
    bool result {false};
    int position {-1};
-   bool writeOnBlink{_blinking};
 
    if (port < _dspDigitsQty){
       position = _charSet.find(character);
       if (position > -1) { // Character found for translation
-         if(writeOnBlink)
-            noBlink();
-			*(_dspBuffPtr + port) = _charLeds[position];
-         if(writeOnBlink)
-            blink();
+      	result = write(_charLeds[position], port);
          result = true;
       }
     }
