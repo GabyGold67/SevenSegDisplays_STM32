@@ -1,9 +1,12 @@
 <map id="SevenSegTM1637" name="SevenSegTM1637">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,248,131,275"/>
-<area shape="rect" id="Node000002" href="$class_seven_seg_static.html" title=" " alt="" coords="11,172,125,199"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="71,214,71,248,65,248,65,214"/>
-<area shape="rect" id="Node000003" href="$class_seven_seg_disp_hw.html" title="Implements a generic Seven Segments LEDs hardware interface to displays the logically generated chara..." alt="" coords="6,96,130,123"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="71,138,71,172,65,172,65,138"/>
-<area shape="rect" id="Node000004" href="$structgpio_pin_id__t.html" title="Type used to keep GPIO pin identification as a single parameter, independently of the platform requir..." alt="" coords="25,5,111,32"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="71,48,71,95,65,95,65,48"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,355,131,381"/>
+<area shape="rect" id="Node000002" href="$class_seven_seg_t_m163_x.html" title=" " alt="" coords="5,279,131,305"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="71,320,71,354,65,354,65,320"/>
+<area shape="rect" id="Node000003" href="$class_seven_seg_static.html" title=" " alt="" coords="75,203,189,229"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="113,243,81,280,77,277,109,239"/>
+<area shape="rect" id="Node000004" href="$class_seven_seg_disp_hw.html" title="Implements a generic Seven Segments LEDs hardware interface to displays the logically generated chara..." alt="" coords="73,96,196,123"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="137,138,135,202,130,202,131,138"/>
+<area shape="rect" id="Node000005" href="$structgpio_pin_id__t.html" title="Type used to keep GPIO pin identification as a single parameter, independently of the platform requir..." alt="" coords="15,5,100,32"/>
+<area shape="poly" id="edge5_Node000002_Node000005" title=" " alt="" coords="60,47,65,229,69,278,64,279,60,229,55,48"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="80,42,126,94,122,97,76,45"/>
 </map>

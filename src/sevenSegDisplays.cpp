@@ -182,7 +182,9 @@ void SevenSegDisplays::clear(){
       for (int i{0}; i < _dspDigitsQty; i++){
          if(*(_dspBuffPtr + i) != _space){
             *(_dspBuffPtr + i) = _space;
-            _dspBuffChng = true;    //Signal for the hardware refresh mechanism
+            //_dspBuffChng = true;
+         	_dspUndrlHwPtr -> dspBffrCntntChng();
+         	//_dspBuffChng = false;
          }
       }
    	taskEXIT_CRITICAL();
@@ -454,7 +456,9 @@ bool SevenSegDisplays::print(std::string text){
       taskEXIT_CRITICAL();
       if(printOnBlink)
          blink();
-      _dspBuffChng = true;
+      //_dspBuffChng = true;
+   	_dspUndrlHwPtr -> dspBffrCntntChng();
+   	//_dspBuffChng = false;
    }
    else{
    	clear();
@@ -551,7 +555,9 @@ void SevenSegDisplays::restoreDspBuff(){
 	for (int i{0}; i < _dspDigitsQty; i++){
    	 if((*(_dspBuffPtr + i)) != (*(_dspAuxBuffPtr + i))){
       	 (*(_dspBuffPtr + i)) = (*(_dspAuxBuffPtr + i));
-      	 _dspBuffChng = true;
+          //_dspBuffChng = true;
+       	_dspUndrlHwPtr -> dspBffrCntntChng();
+       	//_dspBuffChng = false;
    	 }
     }
 	taskEXIT_CRITICAL();
@@ -712,7 +718,9 @@ void SevenSegDisplays::updBlinkState(){
                if(*(_blinkMaskPtr + i))
                   *(_dspBuffPtr + i) = _space;
             _blinkTimer = xTaskGetTickCount() / portTICK_RATE_MS; //Starts the count for the blinkRate control
-            _dspBuffChng = true;
+            //_dspBuffChng = true;
+         	_dspUndrlHwPtr -> dspBffrCntntChng();
+         	//_dspBuffChng = false;
          }
          else if((xTaskGetTickCount() / portTICK_RATE_MS - _blinkTimer) >= _blinkOffRate){
             _blinkTimer = 0;
@@ -724,6 +732,9 @@ void SevenSegDisplays::updBlinkState(){
             //The turn-On display stage of the blinking started, restore the dspBuff contents from the dspAuxBuff
             restoreDspBuff();
             _blinkTimer = xTaskGetTickCount() / portTICK_RATE_MS;
+            //_dspBuffChng = true;
+         	_dspUndrlHwPtr -> dspBffrCntntChng();
+         	//_dspBuffChng = false;
          }
          else if((xTaskGetTickCount() / portTICK_RATE_MS - _blinkTimer) >= _blinkOnRate){
             _blinkTimer = 0;
@@ -750,7 +761,10 @@ void SevenSegDisplays::updWaitState(){
                *(_dspBuffPtr + i) = _space;
          }
       	taskEXIT_CRITICAL();
-         _dspBuffChng = true;
+         //_dspBuffChng = true;
+      	_dspUndrlHwPtr -> dspBffrCntntChng();
+      	//_dspBuffChng = false;
+
          _waitCount++;
          if (_waitCount == (_dspDigitsQty + 1))
             _waitCount = 0;

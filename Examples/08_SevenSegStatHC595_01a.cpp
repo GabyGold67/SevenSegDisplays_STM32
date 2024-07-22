@@ -13,7 +13,7 @@
   * 	@author	: Gabriel D. Goldman
   *
   * 	@date	: 	08/05/2024 First release
-  * 				08/05/2024 Last update
+  * 				20/06/2024 Last update
   *
   ******************************************************************************
   * @attention	This file is part of the Examples folder for the MPBttnAsSwitch_ESP32
@@ -30,7 +30,6 @@
 #include "FreeRTOS.h"
 #include "task.h"
 #include "timers.h"
-#include "event_groups.h"
 //===========================>> Previous lines used to avoid CMSIS wrappers
 
 #include "../../SevenSegDisplays_STM32/src/sevenSegDisplays.h"
@@ -38,21 +37,19 @@
 /* USER CODE END Includes */
 
 /* Private variables ---------------------------------------------------------*/
-UART_HandleTypeDef huart2;
 
 /* USER CODE BEGIN PV */
-TaskHandle_t tstDefTaskHandle {NULL};
+TaskHandle_t mainCtrlTskHndl {NULL};
 BaseType_t xReturned;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
-static void MX_USART2_UART_Init(void);
 void Error_Handler(void);
 
 /* USER CODE BEGIN PFP */
-void tstDefTaskExec(void *pvParameters);
+void mainCtrlTsk(void *pvParameters);
 /* USER CODE END PFP */
 
 /**
@@ -61,9 +58,6 @@ void tstDefTaskExec(void *pvParameters);
   */
 int main(void)
 {
-  /* USER CODE BEGIN 1 */
-  /* USER CODE END 1 */
-
   /* MCU Configuration--------------------------------------------------------*/
 
   /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
@@ -72,22 +66,20 @@ int main(void)
   /* Configure the system clock */
   SystemClock_Config();
 
-  /* USER CODE BEGIN SysInit */
-  /* USER CODE END SysInit */
-
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
-  MX_USART2_UART_Init();
 
   /* Create the thread(s) */
   /* USER CODE BEGIN RTOS_THREADS */
   xReturned = xTaskCreate(
-		  tstDefTaskExec, //taskFunction
-		  "TstMainTask", //Task function legible name
+		  mainCtrlTsk, //taskFunction
+		  "MainControlTask", //Task function legible name
 		  256, // Stack depth in words
 		  NULL,	//Parameters to pass as arguments to the taskFunction
 		  configTIMER_TASK_PRIORITY,	//Set to the same priority level as the software timers
-		  &tstDefTaskHandle);
+		  &mainCtrlTskHndl);
+  if(xReturned != pdPASS)
+	  Error_Handler();
   /* USER CODE END RTOS_THREADS */
 
   /* Start scheduler */
@@ -147,27 +139,6 @@ void SystemClock_Config(void)
 }
 
 /**
-  * @brief USART2 Initialization Function
-  * @param None
-  * @retval None
-  */
-static void MX_USART2_UART_Init(void)
-{
-  huart2.Instance = USART2;
-  huart2.Init.BaudRate = 115200;
-  huart2.Init.WordLength = UART_WORDLENGTH_8B;
-  huart2.Init.StopBits = UART_STOPBITS_1;
-  huart2.Init.Parity = UART_PARITY_NONE;
-  huart2.Init.Mode = UART_MODE_TX_RX;
-  huart2.Init.HwFlowCtl = UART_HWCONTROL_NONE;
-  huart2.Init.OverSampling = UART_OVERSAMPLING_16;
-  if (HAL_UART_Init(&huart2) != HAL_OK)
-  {
-    Error_Handler();
-  }
-}
-
-/**
   * @brief GPIO Initialization Function
   * @param None
   * @retval None
@@ -192,7 +163,7 @@ static void MX_GPIO_Init(void)
   * @param  argument: Not used
   * @retval None
   */
-void tstDefTaskExec(void *pvParameters)
+void mainCtrlTsk(void *pvParameters)
 {
 //	gpioPinId_t myDspPins[]{{GPIOA, 1 << 5}, {GPIOA, 1 << 6}, {GPIOB, 1 << 12}};	//This line and the next are equivalent
 	gpioPinId_t myDspPins[]{{GPIOA, GPIO_PIN_5}, {GPIOA, GPIO_PIN_6}, {GPIOB, GPIO_PIN_12}};
@@ -205,7 +176,7 @@ void tstDefTaskExec(void *pvParameters)
 	for(;;)
 	{
 		vTaskDelay(1000);
-		tmpDispData[0] = 0xFF;
+		tmpDispData[0] = 0xC2 - 0x80;
 		tmpDispData[1] = 0xE3 - 0x80;
 		tmpDispData[2] = 0xA0;
 		tmpDispData[3] = 0x8C;

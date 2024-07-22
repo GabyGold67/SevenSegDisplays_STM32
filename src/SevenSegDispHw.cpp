@@ -188,51 +188,6 @@ SevenSegDynHC595::SevenSegDynHC595(gpioPinId_t* ioPins, uint8_t dspDigits, bool 
 
 SevenSegDynHC595::~SevenSegDynHC595(){}
 
-void SevenSegDynHC595::refresh(){
-   uint8_t tmpDigToSend{0};
-   uint8_t tmpPosToSend{0};
-
-    for (int i {0}; i < _dspDigitsQty; i++){
-        tmpDigToSend = *(_dspBuffPtr + ((i + _firstRefreshed) % _dspDigitsQty));
-        tmpPosToSend = uint8_t(1) << *(_digitPosPtr + ((i + _firstRefreshed) % _dspDigitsQty));
-//        send(tmpDigToSend, uint8_t(1) << *(_digitPosPtr + ((i + _firstRefreshed) % _dspDigitsQty)));
-        send(tmpDigToSend, tmpPosToSend);
-    }
-    ++_firstRefreshed;
-    if (_firstRefreshed == _dspDigitsQty)
-        _firstRefreshed = 0;
-
-    return;
-}
-
-void SevenSegDynHC595::send(uint8_t content){
-	bool prevPnLvl {false};
-
-	HAL_GPIO_WritePin(_dio.portId, _dio.pinNum, GPIO_PIN_RESET);	//Ensuring starting state of the data out pin
-
-	for (int i {7}; i >= 0; i--){   //Send each of the 8 bits representing the character
-		if (((content & 0x80)!=0) xor prevPnLvl){
-			HAL_GPIO_TogglePin(_dio.portId, _dio.pinNum);
-			prevPnLvl = !prevPnLvl;
-		}
-		HAL_GPIO_WritePin(_sclk.portId, _sclk.pinNum, GPIO_PIN_SET);	//Rising edge to accept data presented
-		content <<= 1;
-		HAL_GPIO_WritePin(_sclk.portId, _sclk.pinNum, GPIO_PIN_RESET); //Lower back for next bit to be presented
-	}
-
-	return;
-}
-
-void SevenSegDynHC595::send(const uint8_t &segments, const uint8_t &port){
-
-	HAL_GPIO_WritePin(_rclk.portId, _rclk.pinNum, GPIO_PIN_RESET);	//Set the shift register to accept data
-	send(segments);
-	send(port);
-	HAL_GPIO_WritePin(_rclk.portId, _rclk.pinNum, GPIO_PIN_SET);	//Set the shift register to show latched data
-
-   return;
-}
-
 bool SevenSegDynHC595::begin(const unsigned long int &rfrshFrq){
 	bool result {false};
    BaseType_t tmrModResult {pdFAIL};
@@ -285,6 +240,51 @@ bool SevenSegDynHC595::end() {
     return result;
 }
 
+void SevenSegDynHC595::refresh(){
+   uint8_t tmpDigToSend{0};
+   uint8_t tmpPosToSend{0};
+
+    for (int i {0}; i < _dspDigitsQty; i++){
+        tmpDigToSend = *(_dspBuffPtr + ((i + _firstRefreshed) % _dspDigitsQty));
+        tmpPosToSend = uint8_t(1) << *(_digitPosPtr + ((i + _firstRefreshed) % _dspDigitsQty));
+//        send(tmpDigToSend, uint8_t(1) << *(_digitPosPtr + ((i + _firstRefreshed) % _dspDigitsQty)));
+        send(tmpDigToSend, tmpPosToSend);
+    }
+    ++_firstRefreshed;
+    if (_firstRefreshed == _dspDigitsQty)
+        _firstRefreshed = 0;
+
+    return;
+}
+
+void SevenSegDynHC595::send(uint8_t content){
+	bool prevPnLvl {false};
+
+	HAL_GPIO_WritePin(_dio.portId, _dio.pinNum, GPIO_PIN_RESET);	//Ensuring starting state of the data out pin
+
+	for (int i {7}; i >= 0; i--){   //Send each of the 8 bits representing the character
+		if (((content & 0x80)!=0) xor prevPnLvl){
+			HAL_GPIO_TogglePin(_dio.portId, _dio.pinNum);
+			prevPnLvl = !prevPnLvl;
+		}
+		HAL_GPIO_WritePin(_sclk.portId, _sclk.pinNum, GPIO_PIN_SET);	//Rising edge to accept data presented
+		content <<= 1;
+		HAL_GPIO_WritePin(_sclk.portId, _sclk.pinNum, GPIO_PIN_RESET); //Lower back for next bit to be presented
+	}
+
+	return;
+}
+
+void SevenSegDynHC595::send(const uint8_t &segments, const uint8_t &port){
+
+	HAL_GPIO_WritePin(_rclk.portId, _rclk.pinNum, GPIO_PIN_RESET);	//Set the shift register to accept data
+	send(segments);
+	send(port);
+	HAL_GPIO_WritePin(_rclk.portId, _rclk.pinNum, GPIO_PIN_SET);	//Set the shift register to show latched data
+
+   return;
+}
+
 void SevenSegDynHC595::tmrCbRefreshDyn(TimerHandle_t rfrshTmrCbArg){
 	SevenSegDynHC595* argObj = (SevenSegDynHC595*)pvTimerGetTimerID(rfrshTmrCbArg);
    //Timer Callback to keep the display lit by calling the display's refresh() method
@@ -294,22 +294,31 @@ void SevenSegDynHC595::tmrCbRefreshDyn(TimerHandle_t rfrshTmrCbArg){
 }
 
 //============================================================> Class methods separator
-SevenSegStatic::SevenSegStatic(gpioPinId_t* ioPins, uint8_t dspDigits, bool commAnode)
-{
 
+SevenSegStatic::SevenSegStatic(gpioPinId_t* ioPins, uint8_t dspDigits, bool commAnode)
+:SevenSegDispHw(ioPins, dspDigits, commAnode)
+{
+}
+
+SevenSegStatic::~SevenSegStatic()
+{
 }
 
 //============================================================> Class methods separator
 
-SevenSegTM1637::SevenSegTM1637(gpioPinId_t* ioPins, uint8_t dspDigits)
+SevenSegTM163X::SevenSegTM163X(gpioPinId_t* ioPins, uint8_t dspDigits)
 :SevenSegStatic(ioPins, dspDigits, true), _clk{ioPins[_clkArgPos]}, _dio{ioPins[_dioArgPos]}
 {
 	//Setting pin directions
 	setGPIOPinAsOutput(_clk);
 	setGPIOPinAsOutput(_dio);
 
-
 }
+
+SevenSegTM163X::~SevenSegTM163X()
+{
+}
+
 //============================================================> Generic use functions
 
 bool setGPIOPinAsOutput(const gpioPinId_t &outPin){
@@ -334,7 +343,6 @@ bool setGPIOPinAsOutput(const gpioPinId_t &outPin){
 
 	  return true;
 }
-
 
 bool setGPIOPinAsInput(const gpioPinId_t &inPin){
 

@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * @file		: SevenSegDispHw.h
+  * @file	: SevenSegDispHw.h
   * @brief	: Header file for SevenSegDispHw library classes
   *
   * @details The library builds Seven Segment Display hardware classes. Each class will provide the hardware specific implementation for the methods required by all hardware displays:
@@ -16,7 +16,7 @@
   *
   * @author	: Gabriel D. Goldman
   * @version v1.0.0
-  * @date		: Created on: 16/11/2023
+  * @date	: Created on: 16/11/2023
   * 			: Last modification:	11/06/2024
   * @copyright GPL-3.0 license
   *
@@ -90,8 +90,10 @@ protected:
     gpioPinId_t* _ioPins{};
     uint8_t* _digitPosPtr{nullptr};
     uint8_t _dspDigitsQty{}; //Display size in digits
+    const uint8_t _dspDigitsQtyMax{}; // Maximum display size in digits, hardware dependent
     bool _commAnode {true}; //SevenSegDisplays objects will retrieve this info to build the right segments for each character
 
+    uint8_t _brghtnssLvls{0};
     uint8_t* _dspBuffPtr{nullptr};
     uint8_t _dspHwInstNbr{0};
 
@@ -109,7 +111,7 @@ public:
      *
      * @param ioPins Pointer to a gpioPinId_t array with the needed MCU pins identification to drive the hardware display.
      * @param dspDigits Display's length in digits quantity (dspDigitsQty attribute).
-     * @param commAnode Indicates the display leds wiring scheme, either **common anode** (true) or **common cathode** (fa.lse)
+     * @param commAnode Indicates the display leds wiring scheme, either **common anode** (true) or **common cathode** (false)
      *
      * @class SevenSegDispHw
      */
@@ -119,7 +121,37 @@ public:
      *
      * @class SevenSegDispHw
      */
-    ~SevenSegDispHw();
+    virtual ~SevenSegDispHw();
+    /**
+     * @brief Starts the timer and / or services needed to keep the display updated
+     *
+     * For dynamic displays a timer is needed to keep the cinematic effect of having all the digits displaying it's content at the same time.
+     * For static displays sets the corresponding configuration of the display driving chipset.
+     *
+     * @param rfrsFrq Refreshing frequency of the dynamic display in milliseconds.
+     *
+     * @retval true: The timer for update services or configuration parameters were correctly set.
+     * @retval false: The timer or update services activation failed.
+     */
+    virtual bool begin(const unsigned long int &rfrshFrq = 0);
+    /**
+     * @brief Loads the hardware display driver's internal buffer with the current display's data buffer contents.
+     *
+     * The method is invoked every time the display's data buffer contents change. This mechanism implementation avoids the need of periodically checking the display's data buffer for changes. The standard invocation of this method is done by the SevenSegDisplays class methods that modify the display's data buffer contents (print(), write(), blink(), wait() and others).
+     *
+     * @note The dynamic technology displays usually don't have internal buffers and need constant reading of the display buffer to refresh the displaying content. For this kind of displays this method is unneeded, so it might be not implementation for those sub-clases, or might be implemented as an empty method.
+     */
+    virtual void dspBffrCntntChng(){};
+    /**
+     * @brief Stops the timer and/or services needed to keep the display updated
+     *
+     * For dynamic displays the needed timer will be stopped and deleted.
+     * For static displays sets the corresponding communication channels as disabled.
+     *
+     * @retval true: The timer or update services were deactivated without issues.
+     * @retval false: The timer or update services deactivation failed.
+     */
+    bool end();
     /**
      * @brief Gets the display leds wiring scheme setting for the object
      *
@@ -151,9 +183,9 @@ public:
      * @param newOrderPtr Pointer to the "translation array".
      *
      * @retval true: All of the elements of the array were in the accepted range. The change was performed
-     * @retval false: At least one of the values of the array passed were out of range. The change wasn't performed.
+     * @retval false: At least one of the values of the array parameter is out of range. The change wasn't performed.
      *
-     * @note Each value in the array passed as argument will be checked against the _dspDigits value to ensure that they are all in the range acceptable, 0 <= value <= _dspDigits - 1. If one of the values is out of the valid range no change will be done. Please note that no checking will be done to ensure all of the array values are different. A repeated value will be accepted. leading to unexpected display due to superimposing digits and not included digits.
+     * @note Each value in the array passed as argument will be checked against the _dspDigits value to ensure that they are all in the range acceptable, 0 <= value <= _dspDigits - 1. If one of the values is out of the valid range no change will be done. Please note that no checking will be done to ensure all of the array values are different. A repeated value will be accepted, leading to unexpected display behavior due to superimposing digits and not including digits.
      */
     bool setDigitsOrder(uint8_t* newOrderPtr);
     /**
@@ -169,34 +201,11 @@ public:
      */
     void setDspBuffPtr(uint8_t* newDspBuffPtr);
     /**
-     * @brief Starts the timer and/or services needed to keep the display updated
-     *
-     * For dynamic displays a timer is needed to keep the cinematic effect for having all the digits lit.
-     * For static displays sets the corresponding communication channels to update the display every time the display buffer contents change
-     *
-     * @param rfrsFrq Refreshing frequency of the dynamic display in milliseconds.
-     *
-     * @retval true: The timer or update services were activated without issues.
-     * @retval false: The timer or update services activation failed.
-     */
-    virtual bool begin(const unsigned long int &rfrshFrq = 0);
-    /**
-     * @brief Stops the timer and/or services needed to keep the display updated
-     *
-     * For dynamic displays the needed timer will be stopped and deleted.
-     * For static displays sets the corresponding communication channels are disabled.
-     *
-     * @retval true: The timer or update services were deactivated without issues.
-     * @retval false: The timer or update services deactivation failed.
-     */
-    bool end();
-    /**
-     * @brief Keep the dynamic type displays running
+     * @brief Keeps the dynamic type displays running by redisplaying the content of each display port.
      *
      * The dynamic technology displays need to be periodically refreshed, as it can actively turn on only one digit at a time, so to keep all the digits visible the driving code must activate periodically each digit one by one independently to generate a "cinematic effect".
-     *
      */
-    virtual void refresh(){};
+//    virtual void refresh(){};
 };
 
 //============================================================> Class declarations separator
@@ -224,12 +233,37 @@ public:
      * @brief Default class constructor
      */
     SevenSegDynamic();
+    /**
+     * @brief Class constructor
+     *
+     * @param ioPins Pointer to a gpioPinId_t array with the needed MCU pins identification to drive the hardware display.
+     * @param dspDigits Display's length in digits quantity (dspDigitsQty attribute).
+     * @param commAnode Indicates the display leds wiring scheme, either **common anode** (true) or **common cathode** (fa.lse)
+     */
     SevenSegDynamic(gpioPinId_t* ioPins, uint8_t dspDigits, bool commAnode);
     /**
      * @brief Virtual class destructor
      */
     virtual ~SevenSegDynamic();
+    /**
+     * @brief Starts the timer and / or services needed to keep the display updated
+     *
+     * For dynamic displays a timer is needed to keep the cinematic effect of having all the digits displaying it's content at the same time.
+     *
+     * @param rfrsFrq Refreshing frequency of the dynamic display in milliseconds.
+     *
+     * @retval true: The timer or update services were activated without issues.
+     * @retval false: The timer or update services activation failed.
+     */
     virtual bool begin(const unsigned long int &rfrshFrq = 0);
+    /**
+     * @brief Stops the timer and/or services needed to keep the display updated
+     *
+     * The dynamic displays' refreshing timer will be stopped and deleted.
+     *
+     * @retval true: The timer or update services were deactivated without issues.
+     * @retval false: The timer or update services deactivation failed.
+     */
     virtual bool end();
 };
 
@@ -245,21 +279,58 @@ public:
  */
 class SevenSegDynHC595: public SevenSegDynamic{
 private:
-    const uint8_t _sclkArgPos {0};
-    const uint8_t _rclkArgPos {1};
-    const uint8_t _dioArgPos {2};
-    gpioPinId_t _sclk{};
-    gpioPinId_t _rclk{};
-    gpioPinId_t _dio{};
+	const uint8_t _dspDigitsQtyMax{8}; // Maximum display size in digits, hardware dependent
+	const uint8_t _sclkArgPos {0};
+	const uint8_t _rclkArgPos {1};
+	const uint8_t _dioArgPos {2};
+	gpioPinId_t _sclk{};
+	gpioPinId_t _rclk{};
+	gpioPinId_t _dio{};
 protected:
     virtual void refresh();
     static void tmrCbRefreshDyn(TimerHandle_t rfrshTmrCbArg);
 public:
+    /**
+     * @brief Class constructor
+     *
+     * Instantiates a seven segments display driven dynamically by an array of two 74HC595 8 bits shift registers.
+     *
+     * @param ioPins Pointer to a gpioPinId_t array of three elements, with the needed MCU pins identification to drive the hardware display pins: SCLK, RCLK and DIO
+     * @param dspDigits Display's length in digits quantity (dspDigitsQty attribute).
+     * @param commAnode Indicates the display leds wiring scheme, either **common anode** (true) or **common cathode** (false)
+     */
     SevenSegDynHC595(gpioPinId_t* ioPins, uint8_t dspDigits, bool commAnode);
+    /**
+     * @brief Virtual destructor
+     */
     ~SevenSegDynHC595();
+    /**
+     * @brief See SevenSegDynamic::begin(const unsigned long int)
+     */
     virtual bool begin(const unsigned long int &rfrshFrq = 0);
+    /**
+     * @brief See SevenSegDynamic::end()
+     */
     virtual bool end();
+    /**
+     * @brief Sends a 8 bits value to a 74HC595 shift register
+     *
+     * The byte value is sent through the manipulation of the DIO and SCLK lines according to the IC specifications to it's internal 8 bits buffer
+     *
+     * @param content The 8 bits value to send to the IC internal 8 bits buffer
+     */
     void send(uint8_t content);
+    /**
+     * @brief Sends a character to the display, the port (position) where it must be displayed and generate the displaying of the character.
+     *
+     * The displaying mechanism consist of the following steps:
+     * - Send a byte consisting of the character to display using send(uint8_t)
+     * - Send a byte consisting of the position in the display to show the character using send(uint8_t)
+     * - Manipulate the RCLK line to "Lock & Present" the value to the Seven Segments Display module.
+     *
+     * @param segments A character set as a 8 bits value representing the segments to lit to form graphic representation of such character
+     * @param port A 8 bits value representing the position on the display to show the character, often as a single bit set byte.
+     */
     void send(const uint8_t &segments, const uint8_t &port);
 };
 
@@ -274,18 +345,29 @@ public:
 
 //============================================================> Class declarations separator
 
-class SevenSegTM1637: public SevenSegStatic{
-private:
+class SevenSegTM163X: public SevenSegStatic{
+protected:
    const uint8_t _clkArgPos {0};
    const uint8_t _dioArgPos {1};
    gpioPinId_t _clk{};
    gpioPinId_t _dio{};
 
 public:
-	SevenSegTM1637(gpioPinId_t* ioPins, uint8_t dspDigits);
-	~SevenSegTM1637();
+	SevenSegTM163X(gpioPinId_t* ioPins, uint8_t dspDigits);
+	~SevenSegTM163X();
 	bool setBrghtnss();
 
 };
+
+//============================================================> Class declarations separator
+
+class SevenSegTM1637: public SevenSegTM163X{
+protected:
+	const uint8_t _dspDigitsQtyMax{6}; // Maximum display size in digits, hardware dependent
+
+};
+
+//============================================================> Class declarations separator
+
 
 #endif /* _SEVENSEGDISPHW_H_ */

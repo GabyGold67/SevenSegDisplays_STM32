@@ -107,7 +107,9 @@ Inheritance diagram for SevenSegTM1637:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_seven_seg_t_m1637__inherit__graph.png" border="0" usemap="#a_seven_seg_t_m1637_inherit__map" alt="Inheritance graph"/></div>
 <map name="a_seven_seg_t_m1637_inherit__map" id="a_seven_seg_t_m1637_inherit__map">
-<area shape="rect" title=" " alt="" coords="5,155,131,181"/>
+<area shape="rect" title=" " alt="" coords="5,229,131,256"/>
+<area shape="rect" href="class_seven_seg_t_m163_x.html" title=" " alt="" coords="5,155,131,181"/>
+<area shape="poly" title=" " alt="" coords="71,197,71,229,65,229,65,197"/>
 <area shape="rect" href="class_seven_seg_static.html" title=" " alt="" coords="11,80,125,107"/>
 <area shape="poly" title=" " alt="" coords="71,122,71,154,65,154,65,122"/>
 <area shape="rect" href="class_seven_seg_disp_hw.html" title="Implements a generic Seven Segments LEDs hardware interface to displays the logically generated chara..." alt="" coords="6,5,130,32"/>
@@ -119,13 +121,16 @@ Collaboration diagram for SevenSegTM1637:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_seven_seg_t_m1637__coll__graph.png" border="0" usemap="#a_seven_seg_t_m1637_coll__map" alt="Collaboration graph"/></div>
 <map name="a_seven_seg_t_m1637_coll__map" id="a_seven_seg_t_m1637_coll__map">
-<area shape="rect" title=" " alt="" coords="5,248,131,275"/>
-<area shape="rect" href="class_seven_seg_static.html" title=" " alt="" coords="11,172,125,199"/>
-<area shape="poly" title=" " alt="" coords="71,214,71,248,65,248,65,214"/>
-<area shape="rect" href="class_seven_seg_disp_hw.html" title="Implements a generic Seven Segments LEDs hardware interface to displays the logically generated chara..." alt="" coords="6,96,130,123"/>
-<area shape="poly" title=" " alt="" coords="71,138,71,172,65,172,65,138"/>
-<area shape="rect" href="structgpio_pin_id__t.html" title="Type used to keep GPIO pin identification as a single parameter, independently of the platform requir..." alt="" coords="25,5,111,32"/>
-<area shape="poly" title=" " alt="" coords="71,48,71,95,65,95,65,48"/>
+<area shape="rect" title=" " alt="" coords="5,355,131,381"/>
+<area shape="rect" href="class_seven_seg_t_m163_x.html" title=" " alt="" coords="5,279,131,305"/>
+<area shape="poly" title=" " alt="" coords="71,320,71,354,65,354,65,320"/>
+<area shape="rect" href="class_seven_seg_static.html" title=" " alt="" coords="75,203,189,229"/>
+<area shape="poly" title=" " alt="" coords="113,243,81,280,77,277,109,239"/>
+<area shape="rect" href="class_seven_seg_disp_hw.html" title="Implements a generic Seven Segments LEDs hardware interface to displays the logically generated chara..." alt="" coords="73,96,196,123"/>
+<area shape="poly" title=" " alt="" coords="137,138,135,202,130,202,131,138"/>
+<area shape="rect" href="structgpio_pin_id__t.html" title="Type used to keep GPIO pin identification as a single parameter, independently of the platform requir..." alt="" coords="15,5,100,32"/>
+<area shape="poly" title=" " alt="" coords="60,47,65,229,69,278,64,279,60,229,55,48"/>
+<area shape="poly" title=" " alt="" coords="80,42,126,94,122,97,76,45"/>
 </map>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
@@ -136,8 +141,11 @@ Additional Inherited Members</h2></td></tr>
 <tr class="memdesc:a31e3b1f101170f21c7d247f72536ff8c inherit pub_methods_class_seven_seg_disp_hw"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor.  <br /></td></tr>
 <tr class="separator:a31e3b1f101170f21c7d247f72536ff8c inherit pub_methods_class_seven_seg_disp_hw"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae04a00f5cb2ace69f7d8a487dcb5f33c inherit pub_methods_class_seven_seg_disp_hw" id="r_ae04a00f5cb2ace69f7d8a487dcb5f33c"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_seven_seg_disp_hw.html#ae04a00f5cb2ace69f7d8a487dcb5f33c">begin</a> (const unsigned long int &amp;rfrshFrq=0)</td></tr>
-<tr class="memdesc:ae04a00f5cb2ace69f7d8a487dcb5f33c inherit pub_methods_class_seven_seg_disp_hw"><td class="mdescLeft">&#160;</td><td class="mdescRight">Starts the timer and/or services needed to keep the display updated.  <br /></td></tr>
+<tr class="memdesc:ae04a00f5cb2ace69f7d8a487dcb5f33c inherit pub_methods_class_seven_seg_disp_hw"><td class="mdescLeft">&#160;</td><td class="mdescRight">Starts the timer and / or services needed to keep the display updated.  <br /></td></tr>
 <tr class="separator:ae04a00f5cb2ace69f7d8a487dcb5f33c inherit pub_methods_class_seven_seg_disp_hw"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adf83ae4e9968ed2ccb74d068f84213d7 inherit pub_methods_class_seven_seg_disp_hw" id="r_adf83ae4e9968ed2ccb74d068f84213d7"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_seven_seg_disp_hw.html#adf83ae4e9968ed2ccb74d068f84213d7">dspBffrCntntChng</a> ()</td></tr>
+<tr class="memdesc:adf83ae4e9968ed2ccb74d068f84213d7 inherit pub_methods_class_seven_seg_disp_hw"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads the hardware display driver's internal buffer with the current display's data buffer contents.  <br /></td></tr>
+<tr class="separator:adf83ae4e9968ed2ccb74d068f84213d7 inherit pub_methods_class_seven_seg_disp_hw"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a10ef7e4db6af3dbbcdeb48331d94f2e2 inherit pub_methods_class_seven_seg_disp_hw" id="r_a10ef7e4db6af3dbbcdeb48331d94f2e2"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_seven_seg_disp_hw.html#a10ef7e4db6af3dbbcdeb48331d94f2e2">end</a> ()</td></tr>
 <tr class="memdesc:a10ef7e4db6af3dbbcdeb48331d94f2e2 inherit pub_methods_class_seven_seg_disp_hw"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stops the timer and/or services needed to keep the display updated.  <br /></td></tr>
 <tr class="separator:a10ef7e4db6af3dbbcdeb48331d94f2e2 inherit pub_methods_class_seven_seg_disp_hw"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -150,9 +158,6 @@ Additional Inherited Members</h2></td></tr>
 <tr class="memitem:a64ce74f4368bf5cd1edbbd520df551d9 inherit pub_methods_class_seven_seg_disp_hw" id="r_a64ce74f4368bf5cd1edbbd520df551d9"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_seven_seg_disp_hw.html#a64ce74f4368bf5cd1edbbd520df551d9">getDspDigits</a> ()</td></tr>
 <tr class="memdesc:a64ce74f4368bf5cd1edbbd520df551d9 inherit pub_methods_class_seven_seg_disp_hw"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the Display's length in digits quantity (dspDigitsQty attribute).  <br /></td></tr>
 <tr class="separator:a64ce74f4368bf5cd1edbbd520df551d9 inherit pub_methods_class_seven_seg_disp_hw"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a123b7cf1f60cc67994995460346e699c inherit pub_methods_class_seven_seg_disp_hw" id="r_a123b7cf1f60cc67994995460346e699c"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_seven_seg_disp_hw.html#a123b7cf1f60cc67994995460346e699c">refresh</a> ()</td></tr>
-<tr class="memdesc:a123b7cf1f60cc67994995460346e699c inherit pub_methods_class_seven_seg_disp_hw"><td class="mdescLeft">&#160;</td><td class="mdescRight">Keep the dynamic type displays running.  <br /></td></tr>
-<tr class="separator:a123b7cf1f60cc67994995460346e699c inherit pub_methods_class_seven_seg_disp_hw"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aee6d67c3bdd719b05ac6e7d8d250d43f inherit pub_methods_class_seven_seg_disp_hw" id="r_aee6d67c3bdd719b05ac6e7d8d250d43f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_seven_seg_disp_hw.html#aee6d67c3bdd719b05ac6e7d8d250d43f">setDigitsOrder</a> (uint8_t *newOrderPtr)</td></tr>
 <tr class="memdesc:aee6d67c3bdd719b05ac6e7d8d250d43f inherit pub_methods_class_seven_seg_disp_hw"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a display ports sorting order.  <br /></td></tr>
 <tr class="separator:aee6d67c3bdd719b05ac6e7d8d250d43f inherit pub_methods_class_seven_seg_disp_hw"><td class="memSeparator" colspan="2">&#160;</td></tr>

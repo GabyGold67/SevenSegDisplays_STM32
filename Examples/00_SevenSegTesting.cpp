@@ -50,22 +50,19 @@
 /* USER CODE END Includes */
 
 /* Private variables ---------------------------------------------------------*/
-UART_HandleTypeDef huart2;
 
 /* USER CODE BEGIN PV */
-TaskHandle_t tstDefTaskHandle {NULL};
+TaskHandle_t mainCtrlTaskHandle {NULL};
 BaseType_t xReturned;
-
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
-static void MX_USART2_UART_Init(void);
 void Error_Handler(void);
 
 /* USER CODE BEGIN PFP */
-void tstDefTaskExec(void *pvParameters);
+void mainCtrlTsk(void *pvParameters);
 /* USER CODE END PFP */
 
 /**
@@ -74,9 +71,6 @@ void tstDefTaskExec(void *pvParameters);
   */
 int main(void)
 {
-  /* USER CODE BEGIN 1 */
-  /* USER CODE END 1 */
-
   /* MCU Configuration--------------------------------------------------------*/
 
   /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
@@ -85,22 +79,22 @@ int main(void)
   /* Configure the system clock */
   SystemClock_Config();
 
-  /* USER CODE BEGIN SysInit */
-  /* USER CODE END SysInit */
-
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
-  MX_USART2_UART_Init();
 
   /* Create the thread(s) */
   /* USER CODE BEGIN RTOS_THREADS */
   xReturned = xTaskCreate(
-		  tstDefTaskExec, //taskFunction
-		  "TstMainTask", //Task function legible name
-		  256, // Stack depth in words
+		  mainCtrlTsk, //taskFunction
+		  "MainControlTask", //Task function legible name
+		  512, // Stack depth in words
 		  NULL,	//Parameters to pass as arguments to the taskFunction
 		  configTIMER_TASK_PRIORITY,	//Set to the same priority level as the software timers
-		  &tstDefTaskHandle);
+		  &mainCtrlTaskHandle
+		  );
+  if(xReturned != pdPASS)
+	  Error_Handler();
+
   /* USER CODE END RTOS_THREADS */
 
   /* Start scheduler */
@@ -112,6 +106,129 @@ int main(void)
   {
   }
 }
+
+/* USER CODE BEGIN */
+void mainCtrlTsk(void *pvParameters)
+{
+
+	gpioPinId_t dps00Sclk {GPIOA, GPIO_PIN_5};
+	gpioPinId_t dsp00Rclk {GPIOA, GPIO_PIN_6};
+	gpioPinId_t dsp00Dio {GPIOB, GPIO_PIN_12};
+	gpioPinId_t myDspPins[]{dps00Sclk, dsp00Rclk, dsp00Dio};
+	//gpioPinId_t myDspPins[]{{GPIOA, GPIO_PIN_5}, {GPIOA, GPIO_PIN_6}, {GPIOB, GPIO_PIN_12}};	//Optional shorthand valid array construction
+
+	SevenSegDynHC595 myDspHw(myDspPins, 4 , true);
+	SevenSegDisplays mySevenSegDisp(&myDspHw);
+	mySevenSegDisp.begin();
+
+	const int frstTstNum{0};
+	int tstNum{frstTstNum};
+
+	unsigned long tstTmStrt{0};
+	unsigned long tstTmLngth{0};
+	unsigned long dfltTstTm{2000};
+	bool tstEnded{true};
+	bool tmpBlnkMsk[4];
+
+	for(;;)
+	{
+		if(tstEnded){
+			tstTmStrt = xTaskGetTickCount() / portTICK_RATE_MS;
+			tstTmLngth = dfltTstTm;
+			tstEnded = false;
+
+			switch(tstNum){
+				case 0:
+					mySevenSegDisp.print("Pau.G.");
+					break;
+				case 1:
+					mySevenSegDisp.print("GabY");
+					break;
+				case 2:
+					mySevenSegDisp.blink(500);
+					break;
+				case 3:
+					tmpBlnkMsk[0] = true;
+					tmpBlnkMsk[1] = true;
+					tmpBlnkMsk[2] = false;
+					tmpBlnkMsk[3] = false;
+					mySevenSegDisp.setBlinkMask(tmpBlnkMsk);
+					mySevenSegDisp.setBlinkRate(250);
+					break;
+				case 4:
+					tmpBlnkMsk[0] = false;
+					tmpBlnkMsk[1] = false;
+					tmpBlnkMsk[2] = true;
+					tmpBlnkMsk[3] = true;
+					mySevenSegDisp.setBlinkMask(tmpBlnkMsk);
+					mySevenSegDisp.setBlinkRate(100);
+					break;
+				case 5:
+					mySevenSegDisp.resetBlinkMask();
+					mySevenSegDisp.noBlink();
+					mySevenSegDisp.print(321);
+					break;
+				case 6:
+					mySevenSegDisp.print(321, true);
+					break;
+				case 7:
+					mySevenSegDisp.print(321, true, true);
+					break;
+				case 8:
+					mySevenSegDisp.wait(500);
+					break;
+				case 9:
+					mySevenSegDisp.setWaitRate(250);
+					break;
+				case 10:
+					mySevenSegDisp.setWaitRate(100);
+					break;
+				case 11:
+					mySevenSegDisp.noWait();
+					mySevenSegDisp.print(2.3456, 1, true);
+					break;
+				case 12:
+					mySevenSegDisp.print(2.3456, 1, true, true);
+					break;
+				case 13:
+					mySevenSegDisp.print(-2.3456, 1);
+					break;
+				case 14:
+					mySevenSegDisp.print(-2.3456, 1, true);
+					break;
+				case 15:
+					mySevenSegDisp.print(-2.3456, 1, true, true);
+					break;
+				case 16:
+					mySevenSegDisp.print(-2.3456, 2, true, true);
+					break;
+				case 17:
+					mySevenSegDisp.gauge(3, 'b');
+					break;
+				case 18:
+					mySevenSegDisp.gauge(2, 'b');
+					break;
+				case 19:
+					mySevenSegDisp.gauge(1, 'b');
+					break;
+				case 20:
+					mySevenSegDisp.gauge(0, 'b');
+					break;
+				default:
+					mySevenSegDisp.noBlink();
+					mySevenSegDisp.noWait();
+					tstNum = frstTstNum - 1;
+					tstTmStrt = 0;
+			};
+		}
+
+		if((xTaskGetTickCount() / portTICK_RATE_MS - tstTmStrt) > tstTmLngth){
+			++tstNum;
+			tstEnded = true;
+		}
+	}
+}
+/* USER CODE END */
 
 /**
   * @brief System Clock Configuration
@@ -160,27 +277,6 @@ void SystemClock_Config(void)
 }
 
 /**
-  * @brief USART2 Initialization Function
-  * @param None
-  * @retval None
-  */
-static void MX_USART2_UART_Init(void)
-{
-  huart2.Instance = USART2;
-  huart2.Init.BaudRate = 115200;
-  huart2.Init.WordLength = UART_WORDLENGTH_8B;
-  huart2.Init.StopBits = UART_STOPBITS_1;
-  huart2.Init.Parity = UART_PARITY_NONE;
-  huart2.Init.Mode = UART_MODE_TX_RX;
-  huart2.Init.HwFlowCtl = UART_HWCONTROL_NONE;
-  huart2.Init.OverSampling = UART_OVERSAMPLING_16;
-  if (HAL_UART_Init(&huart2) != HAL_OK)
-  {
-    Error_Handler();
-  }
-}
-
-/**
   * @brief GPIO Initialization Function
   * @param None
   * @retval None
@@ -188,9 +284,6 @@ static void MX_USART2_UART_Init(void)
 static void MX_GPIO_Init(void)
 {
 //  GPIO_InitTypeDef GPIO_InitStruct = {0};
-/* USER CODE BEGIN MX_GPIO_Init_1 */
-/* USER CODE END MX_GPIO_Init_1 */
-
   /* GPIO Ports Clock Enable */
   __HAL_RCC_GPIOC_CLK_ENABLE();
   __HAL_RCC_GPIOH_CLK_ENABLE();
@@ -198,52 +291,6 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOB_CLK_ENABLE();
 }
 
-/* USER CODE BEGIN 4 */
-void tstDefTaskExec(void *pvParameters)
-{
-//---------------------------_sclk-------------_rclk-----------_dio
-//	gpioPinId_t myDspPins[]{{GPIOA, 1 << 5}, {GPIOA, 1 << 6}, {GPIOB, 1 << 12}};
-
-	gpioPinId_t myDspPins[]{{GPIOA, GPIO_PIN_5}, {GPIOA, GPIO_PIN_6}, {GPIOB, GPIO_PIN_12}};
-	SevenSegDynHC595 myDspHw(myDspPins, 4 , true);
-
-	SevenSegDisplays mySevenSegDisp(&myDspHw);
-
-	mySevenSegDisp.begin();
-
-	for(;;)
-	{
-		mySevenSegDisp.print("GabY");
-		vTaskDelay(1000);
-		mySevenSegDisp.blink();
-		mySevenSegDisp.print("Pau.G.");
-		vTaskDelay(3000);
-		mySevenSegDisp.noBlink();
-//		mySevenSegDisp.print(321);
-//		vTaskDelay(1000);
-//		mySevenSegDisp.print(321, true);
-//		vTaskDelay(1000);
-//		mySevenSegDisp.print(321, true, true);
-//		vTaskDelay(1000);
-//		mySevenSegDisp.print("87.6.5");
-//		vTaskDelay(1000);
-//		mySevenSegDisp.print(2.3456,1);
-//		vTaskDelay(1000);
-//		mySevenSegDisp.print(2.3456,1, true);
-//		vTaskDelay(1000);
-//		mySevenSegDisp.print(2.3456,1, true, true);
-//		vTaskDelay(1000);
-//		mySevenSegDisp.print(-2.3456,1);
-//		vTaskDelay(1000);
-//		mySevenSegDisp.print(-2.3456,1, true);
-//		vTaskDelay(1000);
-//		mySevenSegDisp.print(-2.3456,1, true, true);
-//		vTaskDelay(1000);
-	}
-}
-/* USER CODE END 4 */
-
-/* USER CODE BEGIN Header_StartDefaultTask */
 /**
   * @brief  Period elapsed callback in non blocking mode
   * @note   This function is called  when TIM9 interrupt took place, inside
@@ -259,8 +306,6 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
   if (htim->Instance == TIM9) {
     HAL_IncTick();
   }
-  /* USER CODE BEGIN Callback 1 */
-  /* USER CODE END Callback 1 */
 }
 
 /**

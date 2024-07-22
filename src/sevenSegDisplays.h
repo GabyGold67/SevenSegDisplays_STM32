@@ -38,8 +38,8 @@
 //===========================>> Previous lines provided to use FreeRTOS and avoid CMSIS wrappers
 
 // Maximum limit constants, those are provided just to avoid lack of resources errors in the testing stage. They might be changed to lower or higher values, as much as needed and as long as no lack of resources errors are triggered
-const int MAX_DIGITS_PER_DISPLAY{8};
-const int MAX_DISPLAYS_QTY{10};
+const int MAX_DIGITS_PER_DISPLAY{16};
+const int MAX_DISPLAYS_QTY{16};
 
 //============================================================> Class declarations separator
 
@@ -77,7 +77,7 @@ protected:
     unsigned long _blinkTimer{0};
     TimerHandle_t _blinkTmrHndl{NULL};
     uint8_t* _dspAuxBuffPtr{nullptr};
-    bool _dspBuffChng{false};
+//    bool _dspBuffChng{false};
     uint8_t* _dspBuffPtr{nullptr};
     uint8_t _dspDigitsQty{};
     SevenSegDispHw* _dspUndrlHwPtr{};

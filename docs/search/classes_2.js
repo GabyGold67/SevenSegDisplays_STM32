@@ -5,5 +5,6 @@ var searchData=
   ['sevensegdynamic_2',['SevenSegDynamic',['../class_seven_seg_dynamic.html',1,'']]],
   ['sevensegdynhc595_3',['SevenSegDynHC595',['../class_seven_seg_dyn_h_c595.html',1,'']]],
   ['sevensegstatic_4',['SevenSegStatic',['../class_seven_seg_static.html',1,'']]],
-  ['sevensegtm1637_5',['SevenSegTM1637',['../class_seven_seg_t_m1637.html',1,'']]]
+  ['sevensegtm1637_5',['SevenSegTM1637',['../class_seven_seg_t_m1637.html',1,'']]],
+  ['sevensegtm163x_6',['SevenSegTM163X',['../class_seven_seg_t_m163_x.html',1,'']]]
 ];
