@@ -270,7 +270,7 @@ public:
 //============================================================> Class declarations separator
 
 /**
- * @brief Implements specific Seven Segments LEDs dynamic hardware based on 74HC595 shift register array
+ * @brief Implements specific Seven Segments LEDs dynamic display hardware based on 74HC595 shift register array
  *
  * The hardware targeted is implemented as a two shift register matrix, one for the leds segments to be lit, one for the port selection
  * The display implemented with this arrangement is capable of driving from 2 and up to 8 ports displays
@@ -345,17 +345,57 @@ public:
 
 //============================================================> Class declarations separator
 
+/**
+ * @brief Implements specific Seven Segments LEDs static displays hardware based on Titan Micro TM163X series chips
+ *
+ * As TM163X series chips have some differences among them, this class implements the base common characteristics, de differences are implemented in corresponding subclasses.
+ *
+ * Common attributes include:
+ * - Communications protocol (a non standard variation of the I2C protocol).
+ * - Commands structure.
+ * - Read/Write commands.
+ * - Brightness commands, capabilities and values.
+ * - Start and Stop commands.
+ *
+ * Different attributes include:
+ * - Maximum number of ports addressable.
+ *
+ * @note As the communications protocol does't comply with the I2C protocol, the communications must be implemented in software. For that reason, for resources saving sake, the CLK speed will be reduced from the data sheet **Maximum clock frequency** stated as 500KHz to a less demanding 100KHz time slices, managed by a timer interrupt set at 10MHz, enabling the timer interrupt service only while transmitting data, and disabling it while idle. The transmission protocol will implement the data sheet requirements, part of it being the use of a 0.5 long CLK multiples for signaling, so **TWO** 10 MHz periods will be set as the CLK width standard.
+ *
+ * @class SevenSegTM163X
+ */
 class SevenSegTM163X: public SevenSegStatic{
+	static uint8_t _usTmrUsrs;
+   static TIM_HandleTypeDef _htim10Us;
 protected:
    const uint8_t _clkArgPos {0};
    const uint8_t _dioArgPos {1};
    gpioPinId_t _clk{};
    gpioPinId_t _dio{};
 
+   uint8_t _brghtnss{};
+   const uint8_t _brghtnssLvlMax{7};
+   const uint8_t _brghtnssLvlMin{0};
+
+   bool _turnOff();
+   bool _turnOn();
+
+   void _delay10Us(const uint8_t);
+   void _txStart();
+   void _txAsk();
+   void _txStop();
+   void _txWrByte(const uint8_t data);
+
 public:
 	SevenSegTM163X(gpioPinId_t* ioPins, uint8_t dspDigits);
 	~SevenSegTM163X();
-	bool setBrghtnss();
+	bool begin();
+	virtual void dspBffrCntntChng();
+	bool end();
+	bool getBrghtnss();
+	bool getBrghtnssMaxLvl();
+	bool getBrghtnssMinLvl();
+	bool setBrghtnss(const uint8_t &newBrghtnssLvl);
 
 };
 
@@ -364,10 +404,23 @@ public:
 class SevenSegTM1637: public SevenSegTM163X{
 protected:
 	const uint8_t _dspDigitsQtyMax{6}; // Maximum display size in digits, hardware dependent
+public:
+	SevenSegTM1637(gpioPinId_t* ioPins, uint8_t dspDigits);
+	~SevenSegTM1637();
 
 };
 
 //============================================================> Class declarations separator
 
+class SevenSegTM1639: public SevenSegTM163X{
+protected:
+	const uint8_t _dspDigitsQtyMax{16}; // Maximum display size in digits, hardware dependent
+public:
+	SevenSegTM1639(gpioPinId_t* ioPins, uint8_t dspDigits);
+	~SevenSegTM1639();
+
+};
+
+//============================================================> Class declarations separator
 
 #endif /* _SEVENSEGDISPHW_H_ */

@@ -1,5 +1,5 @@
 <map id="SevenSegDynHC595" name="SevenSegDynHC595">
-<area shape="rect" id="Node000001" title="Implements specific Seven Segments LEDs dynamic hardware based on 74HC595 shift register array." alt="" coords="5,155,147,181"/>
+<area shape="rect" id="Node000001" title="Implements specific Seven Segments LEDs dynamic display hardware based on 74HC595 shift register arra..." alt="" coords="5,155,147,181"/>
 <area shape="rect" id="Node000002" href="$class_seven_seg_dynamic.html" title="Implements a generic Seven Segments LEDs dynamic hardware interface to displays the logically generat..." alt="" coords="11,80,141,107"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="79,122,79,154,73,154,73,122"/>
 <area shape="rect" id="Node000003" href="$class_seven_seg_disp_hw.html" title="Implements a generic Seven Segments LEDs hardware interface to displays the logically generated chara..." alt="" coords="14,5,138,32"/>

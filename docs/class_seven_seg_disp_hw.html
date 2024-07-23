@@ -116,12 +116,14 @@ Inheritance diagram for SevenSegDispHw:</div>
 <area shape="poly" title=" " alt="" coords="131,45,93,82,90,78,128,41"/>
 <area shape="rect" href="class_seven_seg_static.html" title=" " alt="" coords="173,80,286,107"/>
 <area shape="poly" title=" " alt="" coords="179,41,218,78,214,82,176,45"/>
-<area shape="rect" href="class_seven_seg_dyn_h_c595.html" title="Implements specific Seven Segments LEDs dynamic hardware based on 74HC595 shift register array." alt="" coords="5,155,147,181"/>
+<area shape="rect" href="class_seven_seg_dyn_h_c595.html" title="Implements specific Seven Segments LEDs dynamic display hardware based on 74HC595 shift register arra..." alt="" coords="5,155,147,181"/>
 <area shape="poly" title=" " alt="" coords="80,123,79,154,74,154,75,122"/>
-<area shape="rect" href="class_seven_seg_t_m163_x.html" title=" " alt="" coords="171,155,296,181"/>
+<area shape="rect" href="class_seven_seg_t_m163_x.html" title="Implements specific Seven Segments LEDs static displays hardware based on Titan Micro TM163X series c..." alt="" coords="171,155,296,181"/>
 <area shape="poly" title=" " alt="" coords="234,122,235,154,230,154,228,123"/>
-<area shape="rect" href="class_seven_seg_t_m1637.html" title=" " alt="" coords="171,229,296,256"/>
-<area shape="poly" title=" " alt="" coords="236,197,236,229,231,229,231,197"/>
+<area shape="rect" href="class_seven_seg_t_m1637.html" title=" " alt="" coords="96,229,221,256"/>
+<area shape="poly" title=" " alt="" coords="211,194,173,231,170,227,208,190"/>
+<area shape="rect" href="class_seven_seg_t_m1639.html" title=" " alt="" coords="245,229,371,256"/>
+<area shape="poly" title=" " alt="" coords="259,190,297,227,293,231,255,194"/>
 </map>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <div class="dynheader">
@@ -269,6 +271,8 @@ Public Member Functions</h2></td></tr>
 <p>Loads the hardware display driver's internal buffer with the current display's data buffer contents. </p>
 <p>The method is invoked every time the display's data buffer contents change. This mechanism implementation avoids the need of periodically checking the display's data buffer for changes. The standard invocation of this method is done by the <a class="el" href="class_seven_seg_displays.html" title="Implements a seven segment display object.">SevenSegDisplays</a> class methods that modify the display's data buffer contents (print(), write(), blink(), wait() and others).</p>
 <dl class="section note"><dt>Note</dt><dd>The dynamic technology displays usually don't have internal buffers and need constant reading of the display buffer to refresh the displaying content. For this kind of displays this method is unneeded, so it might be not implementation for those sub-clases, or might be implemented as an empty method. </dd></dl>
+
+<p>Reimplemented in <a class="el" href="class_seven_seg_t_m163_x.html#aae02bd2ac2389f8417c8edc092d92e51">SevenSegTM163X</a>.</p>
 
 </div>
 </div>

@@ -24,6 +24,7 @@ bool setGPIOPinAsOutput(const gpioPinId_t &outPin);
 bool setGPIOPinAsInput(const gpioPinId_t &inPin);
 //--------------------------------------------------------------- User Static variables
 uint8_t SevenSegDispHw::_dspHwSerialNum = 0;
+uint8_t SevenSegTM163X::_usTmrUsrs = 0;
 //============================================================> Class methods separator
 
 SevenSegDispHw::SevenSegDispHw()
@@ -319,20 +320,16 @@ SevenSegTM163X::~SevenSegTM163X()
 {
 }
 
+bool SevenSegTM163X::begin(){
+	bool result{true};
+
+
+	return result;
+}
 //============================================================> Generic use functions
 
 bool setGPIOPinAsOutput(const gpioPinId_t &outPin){
-//	The commented out code is the "old verbose style" of a struct initialization, vs the tidier less error prone New Style
-//	  GPIO_InitTypeDef pinInit = {0};
-
 	  HAL_GPIO_WritePin(outPin.portId, outPin.pinNum, GPIO_PIN_RESET);
-
-/*	  pinInit.Pin = outPin.pinNum;
-	  pinInit.Mode = GPIO_MODE_OUTPUT_PP;
-	  pinInit.Pull = GPIO_NOPULL;
-	  pinInit.Speed = GPIO_SPEED_FREQ_LOW;	// Options include: GPIO_SPEED_FREQ_LOW / GPIO_SPEED_FREQ_MEDIUM / GPIO_SPEED_FREQ_HIGH / GPIO_SPEED_FREQ_VERY_HIGH
-	  HAL_GPIO_Init(outPin.portId, &pinInit);
-*/
 	  GPIO_InitTypeDef pinInit = {
 			  .Pin = outPin.pinNum,
 			  .Mode = GPIO_MODE_OUTPUT_PP,
@@ -357,3 +354,16 @@ bool setGPIOPinAsInput(const gpioPinId_t &inPin){
 
 	  return true;
 }
+
+bool setUsTmrInt(){	//Set a timer interrupt of 10 Us for timebase for synchronous communications CLK
+	/*
+	 * For a 84 MHz MCU SYSCLK:
+	 * Prescaler of 84 sets the output speed to 1000KHz (1MHz)
+	 * Count of 10 sets the output speed to 100KHz
+	 * Any timer for this MCU is capable of those frequencies, the TIM10 is chosen
+	 */
+	bool result{false};
+
+	return result;
+}
+

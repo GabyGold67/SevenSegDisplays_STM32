@@ -8,7 +8,8 @@ var hierarchy =
       ] ],
       [ "SevenSegStatic", "class_seven_seg_static.html", [
         [ "SevenSegTM163X", "class_seven_seg_t_m163_x.html", [
-          [ "SevenSegTM1637", "class_seven_seg_t_m1637.html", null ]
+          [ "SevenSegTM1637", "class_seven_seg_t_m1637.html", null ],
+          [ "SevenSegTM1639", "class_seven_seg_t_m1639.html", null ]
         ] ]
       ] ]
     ] ],

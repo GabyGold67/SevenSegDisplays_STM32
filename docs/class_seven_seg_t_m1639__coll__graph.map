@@ -1,4 +1,4 @@
-<map id="SevenSegTM1637" name="SevenSegTM1637">
+<map id="SevenSegTM1639" name="SevenSegTM1639">
 <area shape="rect" id="Node000001" title=" " alt="" coords="5,355,131,381"/>
 <area shape="rect" id="Node000002" href="$class_seven_seg_t_m163_x.html" title="Implements specific Seven Segments LEDs static displays hardware based on Titan Micro TM163X series c..." alt="" coords="5,279,131,305"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="71,320,71,354,65,354,65,320"/>

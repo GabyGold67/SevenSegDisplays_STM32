@@ -16,6 +16,7 @@ var searchData=
   ['sevensegdynhc595_13',['SevenSegDynHC595',['../class_seven_seg_dyn_h_c595.html',1,'SevenSegDynHC595'],['../class_seven_seg_dyn_h_c595.html#a8396d2da28f7e568ec6f2479352ea105',1,'SevenSegDynHC595::SevenSegDynHC595()']]],
   ['sevensegstatic_14',['SevenSegStatic',['../class_seven_seg_static.html',1,'']]],
   ['sevensegtm1637_15',['SevenSegTM1637',['../class_seven_seg_t_m1637.html',1,'']]],
-  ['sevensegtm163x_16',['SevenSegTM163X',['../class_seven_seg_t_m163_x.html',1,'']]],
-  ['stm32_17',['SevenSegDisplays Library for STM32',['../index.html',1,'']]]
+  ['sevensegtm1639_16',['SevenSegTM1639',['../class_seven_seg_t_m1639.html',1,'']]],
+  ['sevensegtm163x_17',['SevenSegTM163X',['../class_seven_seg_t_m163_x.html',1,'']]],
+  ['stm32_18',['SevenSegDisplays Library for STM32',['../index.html',1,'']]]
 ];
