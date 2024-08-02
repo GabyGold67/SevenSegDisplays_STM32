@@ -15,16 +15,19 @@ static void  tmrStaticCbBlink(TimerHandle_t blinkTmrCbArg){
     return;
 }*/
 
-const int MAX_DIGITS_PER_DISPLAY{8};
+const int MAX_DIGITS_PER_DISPLAY{16};
 const uint8_t diyMore8Bits[8] {3, 2, 1, 0, 7, 6, 5, 4};
 const uint8_t noName4Bits[4] {0, 1, 2, 3};
 
 //--------------------------------------------------------------- User Function prototypes
-bool setGPIOPinAsOutput(const gpioPinId_t &outPin);
+void Error_Handler(void);
 bool setGPIOPinAsInput(const gpioPinId_t &inPin);
+bool setGPIOPinAsOutput(const gpioPinId_t &outPin);
+void txTM163xTmrCB(TIM_HandleTypeDef *htim);
 //--------------------------------------------------------------- User Static variables
 uint8_t SevenSegDispHw::_dspHwSerialNum = 0;
 uint8_t SevenSegTM163X::_usTmrUsrs = 0;
+
 //============================================================> Class methods separator
 
 SevenSegDispHw::SevenSegDispHw()
@@ -308,24 +311,182 @@ SevenSegStatic::~SevenSegStatic()
 //============================================================> Class methods separator
 
 SevenSegTM163X::SevenSegTM163X(gpioPinId_t* ioPins, uint8_t dspDigits)
-:SevenSegStatic(ioPins, dspDigits, true), _clk{ioPins[_clkArgPos]}, _dio{ioPins[_dioArgPos]}
+:SevenSegStatic(ioPins, dspDigits, true)
 {
-	//Setting pin directions
-	setGPIOPinAsOutput(_clk);
-	setGPIOPinAsOutput(_dio);
+	 _clk = ioPins[_clkArgPos];
+	 _dio = ioPins[_dioArgPos];
 
+	setGPIOPinAsOutput(_clk);	//Setting pin directions
+	setGPIOPinAsOutput(_dio);
 }
 
 SevenSegTM163X::~SevenSegTM163X()
 {
 }
 
-bool SevenSegTM163X::begin(){
-	bool result{true};
+bool SevenSegTM163X::begin(TIM_HandleTypeDef &newTxTM163xTmr){
+	bool result{false};
+	/*
+	 * As TM163X use a non standard I2C-like communications protocol, the begin method must do
+	 * - Create a Timer interrupt to produce the CLK speed of the communications
+	 * - Start the Timer int
+	 * - Send a turn On command using the turnOn() method
+	 * - Clear the display (test if needed)
+	 * - Stop the interrupt Timer
+	 */
+
+	//Timer parameters configuration
+	//---------------------------------------------------------------------
+	TIM_OC_InitTypeDef sConfigOC = {0};
+
+	_txTM163xTmr.Instance = TIM11;	//Adress of the TIMER11, must be variable for different timers use
+	_txTM163xTmr.Init.Prescaler = 84-1;	// Prescaled to 1MHz, must be variable to generate that clockspeed for any MCU
+	_txTM163xTmr.Init.CounterMode = TIM_COUNTERMODE_UP;
+	_txTM163xTmr.Init.Period = 10-1;
+	_txTM163xTmr.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
+	_txTM163xTmr.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_ENABLE;
+	if (HAL_TIM_Base_Init(&_txTM163xTmr) != HAL_OK)
+	{
+		Error_Handler();
+	}
+	if (HAL_TIM_OC_Init(&_txTM163xTmr) != HAL_OK)
+	{
+		Error_Handler();
+	}
+	sConfigOC.OCMode = TIM_OCMODE_TIMING;
+	sConfigOC.Pulse = 0;
+	sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
+	sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
+	if (HAL_TIM_OC_ConfigChannel(&_txTM163xTmr, &sConfigOC, TIM_CHANNEL_1) != HAL_OK)
+	{
+		Error_Handler();
+	}
+	//---------------------------------------------------------------------
+	  HAL_TIM_RegisterCallback(&_txTM163xTmr, HAL_TIM_PERIOD_ELAPSED_CB_ID, txTM163xTmrCB);	//Associates the callback with the interrupt source
+	/*HAL_StatusTypeDef HAL_TIM_RegisterCallback(TIM_HandleTypeDef *htim, HAL_TIM_CallbackIDTypeDef CallbackID, pTIM_CallbackTypeDef pCallback);
+	 *                                                            -------                           ----------                       ---------
+	 *                                                               |                                  |                                 |
+	 *                                                               |                                  |                                 --> Pointer to the TIM callback function, the declaration of the function must respect the function pointer as follows: typedef void (*pTIM_CallbackTypeDef)(TIM_HandleTypeDef *htim)
+	 *                                                               |                                  ------------------------------------> Enum defining the Interrupt trigger event for this timer: HAL_TIM_OC_DELAY_ELAPSED_CB_ID = 0x14U // TIM Output Compare Delay Elapsed Callback ID
+	 *                                                               -----------------------------------------------------------------------> TIM_HandleTypeDef reference to the timer
+	*/
+  //---------------------------------------------------------------------
+	  HAL_TIM_Base_Start_IT(&_txTM163xTmr);
+
 
 
 	return result;
 }
+
+void SevenSegTM163X::delay10UsTck(const uint32_t &actDelay){
+	uint32_t tckCount{0};
+	timIntFlg = RESET;	// The handmade CLK signal starts low to give the chance to use a "Rising Edge" mechanism
+
+	do{
+	  if(timIntFlg == SET){
+		  ++tckCount;
+		  timIntFlg = RESET;
+	  }
+	}while (tckCount <= actDelay);
+
+	return;
+}
+
+void SevenSegTM163X::dspBffrCntntChng(){
+	/* If it's low cost confirm the new buffer contents are different from the display content
+	 * Create a message buffer according to the TM1637 I2C modified protocol:
+	 * Invoke the send() method to output the message to the display
+	 * Delete the message buffer
+	 * >> SOT commands + buffer contents + EOT command
+	 * SOT Commands: Command1 + Command2
+	 * >> - Command1: Mode setup
+	 * -----------------
+	 * |7|6|5|4|3|2|1|0|
+	 *  --- --- - - ---
+	 *   |   |  | |  |
+	 *   |   |  | |  Data Write to display: 00
+	 *   |   |  | Address auto-increment:  0
+	 *   |   |  Normal/Test mode:         0
+	 *   |   N/C:                       00
+	 *   Data command setting:        01
+	 *                              0b01000000
+	 *
+	 * >> - Command2: Address command setting, for TM1637 and TM1639 is 0xC0, 6 consecutive addresses for TM1637, 16 for TM1639
+	 * -----------------
+	 * |7|6|5|4|3|2|1|0|
+	 *  --- --- -------
+	 *   |   |     |
+	 *   |   |     C0H:  0000
+	 *   |   N/C:      00
+	 *   Add. comm.: 11
+	 *             0b11000000
+	 *
+	 * >> Buffer contents: 6 ~ 16 bytes data sequence
+	 *
+	 * >> EOT commands: Command3:
+	 * Command3: Display control
+	 * -----------------
+	 * |7|6|5|4|3|2|1|0|
+	 *  --- --- - -----
+	 *   |   |  |   |
+	 *   |   |  |   Brightness control:    000~111
+	 *   |   |  Display switch On/Off:    1/0
+	 *   |   N/C:                       00
+	 *   Display Control:             10
+	 *                              0b1000XXXX
+	 */
+
+	return;
+}
+
+void SevenSegTM163X::_txStart(){
+	HAL_GPIO_WritePin(_clk.portId, _clk.pinNum, GPIO_PIN_SET);
+	HAL_GPIO_WritePin(_dio.portId, _dio.pinNum, GPIO_PIN_SET);
+	delay10UsTck(2);
+	HAL_GPIO_WritePin(_dio.portId, _dio.pinNum, GPIO_PIN_RESET);
+
+
+	return;
+}
+void SevenSegTM163X::_txAsk(){
+	HAL_GPIO_WritePin(_clk.portId, _clk.pinNum, GPIO_PIN_RESET);
+	delay10UsTck(5);
+	while (HAL_GPIO_ReadPin(_dio.portId, _dio.pinNum)){
+	}
+	HAL_GPIO_WritePin(_clk.portId, _clk.pinNum, GPIO_PIN_SET);
+	delay10UsTck(2);
+	HAL_GPIO_WritePin(_clk.portId, _clk.pinNum, GPIO_PIN_RESET);
+
+	return;
+}
+void SevenSegTM163X::_txStop(){
+	HAL_GPIO_WritePin(_clk.portId, _clk.pinNum, GPIO_PIN_RESET);
+	delay10UsTck(2);
+	HAL_GPIO_WritePin(_dio.portId, _dio.pinNum, GPIO_PIN_RESET);
+	delay10UsTck(2);
+	HAL_GPIO_WritePin(_clk.portId, _clk.pinNum, GPIO_PIN_SET);
+	delay10UsTck(2);
+	HAL_GPIO_WritePin(_dio.portId, _dio.pinNum, GPIO_PIN_SET);
+
+	return;
+}
+void SevenSegTM163X::_txWrByte(const uint8_t data){
+
+	return;
+}
+
+void SevenSegTM163X::send(const uint8_t* data, const uint8_t dataQty){
+
+	_txStart();
+	for(int i{0}; i < dataQty; i++){
+		_txWrByte(*(data+i));
+		_txAsk();
+	}
+	_txStop();
+
+	return;
+}
+
 //============================================================> Generic use functions
 
 bool setGPIOPinAsOutput(const gpioPinId_t &outPin){
@@ -367,3 +528,34 @@ bool setUsTmrInt(){	//Set a timer interrupt of 10 Us for timebase for synchronou
 	return result;
 }
 
+void delay10UsTck(const uint32_t &actDelay){
+	uint32_t tckCount{0};
+	timIntFlg = RESET;	// The "hand-made" CLK signal starts low to give the chance to use a "Rising Edge" mechanism
+
+	do{
+	  if(timIntFlg == SET){
+		  ++tckCount;
+		  timIntFlg = RESET;
+	  }
+	}while (tckCount <= actDelay);
+
+	return;
+}
+
+void txTM163xTmrCB(TIM_HandleTypeDef *htim)
+{
+	timIntFlg = SET;
+
+	return;
+}
+
+void Error_Handler(void)
+{
+  /* USER CODE BEGIN Error_Handler_Debug */
+  /* User can add his own implementation to report the HAL error return state */
+  __disable_irq();
+  while (1)
+  {
+  }
+  /* USER CODE END Error_Handler_Debug */
+}

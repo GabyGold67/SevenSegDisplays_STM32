@@ -1,14 +1,12 @@
 /**
   ******************************************************************************
-  * @file	: 08_SevenSegStatHC595_01a.cpp
-  * @brief  : Test for the MpbAsSwitch_STM32 library DbncdDlydMPBttn class
+  * @file	: 08_SevenSegDynHC595_01a.cpp
+  * @brief  : Test for the SevenSegDisplays_STM32 library SevenSegDynHC595 class
   *
-  * 	The test instantiates a DbncdDlydMPBttn object using:
+  * 	The test instantiates a SevenSegDynHC595 object using:
   * 		- A digital output to GPIO_PA05 to be used by the display sclk
   * 		- A digital output to GPIO_PA06 to be used by the display rclk
-  * 		- A digital output to GPIO_PA07 to be used by the display dio
-  *
-  * 		_ The tstWhlOnTaskExec task that will be resumed and suspended according to the isOn state
+  * 		- A digital output to GPIO_PB12 to be used by the display dio
   *
   * 	@author	: Gabriel D. Goldman
   *
@@ -16,7 +14,7 @@
   * 				20/06/2024 Last update
   *
   ******************************************************************************
-  * @attention	This file is part of the Examples folder for the MPBttnAsSwitch_ESP32
+  * @attention	This file is part of the Examples folder for the SevenSegDisplays_ESP32
   * library. All files needed are provided as part of the source code for the library.
   *
   ******************************************************************************
@@ -146,9 +144,6 @@ void SystemClock_Config(void)
 static void MX_GPIO_Init(void)
 {
 //  GPIO_InitTypeDef GPIO_InitStruct = {0};
-/* USER CODE BEGIN MX_GPIO_Init_1 */
-/* USER CODE END MX_GPIO_Init_1 */
-
   /* GPIO Ports Clock Enable */
   __HAL_RCC_GPIOC_CLK_ENABLE();
   __HAL_RCC_GPIOH_CLK_ENABLE();
@@ -200,13 +195,9 @@ void mainCtrlTsk(void *pvParameters)
   */
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
-  /* USER CODE BEGIN Callback 0 */
-  /* USER CODE END Callback 0 */
   if (htim->Instance == TIM9) {
     HAL_IncTick();
   }
-  /* USER CODE BEGIN Callback 1 */
-  /* USER CODE END Callback 1 */
 }
 
 /**

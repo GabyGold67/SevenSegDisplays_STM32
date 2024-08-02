@@ -41,7 +41,13 @@
 	#ifndef __STM32F4xx_HAL_GPIO_H
 		#include "stm32f4xx_hal_gpio.h"
 	#endif
+	#ifndef STM32F4xx_HAL_TIM_H
+		#include "stm32f4xx_hal_tim.h"
+	#endif
+
 #endif
+
+#define HAL_TIM_PERIOD_ELAPSED_CB_ID 0x0EU   /*!< TIM Period Elapsed Callback ID*/
 //===========================>> Previous lines included for developing purposes, corresponding headers must be provided for the production platform/s
 
 
@@ -72,8 +78,13 @@
 
 //===========================>> BEGIN General use function prototypes
 uint8_t singleBitPosNum(uint16_t mask);
-//===========================>> END General use function prototypes
+void delay10UsTck(const uint32_t &actDelay);
+void User_TIMPeriodElapsedCallback(TIM_HandleTypeDef *htim);	// Defining the TM163X Timer Register CB function
 
+//===========================>> END General use function prototypes
+//===========================>> BEGIN (Global) static variables, the use must be reduced to minimum if not completely avoided
+static FlagStatus timIntFlg {RESET};
+//===========================>> END (Global) static variables, the use must be reduced to minimum if not completely avoided
 //============================================================> Class declarations separator
 
 /**
@@ -360,27 +371,31 @@ public:
  * Different attributes include:
  * - Maximum number of ports addressable.
  *
- * @note As the communications protocol does't comply with the I2C protocol, the communications must be implemented in software. For that reason, for resources saving sake, the CLK speed will be reduced from the data sheet **Maximum clock frequency** stated as 500KHz to a less demanding 100KHz time slices, managed by a timer interrupt set at 10MHz, enabling the timer interrupt service only while transmitting data, and disabling it while idle. The transmission protocol will implement the data sheet requirements, part of it being the use of a 0.5 long CLK multiples for signaling, so **TWO** 10 MHz periods will be set as the CLK width standard.
+ * @note As the communications protocol does't comply with the I2C protocol, the communications must be implemented in software. For that reason, for resources saving sake, the CLK speed will be reduced from the data sheet **Maximum clock frequency** stated as 500KHz to a less demanding 100KHz time slices, managed by a timer interrupt set at 100KHz, enabling the timer interrupt service only while transmitting data, and disabling it while idle. The transmission protocol will implement the data sheet requirements, part of it being the use of a 0.5 long CLK multiples for signaling, so **TWO** 100 KHz periods will be set as the CLK width standard.
  *
  * @class SevenSegTM163X
  */
 class SevenSegTM163X: public SevenSegStatic{
+   static TIM_HandleTypeDef _txTM163xTmr;
 	static uint8_t _usTmrUsrs;
-   static TIM_HandleTypeDef _htim10Us;
+
 protected:
-   const uint8_t _clkArgPos {0};
-   const uint8_t _dioArgPos {1};
    gpioPinId_t _clk{};
+   const uint8_t _clkArgPos {0};
    gpioPinId_t _dio{};
+   const uint8_t _dioArgPos {1};
 
    uint8_t _brghtnss{};
-   const uint8_t _brghtnssLvlMax{7};
-   const uint8_t _brghtnssLvlMin{0};
+   const uint8_t _brghtnssLvlMax{};
+   const uint8_t _brghtnssLvlMin{};
+   uint8_t* _mssgBffr{nullptr};
+   uint8_t _mssgBffrLngth{0};
 
    bool _turnOff();
    bool _turnOn();
 
-   void _delay10Us(const uint8_t);
+   void delay10UsTck(const uint32_t &actDelay);
+   void send(const uint8_t* data, const uint8_t dataQty);
    void _txStart();
    void _txAsk();
    void _txStop();
@@ -389,7 +404,7 @@ protected:
 public:
 	SevenSegTM163X(gpioPinId_t* ioPins, uint8_t dspDigits);
 	~SevenSegTM163X();
-	bool begin();
+	bool begin(TIM_HandleTypeDef &newTxTM163xTmr);
 	virtual void dspBffrCntntChng();
 	bool end();
 	bool getBrghtnss();
@@ -404,6 +419,8 @@ public:
 class SevenSegTM1637: public SevenSegTM163X{
 protected:
 	const uint8_t _dspDigitsQtyMax{6}; // Maximum display size in digits, hardware dependent
+   const uint8_t _brghtnssLvlMax{7};
+   const uint8_t _brghtnssLvlMin{0};
 public:
 	SevenSegTM1637(gpioPinId_t* ioPins, uint8_t dspDigits);
 	~SevenSegTM1637();
