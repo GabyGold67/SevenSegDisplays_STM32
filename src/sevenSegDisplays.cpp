@@ -3,7 +3,7 @@
   * @file	: SevenSegDisplays.h
   * @brief	: Source file for SevenSegDisplays library classes
   *
-  * @details This library builds Seven Segments LEDs displays independently from the hardware involved to execute the display. The included attributes and methods are hardware agnostic, and the hardware used might be changed by design requirements, and several different hardware display models might be used at the same time with the same methods even if they are based on different driver chips or management technologies.
+  * @details This library builds Seven Segments LEDs displays independently from the hardware involved to execute the display. The included attributes and methods are hardware implementation agnostic, the hardware used might be changed by design requirements, and several different hardware display models might be used at the same time with the same API even if they are based on different driver chips or management technologies.
   *
   * @author	: Gabriel D. Goldman
   * @version v1.0.0
@@ -182,9 +182,7 @@ void SevenSegDisplays::clear(){
       for (int i{0}; i < _dspDigitsQty; i++){
          if(*(_dspBuffPtr + i) != _space){
             *(_dspBuffPtr + i) = _space;
-            //_dspBuffChng = true;
          	_dspUndrlHwPtr -> dspBffrCntntChng();
-         	//_dspBuffChng = false;
          }
       }
    	taskEXIT_CRITICAL();
@@ -360,44 +358,54 @@ bool SevenSegDisplays::noBlink(){
 
     //Stops the blinking timer, frees the _dspAuxPtr pointed memory, cleans flags
     if(_blinking){
-		_blinking = false;
 		if(_blinkTmrHndl){   //Verify the timer handle is still valid
 			tmrModResult = xTimerStop(_blinkTmrHndl, portMAX_DELAY);
-			if(tmrModResult == pdPASS)
+			if(tmrModResult == pdPASS){
 				tmrModResult = xTimerDelete(_blinkTmrHndl, portMAX_DELAY);
-			if(tmrModResult == pdPASS)
-				_blinkTmrHndl = NULL;
+				if(tmrModResult == pdPASS){
+					_blinkTmrHndl = NULL;
+					restoreDspBuff();
+			      delete [] _dspAuxBuffPtr;
+			      _dspAuxBuffPtr = nullptr;
+					_blinkTimer = 0;
+					_blinkShowOn = true;
+					_blinking = false;
+					result = true;
+				}
+			}
       }
-		restoreDspBuff();
-      delete [] _dspAuxBuffPtr;
-      _dspAuxBuffPtr = nullptr;
-		_blinkTimer = 0;
-		_blinkShowOn = true;
-		result = true;
-   }
+    }
+    else{
+   	 result = true;
+    }
 
    return result;
 }
 
 bool SevenSegDisplays::noWait(){
-   //Stops the waiting, frees the _dspAuxPtr pointed memory, Stops the timer attached to the process
    bool result {false};
     BaseType_t tmrModResult {pdFAIL};
 
+    //Stops the waiting timer, frees the _dspAuxPtr pointed memory, Stops the timer attached to the process
    if (_waiting){
-      _waiting = false;
       if(_waitTmrHndl){   //if the timer still exists and is running, stop and delete
          tmrModResult = xTimerStop(_waitTmrHndl, portMAX_DELAY);
-         if(tmrModResult == pdPASS)
+         if(tmrModResult == pdPASS){
             tmrModResult = xTimerDelete(_waitTmrHndl, portMAX_DELAY);
-         if(tmrModResult == pdPASS)
-            _waitTmrHndl = NULL;
+				if(tmrModResult == pdPASS){
+					_waitTmrHndl = NULL;
+					restoreDspBuff();
+					delete [] _dspAuxBuffPtr;
+					_dspAuxBuffPtr = nullptr;
+					_waitTimer = 0;
+					_waiting = false;
+					result = true;
+				}
+         }
       }
-      restoreDspBuff();
-      delete [] _dspAuxBuffPtr;
-      _dspAuxBuffPtr = nullptr;
-      _waitTimer = 0;
-      result = true;
+   }
+   else{
+   	result = true;
    }
 
    return result;
@@ -456,9 +464,7 @@ bool SevenSegDisplays::print(std::string text){
       taskEXIT_CRITICAL();
       if(printOnBlink)
          blink();
-      //_dspBuffChng = true;
    	_dspUndrlHwPtr -> dspBffrCntntChng();
-   	//_dspBuffChng = false;
    }
    else{
    	clear();
@@ -555,9 +561,7 @@ void SevenSegDisplays::restoreDspBuff(){
 	for (int i{0}; i < _dspDigitsQty; i++){
    	 if((*(_dspBuffPtr + i)) != (*(_dspAuxBuffPtr + i))){
       	 (*(_dspBuffPtr + i)) = (*(_dspAuxBuffPtr + i));
-          //_dspBuffChng = true;
        	_dspUndrlHwPtr -> dspBffrCntntChng();
-       	//_dspBuffChng = false;
    	 }
     }
 	taskEXIT_CRITICAL();
@@ -718,9 +722,7 @@ void SevenSegDisplays::updBlinkState(){
                if(*(_blinkMaskPtr + i))
                   *(_dspBuffPtr + i) = _space;
             _blinkTimer = xTaskGetTickCount() / portTICK_RATE_MS; //Starts the count for the blinkRate control
-            //_dspBuffChng = true;
          	_dspUndrlHwPtr -> dspBffrCntntChng();
-         	//_dspBuffChng = false;
          }
          else if((xTaskGetTickCount() / portTICK_RATE_MS - _blinkTimer) >= _blinkOffRate){
             _blinkTimer = 0;
@@ -732,9 +734,7 @@ void SevenSegDisplays::updBlinkState(){
             //The turn-On display stage of the blinking started, restore the dspBuff contents from the dspAuxBuff
             restoreDspBuff();
             _blinkTimer = xTaskGetTickCount() / portTICK_RATE_MS;
-            //_dspBuffChng = true;
          	_dspUndrlHwPtr -> dspBffrCntntChng();
-         	//_dspBuffChng = false;
          }
          else if((xTaskGetTickCount() / portTICK_RATE_MS - _blinkTimer) >= _blinkOnRate){
             _blinkTimer = 0;
@@ -761,9 +761,7 @@ void SevenSegDisplays::updWaitState(){
                *(_dspBuffPtr + i) = _space;
          }
       	taskEXIT_CRITICAL();
-         //_dspBuffChng = true;
       	_dspUndrlHwPtr -> dspBffrCntntChng();
-      	//_dspBuffChng = false;
 
          _waitCount++;
          if (_waitCount == (_dspDigitsQty + 1))
@@ -840,18 +838,19 @@ bool SevenSegDisplays::write(const uint8_t &segments, const uint8_t &port){
    bool result {false};
    bool writeOnBlink{_blinking};
 
-   if(!_waiting){
-		if (port < _dspDigitsQty){
-			taskENTER_CRITICAL();
-			if(writeOnBlink)
-				noBlink();
-			*(_dspBuffPtr + port) = segments;
-			if(writeOnBlink)
-				blink();
-			taskEXIT_CRITICAL();
-			result = true;
-		}
-   }
+   if(_waiting)
+      noWait();
+	if (port < _dspDigitsQty){
+		taskENTER_CRITICAL();
+		if(writeOnBlink)
+			noBlink();
+		*(_dspBuffPtr + port) = segments;
+		if(writeOnBlink)
+			blink();
+		taskEXIT_CRITICAL();
+   	_dspUndrlHwPtr -> dspBffrCntntChng();
+		result = true;
+	}
 
    return result;
 }
@@ -876,11 +875,9 @@ bool SevenSegDisplays::write(const std::string &character, const uint8_t &port){
 ClickCounter::ClickCounter(SevenSegDisplays* newDisplay)
 :_displayPtr{newDisplay}
 {
-//    Class constructor
 }
 
 ClickCounter::~ClickCounter(){
-
 }
 
 bool ClickCounter::blink(){
@@ -900,15 +897,15 @@ void ClickCounter::clear(){
 }
 
 bool ClickCounter::countBegin(int32_t startVal){
-   bool result{false};
+	bool result{false};
 
-    if ((startVal >= _displayPtr->getDspValMin()) && (startVal <= _displayPtr->getDspValMax())){
-        // if (_display.begin() == true){
-            result = countRestart(startVal);
-            if (result)
-                _beginStartVal = startVal;
-        // }
-    }
+	result = _displayPtr->begin();
+	if(result){
+		result = countRestart(startVal);
+		if (result)
+			_beginStartVal = startVal;
+	}
+
    return result;
 }
 
@@ -929,32 +926,33 @@ bool ClickCounter::countReset(){
     return countRestart(_beginStartVal);
 }
 
-bool ClickCounter::countRestart(int32_t restartValue){
+bool ClickCounter::countRestart(int32_t restartVal){
    bool result{false};
 
-   if ((restartValue >= _displayPtr->getDspValMin()) && (restartValue <= _displayPtr->getDspValMax())){
-      _count = restartValue;
+   if ((restartVal >= _displayPtr->getDspValMin()) && (restartVal <= _displayPtr->getDspValMax())){
+      _count = restartVal;
       result = updDisplay();
    }
 
    return result;
 }
 
-bool ClickCounter::countStop(){
+bool ClickCounter::countEnd(){
 
-    // return _display.stop();
-    return true;
+	return _displayPtr->end();
 }
 
 bool ClickCounter::countToZero(int32_t qty){
-    bool result {false};
+	bool result {false};
 
-    if (_count > 0)
-        result = countDown(qty);
-    else if (_count < 0)
-        result = countUp(qty);
+	if (_count != 0){
+		if(abs(_count) >= abs(qty)){
+			_count = _count - (_count > 0)?abs(qty):(-1)*abs(qty);
+			result = true;
+		}
+	}
 
-    return result;
+   return result;
 }
 
 bool ClickCounter::countUp(int32_t qty){

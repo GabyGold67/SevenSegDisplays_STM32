@@ -134,7 +134,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:aad6eac4fa55968318f6d0c1e4e80cb8e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Virtual class destructor. <br /></td></tr>
 <tr class="separator:aad6eac4fa55968318f6d0c1e4e80cb8e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:add7e74143b675a533853b26bdb9394a0" id="r_add7e74143b675a533853b26bdb9394a0"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#add7e74143b675a533853b26bdb9394a0">begin</a> ()</td></tr>
-<tr class="memdesc:add7e74143b675a533853b26bdb9394a0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Starts the underlying hardware services needed to keep the display data visible and updated.  <br /></td></tr>
+<tr class="memdesc:add7e74143b675a533853b26bdb9394a0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Starts and initializes the underlying hardware services needed to keep the display data visible and updated.  <br /></td></tr>
 <tr class="separator:add7e74143b675a533853b26bdb9394a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a576676d89b46d8d3752fc8d36fbcac2c" id="r_a576676d89b46d8d3752fc8d36fbcac2c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a576676d89b46d8d3752fc8d36fbcac2c">blink</a> ()</td></tr>
 <tr class="memdesc:a576676d89b46d8d3752fc8d36fbcac2c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes the displayed contents blink, by turning periodically off and then turning on the display ports.  <br /></td></tr>
@@ -149,7 +149,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:aa74bbf6a2436ea01c170459ef1da5fbe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Displays a basic graphical representation of the level of fulfillment or completeness of <b>two</b> segmented values or tasks.  <br /></td></tr>
 <tr class="separator:aa74bbf6a2436ea01c170459ef1da5fbe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa712f19de96a9503c804bf4492040781" id="r_aa712f19de96a9503c804bf4492040781"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa712f19de96a9503c804bf4492040781">end</a> ()</td></tr>
-<tr class="memdesc:aa712f19de96a9503c804bf4492040781"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stops and ends the hardware services needed to keep the display data updated and visible.  <br /></td></tr>
+<tr class="memdesc:aa712f19de96a9503c804bf4492040781"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stops and ends the underlying hardware services needed to keep the display data updated and visible.  <br /></td></tr>
 <tr class="separator:aa712f19de96a9503c804bf4492040781"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6fea06785902000457c1105c78d85093" id="r_a6fea06785902000457c1105c78d85093"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6fea06785902000457c1105c78d85093">gauge</a> (const double &amp;level, char label=' ')</td></tr>
 <tr class="memdesc:a6fea06785902000457c1105c78d85093"><td class="mdescLeft">&#160;</td><td class="mdescRight">Displays a basic graphical representation of the level of fulfillment or completeness of a segmented value or task.  <br /></td></tr>
@@ -158,7 +158,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:aa00c8c2fbca4a0068590ef62de28f198"><td class="mdescLeft">&#160;</td><td class="mdescRight">Displays a basic graphical representation of the level of fulfillment or completeness of a segmented value or task.  <br /></td></tr>
 <tr class="separator:aa00c8c2fbca4a0068590ef62de28f198"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a05ddffe49e505638382affaa0426b272" id="r_a05ddffe49e505638382affaa0426b272"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a05ddffe49e505638382affaa0426b272">getDigitsQty</a> ()</td></tr>
-<tr class="memdesc:a05ddffe49e505638382affaa0426b272"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the quantity of digits -ports- of the display as informed by the underlying hardware (<b>UHW</b>)  <br /></td></tr>
+<tr class="memdesc:a05ddffe49e505638382affaa0426b272"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the quantity of ports -digits- of the display as informed by the underlying hardware (<b>UHW</b>)  <br /></td></tr>
 <tr class="separator:a05ddffe49e505638382affaa0426b272"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ace9c93b38f969bac953449c506c2ce2f" id="r_ace9c93b38f969bac953449c506c2ce2f"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ace9c93b38f969bac953449c506c2ce2f">getDspValMax</a> ()</td></tr>
 <tr class="memdesc:ace9c93b38f969bac953449c506c2ce2f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the maximum integer number value displayable by the display.  <br /></td></tr>
@@ -188,7 +188,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a9f790df925c994efb27f0ce1c39014dd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stops the display blinking, if it was doing so, leaving the display turned on.  <br /></td></tr>
 <tr class="separator:a9f790df925c994efb27f0ce1c39014dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2e6d2565f90dc6acf546934dde557471" id="r_a2e6d2565f90dc6acf546934dde557471"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2e6d2565f90dc6acf546934dde557471">noWait</a> ()</td></tr>
-<tr class="memdesc:a2e6d2565f90dc6acf546934dde557471"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stops the <b>waiting mode</b> in process.  <br /></td></tr>
+<tr class="memdesc:a2e6d2565f90dc6acf546934dde557471"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stops the <b>waiting mode</b> in process, if the display was in it.  <br /></td></tr>
 <tr class="separator:a2e6d2565f90dc6acf546934dde557471"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a57d180fb4339fe2359cc864660a765ac" id="r_a57d180fb4339fe2359cc864660a765ac"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a57d180fb4339fe2359cc864660a765ac">print</a> (const double &amp;value, const unsigned int &amp;decPlaces, bool rgtAlgn=false, bool zeroPad=false)</td></tr>
 <tr class="memdesc:a57d180fb4339fe2359cc864660a765ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Displays a floating point value.  <br /></td></tr>
@@ -197,7 +197,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a4858a1c2efaf8a7d0e67297948937d7c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Displays an integer value.  <br /></td></tr>
 <tr class="separator:a4858a1c2efaf8a7d0e67297948937d7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa40acb9d92f5a832d0ba1d22a03f395e" id="r_aa40acb9d92f5a832d0ba1d22a03f395e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa40acb9d92f5a832d0ba1d22a03f395e">print</a> (std::string text)</td></tr>
-<tr class="memdesc:aa40acb9d92f5a832d0ba1d22a03f395e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Displays a string of text.  <br /></td></tr>
+<tr class="memdesc:aa40acb9d92f5a832d0ba1d22a03f395e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Displays a string.  <br /></td></tr>
 <tr class="separator:aa40acb9d92f5a832d0ba1d22a03f395e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a71a1b9852c21835fa110ce0e64a0590e" id="r_a71a1b9852c21835fa110ce0e64a0590e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a71a1b9852c21835fa110ce0e64a0590e">resetBlinkMask</a> ()</td></tr>
 <tr class="memdesc:a71a1b9852c21835fa110ce0e64a0590e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resets the blinking mask.  <br /></td></tr>
@@ -229,7 +229,7 @@ Public Member Functions</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Implements a seven segment display object. </p>
-<p>The class implements a hardware independent seven segment display object. The data to be shown by the physical display, after generated, is stored in a buffer that will be shared with the underlying hardware display. </p>
+<p>The class implements a hardware independent API for seven segment display objects. The data to be shown by the physical display, after generated, is stored and passed to the underlying hardware display. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="ada6d89fb083fd8a5a2ce603b3b1f5e43" name="ada6d89fb083fd8a5a2ce603b3b1f5e43"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ada6d89fb083fd8a5a2ce603b3b1f5e43">&#9670;&#160;</a></span>SevenSegDisplays()</h2>
@@ -249,13 +249,14 @@ Public Member Functions</h2></td></tr>
 <p>Class constructor. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">dspUndrlHwPtr</td><td>A pointer to the underlying hardware display, a <a class="el" href="class_seven_seg_disp_hw.html" title="Implements a generic Seven Segments LEDs hardware interface to displays the logically generated chara...">SevenSegDispHw</a> instantiable subclass object.</td></tr>
+    <tr><td class="paramname">dspUndrlHwPtr</td><td>A pointer to the underlying hardware display, a <a class="el" href="class_seven_seg_disp_hw.html" title="Implements a generic Seven Segments LEDs hardware interface to displays the logically generated chara...">SevenSegDispHw</a> instantiable class object.</td></tr>
   </table>
   </dd>
 </dl>
-<p>The underlying hardware display is the physical device used to display the information generated by this class objects, shared through it's buffer. As such the underlying display has physical properties that might condition some of this object characteristics -some has no practical incidence- including:</p><ul>
+<p>The underlying hardware display is the physical device used to display the information generated by this class objects, shared through it's buffer. As such the underlying display has physical properties that might condition some of this object's characteristics -some has no practical incidence- including:</p><ul>
 <li>Digits (ports) quantity.</li>
 <li>Type of led connection (common Anode/common Cathode).</li>
+<li>Turn On/Turn Off control</li>
 <li>Quantity and position of semicolons, apostrophes and special icons.</li>
 <li>Managed brightness levels.</li>
 <li>Display color change. </li>
@@ -287,9 +288,9 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Starts the underlying hardware services needed to keep the display data visible and updated. </p>
-<p>Depending on the underlying hardware characteristics, several tasks and services might be configured and started. As these activities are hardware-aware each <b><a class="el" href="class_seven_seg_disp_hw.html" title="Implements a generic Seven Segments LEDs hardware interface to displays the logically generated chara...">SevenSegDispHw</a></b> subclass must implement those initialization tasks in it's own <a class="el" href="#add7e74143b675a533853b26bdb9394a0" title="Starts the underlying hardware services needed to keep the display data visible and updated.">begin()</a> method.</p>
-<dl class="section return"><dt>Returns</dt><dd>The value returned by the <b><a class="el" href="class_seven_seg_disp_hw.html" title="Implements a generic Seven Segments LEDs hardware interface to displays the logically generated chara...">SevenSegDispHw</a></b> subclass implementation of the <a class="el" href="#add7e74143b675a533853b26bdb9394a0" title="Starts the underlying hardware services needed to keep the display data visible and updated.">begin()</a> method </dd></dl>
+<p>Starts and initializes the underlying hardware services needed to keep the display data visible and updated. </p>
+<p>Depending on the underlying hardware characteristics, several tasks and services might be configured and started. As these activities are hardware-aware each <b><a class="el" href="class_seven_seg_disp_hw.html" title="Implements a generic Seven Segments LEDs hardware interface to displays the logically generated chara...">SevenSegDispHw</a></b> subclass must implement those initialization tasks in it's own <a class="el" href="#add7e74143b675a533853b26bdb9394a0" title="Starts and initializes the underlying hardware services needed to keep the display data visible and u...">begin()</a> method.</p>
+<dl class="section return"><dt>Returns</dt><dd>The value returned by the <b><a class="el" href="class_seven_seg_disp_hw.html" title="Implements a generic Seven Segments LEDs hardware interface to displays the logically generated chara...">SevenSegDispHw</a></b> subclass implementation of the <a class="el" href="#add7e74143b675a533853b26bdb9394a0" title="Starts and initializes the underlying hardware services needed to keep the display data visible and u...">begin()</a> method </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">true</td><td>the hardware related services could be started as needed </td></tr>
@@ -316,10 +317,10 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Makes the displayed contents blink, by turning periodically off and then turning on the display ports. </p>
-<p>Once started the display will continue blinking even if the contents are changed. By default all the digits blink, but each digit might be configured individually to blink or not by using the <a class="el" href="#adbf4a53a706c00d9a237991e234a9353" title="Modifies the blinking mask.">setBlinkMask(const bool*)</a> method. When invoking this method with no parameters the existing blinking times parameters -stating the time the blinking ports will stay off an then the time they will stay on- will be used. The blinking times are set at instantiation time to generate a symmetrical blinking effect, meaning that the time the display shows the contents and the time the display is blank are equal. The display blinks until a <a class="el" href="#a9f790df925c994efb27f0ce1c39014dd" title="Stops the display blinking, if it was doing so, leaving the display turned on.">noBlink()</a> method is invoked, or until a <a class="el" href="#ae00a0275a3fa0c1858e475d3e2f1272d" title="Makes the display show a &quot;simple animated progress bar&quot;.">wait()</a> is invoked, as <b>blinking</b> and <b>waiting</b> are mutually exclusive states. The blinking rate can be changed by using the setBlinkRate(const unsigned long, const unsigned long) method. After changing the blinking rate, the new blinking rate will be kept until it is modified with a new setBlinkRate(const unsigned long, const unsigned long) call, or it is restarted by a blink(const unsigned long, const unsigned long) with parameters. </p><dl class="section note"><dt>Note</dt><dd>To restart the blinking with a <a class="el" href="#a576676d89b46d8d3752fc8d36fbcac2c" title="Makes the displayed contents blink, by turning periodically off and then turning on the display ports...">blink()</a> method invocation the service must first be stopped, as the <a class="el" href="#a576676d89b46d8d3752fc8d36fbcac2c" title="Makes the displayed contents blink, by turning periodically off and then turning on the display ports...">blink()</a> method call has no effect if the blinking service was already running.</dd></dl>
+<p>Once started the display will continue blinking even if the contents are changed. By default all the digits are set to blink, but each digit might be configured individually to blink or not by using the <a class="el" href="#adbf4a53a706c00d9a237991e234a9353" title="Modifies the blinking mask.">setBlinkMask(const bool*)</a> method. When invoking this method with no parameters the existing blinking times parameters -stating the time the blinking ports will stay off an then the time they will stay on- will be used. The blinking times are set at instantiation time to generate a symmetrical blinking effect, meaning that the time the display shows the contents and the time the display is blank are equal. The display blinks until a <a class="el" href="#a9f790df925c994efb27f0ce1c39014dd" title="Stops the display blinking, if it was doing so, leaving the display turned on.">noBlink()</a> method is invoked, or until a <a class="el" href="#ae00a0275a3fa0c1858e475d3e2f1272d" title="Makes the display show a &quot;simple animated progress bar&quot;.">wait()</a> is invoked, as <b>blinking</b> and <b>waiting</b> are mutually exclusive states. The blinking rate can be changed by using the setBlinkRate(const unsigned long, const unsigned long) method. After changing the blinking rate, the new blinking rate will be kept until it is modified with a new setBlinkRate(const unsigned long, const unsigned long) call, or it is restarted by a blink(const unsigned long, const unsigned long) with parameters. </p><dl class="section note"><dt>Note</dt><dd>To restart the blinking with a <a class="el" href="#a576676d89b46d8d3752fc8d36fbcac2c" title="Makes the displayed contents blink, by turning periodically off and then turning on the display ports...">blink()</a> method invocation the service must first be stopped, as the <a class="el" href="#a576676d89b46d8d3752fc8d36fbcac2c" title="Makes the displayed contents blink, by turning periodically off and then turning on the display ports...">blink()</a> method call has no effect if the blinking service was already running.</dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">true</td><td>If the display was not already set to blink of if it was already running </td></tr>
+    <tr><td class="paramname">true</td><td>If the display was not already set to blink and the blinking was successfully started, or if it was already running. </td></tr>
     <tr><td class="paramname">false</td><td>The display could not be set for blink due to errors setting the timer that controls the blinking effect. </td></tr>
   </table>
   </dd>
@@ -385,7 +386,7 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Clears the display, turning off all the segments and dots. </p>
-<dl class="section note"><dt>Note</dt><dd>The <a class="el" href="#a67a533e8239853768391bfe513fc318e" title="Clears the display, turning off all the segments and dots.">clear()</a> method can be invoked while the display is in "blinking state" or "waiting state". In the first case the effect will be not visible, as it will imply a empty display turning on and off, no visual clue will be perceived. In the second case, after the "wait state" ends the original display will not be restored as usual, but an empty display will be set after the <a class="el" href="#a2e6d2565f90dc6acf546934dde557471" title="Stops the waiting mode in process.">noWait()</a> is invoked.</dd>
+<dl class="section note"><dt>Note</dt><dd>The <a class="el" href="#a67a533e8239853768391bfe513fc318e" title="Clears the display, turning off all the segments and dots.">clear()</a> method can be invoked while the display is in "blinking state" or "waiting state". In the first case the effect will be not visible, as it will imply a empty display turning on and off, no visual clue will be perceived. In the second case, after the "wait state" ends the original display will not be restored as usual, but an empty display will be set after the <a class="el" href="#a2e6d2565f90dc6acf546934dde557471" title="Stops the waiting mode in process, if the display was in it.">noWait()</a> is invoked.</dd>
 <dd>
 The clearing process involves writing a <b>space</b> character to every display port. Due to physical display characteristics this might be or not be equal to writing a '\0' to them. </dd></dl>
 
@@ -426,8 +427,8 @@ The clearing process involves writing a <b>space</b> character to every display 
   <table class="params">
     <tr><td class="paramname">levelLeft</td><td>The value to display for the two left side 7 segments display ports, must be in the range 0 &lt;= level &lt;= 3. </td></tr>
     <tr><td class="paramname">levelRight</td><td>The value to display for the two right side 7 segments display ports, must be in the range 0 &lt;= level &lt;= 3. </td></tr>
-    <tr><td class="paramname">labelLeft</td><td>(Optional) A char that will be displayed in the leftmost digit of the display. The character must be one of the "displayable" characters, as listed in the <b><a class="el" href="#aa40acb9d92f5a832d0ba1d22a03f395e" title="Displays a string of text.">print(std::string)</a></b> method description. If not specified the default value, a <b>space</b>, will be assumed, </td></tr>
-    <tr><td class="paramname">labelRight</td><td>(Optional) A char that will be displayed in the position left to the <b>levelRight</b> display digit of the display. The character must be one of the "displayable" characters, as listed in the <b><a class="el" href="#aa40acb9d92f5a832d0ba1d22a03f395e" title="Displays a string of text.">print(std::string)</a></b> method description. If not specified the default value, a <b>space</b>, will be assumed,</td></tr>
+    <tr><td class="paramname">labelLeft</td><td>(Optional) A char that will be displayed in the leftmost port of the display. The character must be one of the "displayable" characters, as listed in the <b><a class="el" href="#aa40acb9d92f5a832d0ba1d22a03f395e" title="Displays a string.">print(std::string)</a></b> method description. If not specified the default value, a <b>space</b>, will be assumed, </td></tr>
+    <tr><td class="paramname">labelRight</td><td>(Optional) A char that will be displayed in the position left to the <b>levelRight</b> display port of the display. The character must be one of the "displayable" characters, as listed in the <b><a class="el" href="#aa40acb9d92f5a832d0ba1d22a03f395e" title="Displays a string.">print(std::string)</a></b> method description. If not specified the default value, a <b>space</b>, will be assumed,</td></tr>
   </table>
   </dd>
 </dl>
@@ -464,9 +465,9 @@ The clearing process involves writing a <b>space</b> character to every display 
 </table>
 </div><div class="memdoc">
 
-<p>Stops and ends the hardware services needed to keep the display data updated and visible. </p>
-<p>Depending on the underlying hardware several tasks and services were configured and started by the <b><a class="el" href="#add7e74143b675a533853b26bdb9394a0" title="Starts the underlying hardware services needed to keep the display data visible and updated.">begin()</a></b> method. As those configuration activities are hardware-aware each <b><a class="el" href="class_seven_seg_disp_hw.html" title="Implements a generic Seven Segments LEDs hardware interface to displays the logically generated chara...">SevenSegDispHw</a></b> subclass implement those initialization tasks, and each subclass must implement the correct termination of those tasks and services if required. The <b><a class="el" href="#aa712f19de96a9503c804bf4492040781" title="Stops and ends the hardware services needed to keep the display data updated and visible.">end()</a></b> method invokes the underlying hardware <b><a class="el" href="#aa712f19de96a9503c804bf4492040781" title="Stops and ends the hardware services needed to keep the display data updated and visible.">end()</a></b> method</p>
-<dl class="section return"><dt>Returns</dt><dd>The value returned by the <b><a class="el" href="class_seven_seg_disp_hw.html" title="Implements a generic Seven Segments LEDs hardware interface to displays the logically generated chara...">SevenSegDispHw</a></b> subclass implementation of the <a class="el" href="#aa712f19de96a9503c804bf4492040781" title="Stops and ends the hardware services needed to keep the display data updated and visible.">end()</a> method </dd></dl>
+<p>Stops and ends the underlying hardware services needed to keep the display data updated and visible. </p>
+<p>Depending on the underlying hardware several tasks and services were configured and started by the <b><a class="el" href="#add7e74143b675a533853b26bdb9394a0" title="Starts and initializes the underlying hardware services needed to keep the display data visible and u...">begin()</a></b> method. As those configuration activities are hardware-aware each <b><a class="el" href="class_seven_seg_disp_hw.html" title="Implements a generic Seven Segments LEDs hardware interface to displays the logically generated chara...">SevenSegDispHw</a></b> subclass implement those initialization tasks, and each subclass must implement the correct termination of those tasks and services if required. The <b><a class="el" href="#aa712f19de96a9503c804bf4492040781" title="Stops and ends the underlying hardware services needed to keep the display data updated and visible.">end()</a></b> method invokes the underlying hardware <b><a class="el" href="#aa712f19de96a9503c804bf4492040781" title="Stops and ends the underlying hardware services needed to keep the display data updated and visible.">end()</a></b> method</p>
+<dl class="section return"><dt>Returns</dt><dd>The value returned by the <b><a class="el" href="class_seven_seg_disp_hw.html" title="Implements a generic Seven Segments LEDs hardware interface to displays the logically generated chara...">SevenSegDispHw</a></b> subclass implementation of the <a class="el" href="#aa712f19de96a9503c804bf4492040781" title="Stops and ends the underlying hardware services needed to keep the display data updated and visible.">end()</a> method </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">true</td><td>the hardware related services could be stopped and ended as needed </td></tr>
@@ -501,7 +502,7 @@ The clearing process involves writing a <b>space</b> character to every display 
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">level</td><td>The double value to display, must be in the range 0.0 &lt;= level &lt;= 1.0, being the range the representation of the percentage of the 'full' level, so that the ranges are: 0.0 &lt;= level &lt; 0.25 for the first level, 0.25 &lt;= level &lt; 0.50 for the second level, 0.50 &lt;= level &lt; 0.75 for the third level, and 0.75 &lt;= level &lt;= 1.00 for the fourth and upper level. </td></tr>
-    <tr><td class="paramname">label</td><td>(Optional) A character that might be added before (leftmost port) the graphical representation to give an indication of what the display is showing, if not specified the default value, a space, will be assumed. The character must be one of the "displayable" characters, as listed in the <a class="el" href="#aa40acb9d92f5a832d0ba1d22a03f395e" title="Displays a string of text.">print(std::string)</a> method description.</td></tr>
+    <tr><td class="paramname">label</td><td>(Optional) A character that might be added before (leftmost port) the graphical representation to give an indication of what the display is showing, if not specified the default value, a space, will be assumed. The character must be one of the "displayable" characters, as listed in the <a class="el" href="#aa40acb9d92f5a832d0ba1d22a03f395e" title="Displays a string.">print(std::string)</a> method description.</td></tr>
   </table>
   </dd>
 </dl>
@@ -544,7 +545,7 @@ The clearing process involves writing a <b>space</b> character to every display 
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">level</td><td>The integer value to display, must be in the range 0 &lt;= level &lt;= 3. </td></tr>
-    <tr><td class="paramname">label</td><td>(Optional) A character that might be added before (leftmost port) the graphical representation to give an indication of what the display is showing, if not specified the default value, a space, will be assumed. The character must be one of the "displayable" characters, as listed in the <a class="el" href="#aa40acb9d92f5a832d0ba1d22a03f395e" title="Displays a string of text.">print(std::string)</a> method description.</td></tr>
+    <tr><td class="paramname">label</td><td>(Optional) A character that might be added before (leftmost port) the graphical representation to give an indication of what the display is showing, if not specified the default value, a space, will be assumed. The character must be one of the "displayable" characters, as listed in the <a class="el" href="#aa40acb9d92f5a832d0ba1d22a03f395e" title="Displays a string.">print(std::string)</a> method description.</td></tr>
   </table>
   </dd>
 </dl>
@@ -578,8 +579,8 @@ The clearing process involves writing a <b>space</b> character to every display 
       </table>
 </div><div class="memdoc">
 
-<p>Gets the quantity of digits -ports- of the display as informed by the underlying hardware (<b>UHW</b>) </p>
-<p>The object instantiation requires a <b>physical display object</b> as parameter, and such information is requested from that object. Each time this class is instantiated the object is created with the needed resources -display memory buffer, auxiliary buffers, blinking mask, etc.), and the range of values displayable are calculated based on the display's ports quantity parameter, and that value is the one returned by this method.</p>
+<p>Gets the quantity of ports -digits- of the display as informed by the underlying hardware (<b>UHW</b>) </p>
+<p>The object instantiation requires a <b>underlying physical display object</b> as parameter, and such information is requested from that object. Each time this class is instantiated the object is created with the needed resources -display memory buffer, auxiliary buffers, blinking mask, etc.), and the range of values displayable are calculated based on the display's ports quantity parameter, and that value is the one returned by this method.</p>
 <dl class="section return"><dt>Returns</dt><dd>The number indicating the quantity of digits of the instantiated display. </dd></dl>
 
 </div>
@@ -664,7 +665,7 @@ The clearing process involves writing a <b>space</b> character to every display 
 </div><div class="memdoc">
 
 <p>Gets the maximum value the blink rates for the <a class="el" href="#a576676d89b46d8d3752fc8d36fbcac2c" title="Makes the displayed contents blink, by turning periodically off and then turning on the display ports...">blink()</a> method might take. </p>
-<p>The speed at witch the physical displays might be turned on and off is limited. In the case of this parameter a too much high value might void the blinking strobe effect of being perceived, giving the sensation that the display is fixed on, or was cleared from values. So a higher limit is imposed.</p>
+<p>The speed at witch the physical displays might be turned on and off is limited. In the case of this parameter a too high value might void the blinking strobe effect of being perceived, giving the sensation that the display is fixed on, or was cleared from values. So a higher limit is imposed.</p>
 <dl class="section return"><dt>Returns</dt><dd>The maximum value that might be used as a <a class="el" href="#a576676d89b46d8d3752fc8d36fbcac2c" title="Makes the displayed contents blink, by turning periodically off and then turning on the display ports...">blink()</a> function parameter.</dd></dl>
 <dl class="section note"><dt>Note</dt><dd>This value is also the maximum parameter accepted by the following methods: blink(const unsigned long, const unsigned long), setBlinkRate(const unsigned long, const unsigned long), wait(const unsigned long) and setWaitRate(const unsigned long) </dd></dl>
 
@@ -686,7 +687,7 @@ The clearing process involves writing a <b>space</b> character to every display 
 </div><div class="memdoc">
 
 <p>Gets the minimum value the blink rates for the <a class="el" href="#a576676d89b46d8d3752fc8d36fbcac2c" title="Makes the displayed contents blink, by turning periodically off and then turning on the display ports...">blink()</a> method might take. </p>
-<p>The speed at witch the physical displays might be turned on and off are limited. In the case of this parameter a too much low value might avoid the blinking strobe effect of being perceived, or be not tolerated by the underlying hardware, giving the sensation that the display is fixed on, or was cleared from values. So a lower limit is imposed.</p>
+<p>The speed at witch the physical displays might be turned on and off are limited. In the case of this parameter a too low value might avoid the blinking strobe effect of being perceived, or be not tolerated by the underlying hardware, giving the sensation that the display is fixed on, or was cleared from values. So a lower limit is imposed.</p>
 <dl class="section return"><dt>Returns</dt><dd>The minimum value that might be used as a <a class="el" href="#a576676d89b46d8d3752fc8d36fbcac2c" title="Makes the displayed contents blink, by turning periodically off and then turning on the display ports...">blink()</a> function parameter.</dd></dl>
 <dl class="section note"><dt>Note</dt><dd>This value is also the minimum parameter accepted by the following methods: blink(const unsigned long, const unsigned long), setBlinkRate(const unsigned long, const unsigned long), wait(const unsigned long) and setWaitRate(const unsigned long) <br  />
  </dd></dl>
@@ -716,7 +717,7 @@ The clearing process involves writing a <b>space</b> character to every display 
   </table>
   </dd>
 </dl>
-<dl class="section note"><dt>Note</dt><dd>The condition to be blank is that all the display ports are exhibiting the _space character, not to be confused with '\0' </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>The condition to be blank is that all the display ports are exhibiting the "space" character, not to be confused with '\0' </dd></dl>
 
 </div>
 </div>
@@ -739,7 +740,7 @@ The clearing process involves writing a <b>space</b> character to every display 
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">true</td><td>The display is set to blink. </td></tr>
-    <tr><td class="paramname">false</td><td>The display is set not to blink. </td></tr>
+    <tr><td class="paramname">false</td><td>The display is set to not blink. </td></tr>
   </table>
   </dd>
 </dl>
@@ -790,11 +791,12 @@ The clearing process involves writing a <b>space</b> character to every display 
 <p>Stops the display blinking, if it was doing so, leaving the display turned on. </p>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">true</td><td>The display was set to blink, and the blinking is stopped. </td></tr>
-    <tr><td class="paramname">false</td><td>The display was not set to blink, no changes have been done. </td></tr>
+    <tr><td class="paramname">true</td><td>The display is set not to blink. </td></tr>
+    <tr><td class="paramname">false</td><td>The display was set to blink but the blinking couldn't be stopped due to timer management failures. </td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section warning"><dt>Warning</dt><dd>The failure of the method might indicate a bug in the development. Direct manipulation of the handles and pointers to the resources (or the resources themselves) used by the blinking mechanism might disable this method capabilities to correctly exiting the <b>blinking state</b> </dd></dl>
 
 </div>
 </div>
@@ -813,14 +815,15 @@ The clearing process involves writing a <b>space</b> character to every display 
       </table>
 </div><div class="memdoc">
 
-<p>Stops the <b>waiting mode</b> in process. </p>
+<p>Stops the <b>waiting mode</b> in process, if the display was in it. </p>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">true</td><td>The display was set to wait, and the waiting is stopped. </td></tr>
-    <tr><td class="paramname">false</td><td>The display was not set to wait, no changes will be done. </td></tr>
+    <tr><td class="paramname">true</td><td>The display is set out of <b>waiting mode</b>, and the waiting is stopped. </td></tr>
+    <tr><td class="paramname">false</td><td>The display was set to wait, but the waiting couldn't be stopped due to timer management failures.</td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section warning"><dt>Warning</dt><dd>The failure of the method might indicate a bug in the development. Direct manipulation of the handles and pointers to the resources (or the resources themselves) used by the waiting mechanism might disable this method capabilities to correctly exiting the <b>waiting state</b> </dd></dl>
 
 </div>
 </div>
@@ -933,14 +936,14 @@ The clearing process involves writing a <b>space</b> character to every display 
       </table>
 </div><div class="memdoc">
 
-<p>Displays a string of text. </p>
+<p>Displays a string. </p>
 <p>Displays the string text if it contains all <b>displayable</b> characters, which are the ones included in the following list: <b>0123456789AabCcdEeFGHhIiJLlnOoPqrStUuY-_.</b> and the <b>space</b>. There are other 3 characters that can be represented in the display, but the conversion from a character to use while programming is "host language setting dependent", so those where assigned to available ASCII non displayable characters of easy access in any keyboard layout in most languages, they can be used as part of the text string to display, and they are:</p>
 <p>= Builds a character formed by lighting the lower 2 horizontal segments of the digit display, can be described as a "lower equal" symbol.</p>
 <p>~ Builds a character formed by lighting the 3 horizontal segments of the digit display, can be described as an "equivalent" symbol.</p>
 <p><em>*</em> (asterisk) Builds a character by lighting the upper 4 segments, forming a little square, can be described as the "degrees" symbol or º.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">text</td><td>String, up to <b>DigitsQty</b> -see <a class="el" href="#a05ddffe49e505638382affaa0426b272" title="Gets the quantity of digits -ports- of the display as informed by the underlying hardware (UHW)">getDigitsQty()</a>- displayable characters long PLUS usable dots, all characters included in the representable characters list. Each valid character might be followed by a "." if needed, without being counted as a character, even spaces and special chars. If two or more consecutive dots are passed, an intermediate space is considered to be included between each pair of them, and that space counts as one of the available characters to display.</td></tr>
+    <tr><td class="paramname">text</td><td>String, up to <b>DigitsQty</b> -see <a class="el" href="#a05ddffe49e505638382affaa0426b272" title="Gets the quantity of ports -digits- of the display as informed by the underlying hardware (UHW)">getDigitsQty()</a>- displayable characters long PLUS usable dots, all characters included in the representable characters list. Each valid character might be followed by a "." if needed, without being counted as a character, even spaces and special chars. If two or more consecutive dots are passed, an intermediate space is considered to be included between each pair of them, and that space counts as one of the available characters to display.</td></tr>
   </table>
   </dd>
 </dl>
@@ -954,9 +957,11 @@ The clearing process involves writing a <b>space</b> character to every display 
 <dl class="section note"><dt>Note</dt><dd>Several reasons might be causing a string to not display, including:<ul>
 <li>The inclusion of a character not part of the <b>displayable list</b>.</li>
 <li>The text is longer than the object's DigitsQty (dots are not included in the count).</li>
-<li>The use of two or more consecutive "." -dots- which implies the addition of a space between them not taken into the account of the text lenght. </li>
+<li>The use of two or more consecutive "." -dots- which implies the addition of a space between them, and failing to take them into the account of the text length.</li>
 </ul>
-</dd></dl>
+</dd>
+<dd>
+If a <a class="el" href="#aa40acb9d92f5a832d0ba1d22a03f395e" title="Displays a string.">print(std::string)</a> method is invoked when the display is in <b>wait mode</b>, the method will end the <b>wait mode</b> by invoking a <a class="el" href="#a2e6d2565f90dc6acf546934dde557471" title="Stops the waiting mode in process, if the display was in it.">noWait()</a> method. </dd></dl>
 
 </div>
 </div>
@@ -976,7 +981,7 @@ The clearing process involves writing a <b>space</b> character to every display 
 </div><div class="memdoc">
 
 <p>Resets the blinking mask. </p>
-<p>The blinking mask configures which digits of the display will be affected by the <a class="el" href="#a576676d89b46d8d3752fc8d36fbcac2c" title="Makes the displayed contents blink, by turning periodically off and then turning on the display ports...">blink()</a> method, resetting the mask will restore the original setting by which all the digits of the display will be affected when <b>blinking mode</b> is active. </p>
+<p>The blinking mask configures which digits of the display will be affected by the <a class="el" href="#a576676d89b46d8d3752fc8d36fbcac2c" title="Makes the displayed contents blink, by turning periodically off and then turning on the display ports...">blink()</a> method, resetting the mask will restore the original setting by which all the ports of the display will be affected when <b>blinking mode</b> is active. </p>
 
 </div>
 </div>
@@ -1064,7 +1069,7 @@ The clearing process involves writing a <b>space</b> character to every display 
 <p>The parameters change will take immediate effect, either if the display is already in wait mode or not. The new character will be changed for further calls of the method until a new <a class="el" href="#a806a5ed32988ec7d82b65157b56b538e" title="Sets the character to use when the display is in wait mode.">setWaitChar()</a> is invoked with a valid argument.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">newChar</td><td>A character the display must use for symbolizing the progress, the value must be in the displayable characters list as explained in the <a class="el" href="#aa40acb9d92f5a832d0ba1d22a03f395e" title="Displays a string of text.">print(std::string)</a> method.</td></tr>
+    <tr><td class="paramname">newChar</td><td>A character the display must use for symbolizing the progress, the value must be in the displayable characters list as explained in the <a class="el" href="#aa40acb9d92f5a832d0ba1d22a03f395e" title="Displays a string.">print(std::string)</a> method.</td></tr>
   </table>
   </dd>
 </dl>
@@ -1196,7 +1201,7 @@ The clearing process involves writing a <b>space</b> character to every display 
 <p>Prints one character to the display, at a defined port, without affecting the rest of the characters displayed. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">character</td><td>A single character string that must be displayable, as defined in the <code><a class="el" href="#aa40acb9d92f5a832d0ba1d22a03f395e" title="Displays a string of text.">print()</a></code> method. </td></tr>
+    <tr><td class="paramname">character</td><td>A single character string that must be displayable, as defined in the <code><a class="el" href="#aa40acb9d92f5a832d0ba1d22a03f395e" title="Displays a string.">print()</a></code> method. </td></tr>
     <tr><td class="paramname">port</td><td>An integer value representing the digit where the character will be set, being the range of valid values 0 &lt;= port &lt;= (dspDigits - 1), the 0 value is the rightmost digit, the 1 value the second from the right and so on.</td></tr>
   </table>
   </dd>
@@ -1234,18 +1239,18 @@ The clearing process involves writing a <b>space</b> character to every display 
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">segments</td><td>An integer value representing which segments to turn on and which off to get the graphic representation of a character in the seven segment display. </td></tr>
-    <tr><td class="paramname">port</td><td>An integer value representing the digit where the character will be set, being the range of valid values 0 &lt;= port &lt;= (dspDigits - 1), the 0 value is the rightmost digit, the 1 value the second from the right and so on. </td></tr>
+    <tr><td class="paramname">port</td><td>An integer value representing the digit where the character will be set, being the range of valid values 0 &lt;= port &lt; dspDigits, the 0 value is the rightmost port, the 1 value the second from the right and so on. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">true</td><td>The parameters are within the acceptable range, in this case 0 &lt;= port &lt;= (dspDigits - 1). </td></tr>
+    <tr><td class="paramname">true</td><td>The parameters are within the acceptable range, in this case 0 &lt;= port &lt; dspDigits. </td></tr>
     <tr><td class="paramname">false</td><td>The port value was outside the acceptable range.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section note"><dt>Note</dt><dd>The corresponding value can be looked up in the **_charLeds[]** array definition in the header file of the library. In the case of a common cathode display the values there listed must be complemented. Any other uint8_t (char or unsigned short int is the same here) value is admissible, but the displayed result might not be easily recognized as a known ASCII character. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>The corresponding value can be looked up in the **_charLeds[]** array definition in the header file of the library. In the case of a common cathode display the values there listed must be complemented. Any other uint8_t (char or unsigned short int is the same here) value is admissible, but the displayed result might not be easily recognized as a known ASCII character, but might be useful to display pre-defined special <b>pre-defined significance</b> characters. </dd></dl>
 
 </div>
 </div>

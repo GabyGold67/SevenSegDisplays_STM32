@@ -103,9 +103,16 @@ $(function(){initNavTree('class_click_counter.html',''); initResizable(true); })
   <div class="headertitle"><div class="title">ClickCounter Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Class constructor.  
+ <a href="#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
+<tr class="memitem:add0d83119345530af5e01d74d280695a" id="r_add0d83119345530af5e01d74d280695a"><td class="memItemLeft" align="right" valign="top"><a id="add0d83119345530af5e01d74d280695a" name="add0d83119345530af5e01d74d280695a"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>~ClickCounter</b> ()</td></tr>
+<tr class="memdesc:add0d83119345530af5e01d74d280695a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Class destructor. <br /></td></tr>
+<tr class="separator:add0d83119345530af5e01d74d280695a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7ba45e99dbe4c7d05d29b71ee7ff4158" id="r_a7ba45e99dbe4c7d05d29b71ee7ff4158"><td class="memItemLeft" align="right" valign="top"><a id="a7ba45e99dbe4c7d05d29b71ee7ff4158" name="a7ba45e99dbe4c7d05d29b71ee7ff4158"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>blink</b> ()</td></tr>
 <tr class="memdesc:a7ba45e99dbe4c7d05d29b71ee7ff4158"><td class="mdescLeft">&#160;</td><td class="mdescRight">See <a class="el" href="class_seven_seg_displays.html#a576676d89b46d8d3752fc8d36fbcac2c" title="Makes the displayed contents blink, by turning periodically off and then turning on the display ports...">SevenSegDisplays::blink()</a> <br /></td></tr>
@@ -118,11 +125,287 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>blink</b> (const unsi
 void&#160;</td><td class="memItemRight" valign="bottom"><b>clear</b> ()</td></tr>
 <tr class="memdesc:ac501676871c934b9841b4802d0c066fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">See <a class="el" href="class_seven_seg_displays.html#a67a533e8239853768391bfe513fc318e" title="Clears the display, turning off all the segments and dots.">SevenSegDisplays::clear()</a> <br /></td></tr>
 <tr class="separator:ac501676871c934b9841b4802d0c066fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4134fed8f5613580af87f4ec484bea1e" id="r_a4134fed8f5613580af87f4ec484bea1e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4134fed8f5613580af87f4ec484bea1e">countBegin</a> (int32_t startVal=0)</td></tr>
+<tr class="memdesc:a4134fed8f5613580af87f4ec484bea1e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initiates the counter operation.  <br /></td></tr>
+<tr class="separator:a4134fed8f5613580af87f4ec484bea1e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4dada3bc3494c78a554cc6ba601e88b3" id="r_a4dada3bc3494c78a554cc6ba601e88b3"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4dada3bc3494c78a554cc6ba601e88b3">countDown</a> (int32_t qty=1)</td></tr>
+<tr class="memdesc:a4dada3bc3494c78a554cc6ba601e88b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decrements the counter value.  <br /></td></tr>
+<tr class="separator:a4dada3bc3494c78a554cc6ba601e88b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af9c4f4b8608bcf520800020a1f50e173" id="r_af9c4f4b8608bcf520800020a1f50e173"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af9c4f4b8608bcf520800020a1f50e173">countReset</a> ()</td></tr>
+<tr class="memdesc:af9c4f4b8608bcf520800020a1f50e173"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the counter count value to the value of the parameter used in the <a class="el" href="#a4134fed8f5613580af87f4ec484bea1e" title="Initiates the counter operation.">countBegin(int32_t)</a> method.  <br /></td></tr>
+<tr class="separator:af9c4f4b8608bcf520800020a1f50e173"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a790783585e96388625bf6fc00403ce54" id="r_a790783585e96388625bf6fc00403ce54"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a790783585e96388625bf6fc00403ce54">countRestart</a> (int32_t restartVal=0)</td></tr>
+<tr class="memdesc:a790783585e96388625bf6fc00403ce54"><td class="mdescLeft">&#160;</td><td class="mdescRight">Changes the current count value without stopping and restarting it.  <br /></td></tr>
+<tr class="separator:a790783585e96388625bf6fc00403ce54"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8e223cb7a4deb33d3dfbf7d75e902b1c" id="r_a8e223cb7a4deb33d3dfbf7d75e902b1c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8e223cb7a4deb33d3dfbf7d75e902b1c">countToZero</a> (int32_t qty=1)</td></tr>
+<tr class="memdesc:a8e223cb7a4deb33d3dfbf7d75e902b1c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Modifies the value of the current count by the adding or subtracting the parameter value passed to make the count absolute value smaller until it reaches zero.  <br /></td></tr>
+<tr class="separator:a8e223cb7a4deb33d3dfbf7d75e902b1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a64f41f3934d21f2d81e1bef5eea953ba" id="r_a64f41f3934d21f2d81e1bef5eea953ba"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a64f41f3934d21f2d81e1bef5eea953ba">countUp</a> (int32_t qty=1)</td></tr>
+<tr class="memdesc:a64f41f3934d21f2d81e1bef5eea953ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Increments the counter value.  <br /></td></tr>
+<tr class="separator:a64f41f3934d21f2d81e1bef5eea953ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae8935cd3a1807f513aec89d3fbe45386" id="r_ae8935cd3a1807f513aec89d3fbe45386"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae8935cd3a1807f513aec89d3fbe45386">getCount</a> ()</td></tr>
+<tr class="memdesc:ae8935cd3a1807f513aec89d3fbe45386"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the current value of the counter.  <br /></td></tr>
+<tr class="separator:ae8935cd3a1807f513aec89d3fbe45386"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4185f27a216d636942e53a54f4fa81a2" id="r_a4185f27a216d636942e53a54f4fa81a2"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4185f27a216d636942e53a54f4fa81a2">getStartVal</a> ()</td></tr>
+<tr class="memdesc:a4185f27a216d636942e53a54f4fa81a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the value used to start the counter.  <br /></td></tr>
+<tr class="separator:a4185f27a216d636942e53a54f4fa81a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a086b89e4a8a251ab96a474d9e04edb7c" id="r_a086b89e4a8a251ab96a474d9e04edb7c"><td class="memItemLeft" align="right" valign="top"><a id="a086b89e4a8a251ab96a474d9e04edb7c" name="a086b89e4a8a251ab96a474d9e04edb7c"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>noBlink</b> ()</td></tr>
 <tr class="memdesc:a086b89e4a8a251ab96a474d9e04edb7c"><td class="mdescLeft">&#160;</td><td class="mdescRight">See <a class="el" href="class_seven_seg_displays.html#a9f790df925c994efb27f0ce1c39014dd" title="Stops the display blinking, if it was doing so, leaving the display turned on.">SevenSegDisplays::noBlink()</a> <br /></td></tr>
 <tr class="separator:a086b89e4a8a251ab96a474d9e04edb7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1d77af8406b14866c216b60535aba646" id="r_a1d77af8406b14866c216b60535aba646"><td class="memItemLeft" align="right" valign="top"><a id="a1d77af8406b14866c216b60535aba646" name="a1d77af8406b14866c216b60535aba646"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>setBlinkRate</b> (const unsigned long &amp;newOnRate, const unsigned long &amp;newOffRate=0)</td></tr>
+<tr class="memdesc:a1d77af8406b14866c216b60535aba646"><td class="mdescLeft">&#160;</td><td class="mdescRight">See SevenSegDisplays::setBlinkRate(const unsigned long, const unsigned long) <br /></td></tr>
+<tr class="separator:a1d77af8406b14866c216b60535aba646"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Class constructor. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">newDisplay</td><td>A pointer to a <a class="el" href="class_seven_seg_displays.html" title="Implements a seven segment display object.">SevenSegDisplays</a> object which will display the counter status of the instantiated object </td></tr>
+  </table>
+  </dd>
+</dl>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="a4134fed8f5613580af87f4ec484bea1e" name="a4134fed8f5613580af87f4ec484bea1e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4134fed8f5613580af87f4ec484bea1e">&#9670;&#160;</a></span>countBegin()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool ClickCounter::countBegin </td>
+          <td>(</td>
+          <td class="paramtype">int32_t</td>          <td class="paramname"><span class="paramname"><em>startVal</em></span><span class="paramdefsep"> = </span><span class="paramdefval">0</span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Initiates the counter operation. </p>
+<p>The counter initiation involves several actions including:</p><ul>
+<li>Beginning the seven segments display operation, including the underlying hardware display</li>
+<li>Checking the starting value is within the valid range</li>
+<li>Saving the starting value for future reference</li>
+</ul>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">startVal</td><td>(optional) The starting value setting for the counter, it must be in the range _displayPtr-&gt;getDspValMin() &lt;= startVal &lt;= _displayPtr-&gt;getDspValMax(). If no value is specified the default value, 0, will be assumed.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The success initiating the counter </dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">true</td><td>The initiation succeeded. </td></tr>
+    <tr><td class="paramname">false</td><td>The initiation failed, either caused with a fail initiating the SevenSegDisplay object or caused by a startVal out of acceptable range. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a4dada3bc3494c78a554cc6ba601e88b3" name="a4dada3bc3494c78a554cc6ba601e88b3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4dada3bc3494c78a554cc6ba601e88b3">&#9670;&#160;</a></span>countDown()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool ClickCounter::countDown </td>
+          <td>(</td>
+          <td class="paramtype">int32_t</td>          <td class="paramname"><span class="paramname"><em>qty</em></span><span class="paramdefsep"> = </span><span class="paramdefval">1</span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Decrements the counter value. </p>
+<p>Decrements the value of the current count and refreshes the display to keep it updated. The counter is decremented independently of the sign of the current count, as long as the new value resulting is in the displayable range.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">qty</td><td>(Optional) The integer whose <b>absolute value</b> is to decrement from the current count. If a parameter is not provided a value of 1 is assumed.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The success in decrementing the parameter value from the counter </dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">true</td><td>The result of subtracting the <b>absolute value</b> of parameter from the counter was within the valid range, counter updated. </td></tr>
+    <tr><td class="paramname">false</td><td>The result of subtracting <b>absolute value</b> of the parameter from the counter was out of the valid range, counter was not updated, i.e. (count - abs(qty)) &lt; _displayPtr-&gt;getDspValMin().</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section attention"><dt>Attention</dt><dd>According to the present definition, 0 is a valid parameter. As such the execution of <code>.countDown(0)</code> will be successful, even if the count value won't change!! </dd></dl>
+
+</div>
+</div>
+<a id="af9c4f4b8608bcf520800020a1f50e173" name="af9c4f4b8608bcf520800020a1f50e173"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af9c4f4b8608bcf520800020a1f50e173">&#9670;&#160;</a></span>countReset()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool ClickCounter::countReset </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns the counter count value to the value of the parameter used in the <a class="el" href="#a4134fed8f5613580af87f4ec484bea1e" title="Initiates the counter operation.">countBegin(int32_t)</a> method. </p>
+<dl class="section return"><dt>Returns</dt><dd>The success in returning the count to it's original value. </dd></dl>
+
+</div>
+</div>
+<a id="a790783585e96388625bf6fc00403ce54" name="a790783585e96388625bf6fc00403ce54"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a790783585e96388625bf6fc00403ce54">&#9670;&#160;</a></span>countRestart()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool ClickCounter::countRestart </td>
+          <td>(</td>
+          <td class="paramtype">int32_t</td>          <td class="paramname"><span class="paramname"><em>restartVal</em></span><span class="paramdefsep"> = </span><span class="paramdefval">0</span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Changes the current count value without stopping and restarting it. </p>
+<p>The count value will be set to the parameter value passed if it's within valid range.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">restartValue</td><td>(Optional) New value for the counter count attribute. If a parameter is not provided a value of 1 is assumed.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The success restarting the counter </dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">true</td><td>The restarting succeeded. </td></tr>
+    <tr><td class="paramname">false</td><td>The restarting failed, caused by a restartVal out of acceptable range. <br  />
+ </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a8e223cb7a4deb33d3dfbf7d75e902b1c" name="a8e223cb7a4deb33d3dfbf7d75e902b1c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8e223cb7a4deb33d3dfbf7d75e902b1c">&#9670;&#160;</a></span>countToZero()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool ClickCounter::countToZero </td>
+          <td>(</td>
+          <td class="paramtype">int32_t</td>          <td class="paramname"><span class="paramname"><em>qty</em></span><span class="paramdefsep"> = </span><span class="paramdefval">1</span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Modifies the value of the current count by the adding or subtracting the parameter value passed to make the count absolute value smaller until it reaches zero. </p>
+<p>Modifies the value of the current count. The counter absolute value will be decremented, independently of the sign of the current count, as long as the absolute value of the modification is less than or equal to the current value. If the current count is negative, the absolute value of the parameter will be added, and so result in a count value increment. If the current count is positive, the absolute value of the parameter will be subtracted, resulting in a count decrement, with the concrete purpose of approaching the count value to 0.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">qty</td><td>(Optional) The unsigned integer value to add or subtract from the current count. If a parameter is not provided a value of 1 is assumed.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The success in subtracting the absolute value of the parameter from the absolute value of the counter. </dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">true</td><td>The result of the operation value from the counter was within the valid range, counter updated. </td></tr>
+    <tr><td class="paramname">false</td><td>The result of subtracting the absolute value of the parameter from the absolute value of the counter resulted in less than 0, counter was not updated.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section attention"><dt>Attention</dt><dd>According to the present definition, 0 is a valid parameter. As such the execution of <code>.countDown(0)</code> will be successful, even if the count value won't change!! </dd></dl>
+
+</div>
+</div>
+<a id="a64f41f3934d21f2d81e1bef5eea953ba" name="a64f41f3934d21f2d81e1bef5eea953ba"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a64f41f3934d21f2d81e1bef5eea953ba">&#9670;&#160;</a></span>countUp()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool ClickCounter::countUp </td>
+          <td>(</td>
+          <td class="paramtype">int32_t</td>          <td class="paramname"><span class="paramname"><em>qty</em></span><span class="paramdefsep"> = </span><span class="paramdefval">1</span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Increments the counter value. </p>
+<p>Increments the value of the current count and refreshes the display to keep it updated. The counter is incremented independently of the sign of the current count, as long as the new value resulting is in the displayable range.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">qty</td><td>(Optional) The integer whose <b>absolute value</b> is to be increment from the current count. If a parameter is not provided a value of 1 is assumed.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The success in incrementing the counter by the the parameter's absolute value. </dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">true</td><td>The result of adding the <b>absolute value</b> of parameter to the counter was within the valid range, counter updated. </td></tr>
+    <tr><td class="paramname">false</td><td>The result of adding <b>absolute value</b> of the parameter to the counter was out of the valid range, counter was not updated, i.e. (count + abs(qty)) &gt; _displayPtr-&gt;getDspValMax().</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section attention"><dt>Attention</dt><dd>According to the present definition, 0 is a valid parameter. As such the execution of <code>.countUp(0)</code> will be successful, even if the count value won't change!! </dd></dl>
+
+</div>
+</div>
+<a id="ae8935cd3a1807f513aec89d3fbe45386" name="ae8935cd3a1807f513aec89d3fbe45386"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae8935cd3a1807f513aec89d3fbe45386">&#9670;&#160;</a></span>getCount()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int32_t ClickCounter::getCount </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets the current value of the counter. </p>
+<dl class="section return"><dt>Returns</dt><dd>The current value held by the counter. </dd></dl>
+
+</div>
+</div>
+<a id="a4185f27a216d636942e53a54f4fa81a2" name="a4185f27a216d636942e53a54f4fa81a2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4185f27a216d636942e53a54f4fa81a2">&#9670;&#160;</a></span>getStartVal()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int32_t ClickCounter::getStartVal </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets the value used to start the counter. </p>
+<p>Gets the value passed as parameter when the <a class="el" href="#a4134fed8f5613580af87f4ec484bea1e" title="Initiates the counter operation.">countBegin(int32_t)</a> method was invoked, starting the counter. This is the value that will be used for the <a class="el" href="#af9c4f4b8608bcf520800020a1f50e173" title="Returns the counter count value to the value of the parameter used in the countBegin(int32_t) method.">countReset()</a> method.</p>
+<dl class="section return"><dt>Returns</dt><dd>The value to which the counter was originally started. </dd></dl>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

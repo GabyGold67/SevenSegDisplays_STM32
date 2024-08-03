@@ -2,7 +2,7 @@ var searchData=
 [
   ['send_0',['send',['../class_seven_seg_dyn_h_c595.html#ad913f3469645d360cc7dfbab8892a9aa',1,'SevenSegDynHC595::send(uint8_t content)'],['../class_seven_seg_dyn_h_c595.html#ab5108c4c76696b5c8423ce6a15224b03',1,'SevenSegDynHC595::send(const uint8_t &amp;segments, const uint8_t &amp;port)']]],
   ['setblinkmask_1',['setBlinkMask',['../class_seven_seg_displays.html#adbf4a53a706c00d9a237991e234a9353',1,'SevenSegDisplays']]],
-  ['setblinkrate_2',['setBlinkRate',['../class_seven_seg_displays.html#a5156b178ce490d7b5e1207aa3baa85dc',1,'SevenSegDisplays']]],
+  ['setblinkrate_2',['setBlinkRate',['../class_seven_seg_displays.html#a5156b178ce490d7b5e1207aa3baa85dc',1,'SevenSegDisplays::setBlinkRate()'],['../class_click_counter.html#a1d77af8406b14866c216b60535aba646',1,'ClickCounter::setBlinkRate()']]],
   ['setdigitsorder_3',['setDigitsOrder',['../class_seven_seg_disp_hw.html#aee6d67c3bdd719b05ac6e7d8d250d43f',1,'SevenSegDispHw']]],
   ['setdspbuffptr_4',['setDspBuffPtr',['../class_seven_seg_disp_hw.html#afc7402bad588be4ea2c7aedaf870f9ff',1,'SevenSegDispHw']]],
   ['setwaitchar_5',['setWaitChar',['../class_seven_seg_displays.html#a806a5ed32988ec7d82b65157b56b538e',1,'SevenSegDisplays']]],
