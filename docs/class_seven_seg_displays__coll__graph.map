@@ -1,5 +1,5 @@
 <map id="SevenSegDisplays" name="SevenSegDisplays">
-<area shape="rect" id="Node000001" title="Implements a seven segment display object." alt="" coords="68,235,197,261"/>
+<area shape="rect" id="Node000001" title="Models seven segment display class objects." alt="" coords="68,235,197,261"/>
 <area shape="poly" id="edge3_Node000001_Node000001" title=" " alt="" coords="214,238,224,248,216,258,198,262,197,257,213,253,218,248,210,242"/>
 <area shape="rect" id="Node000002" href="$class_seven_seg_disp_hw.html" title="Implements a generic Seven Segments LEDs hardware interface to displays the logically generated chara..." alt="" coords="5,112,129,139"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="62,154,59,182,67,209,78,222,93,232,91,236,75,226,62,212,54,183,56,154"/>

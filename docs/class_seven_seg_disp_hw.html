@@ -269,7 +269,7 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Loads the hardware display driver's internal buffer with the current display's data buffer contents. </p>
-<p>The method is invoked every time the display's data buffer contents change. This mechanism implementation avoids the need of periodically checking the display's data buffer for changes. The standard invocation of this method is done by the <a class="el" href="class_seven_seg_displays.html" title="Implements a seven segment display object.">SevenSegDisplays</a> class methods that modify the display's data buffer contents (print(), write(), blink(), wait() and others).</p>
+<p>The method is invoked every time the display's data buffer contents change. This mechanism implementation avoids the need of periodically checking the display's data buffer for changes. The standard invocation of this method is done by the <a class="el" href="class_seven_seg_displays.html" title="Models seven segment display class objects.">SevenSegDisplays</a> class methods that modify the display's data buffer contents (print(), write(), blink(), wait() and others).</p>
 <dl class="section note"><dt>Note</dt><dd>The dynamic technology displays usually don't have internal buffers and need constant reading of the display buffer to refresh the displaying content. For this kind of displays this method is unneeded, so it might be not implementation for those sub-clases, or might be implemented as an empty method. </dd></dl>
 
 <p>Reimplemented in <a class="el" href="class_seven_seg_t_m163_x.html#a9514976b2d1615130d8a36725ec61c55">SevenSegTM163X</a>.</p>

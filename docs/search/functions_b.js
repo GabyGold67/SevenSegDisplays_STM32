@@ -1,7 +1,5 @@
 var searchData=
 [
-  ['_7eclickcounter_0',['~ClickCounter',['../class_click_counter.html#add0d83119345530af5e01d74d280695a',1,'ClickCounter']]],
-  ['_7esevensegdisplays_1',['~SevenSegDisplays',['../class_seven_seg_displays.html#aad6eac4fa55968318f6d0c1e4e80cb8e',1,'SevenSegDisplays']]],
-  ['_7esevensegdynamic_2',['~SevenSegDynamic',['../class_seven_seg_dynamic.html#a048f63710ee3e4c00005c0f550da5067',1,'SevenSegDynamic']]],
-  ['_7esevensegdynhc595_3',['~SevenSegDynHC595',['../class_seven_seg_dyn_h_c595.html#a7cba0a6a5ecb438a8b633167c119e4bc',1,'SevenSegDynHC595']]]
+  ['wait_0',['wait',['../class_seven_seg_displays.html#ae00a0275a3fa0c1858e475d3e2f1272d',1,'SevenSegDisplays::wait()'],['../class_seven_seg_displays.html#a25fe31c0ee20fd4dfb96730b05776c28',1,'SevenSegDisplays::wait(const unsigned long &amp;newWaitRate)']]],
+  ['write_1',['write',['../class_seven_seg_displays.html#ab1c77aee430974cc460d259e600668ba',1,'SevenSegDisplays::write(const uint8_t &amp;segments, const uint8_t &amp;port)'],['../class_seven_seg_displays.html#a7e034e7918ccdc5c0ff93af667fecbc6',1,'SevenSegDisplays::write(const std::string &amp;character, const uint8_t &amp;port)']]]
 ];

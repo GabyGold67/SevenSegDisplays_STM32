@@ -872,12 +872,13 @@ bool SevenSegDisplays::write(const std::string &character, const uint8_t &port){
 
 //============================================================> Class methods separator
 
-ClickCounter::ClickCounter(SevenSegDisplays* newDisplay)
-:_displayPtr{newDisplay}
+ClickCounter::ClickCounter(SevenSegDisplays* newDisplay, bool rghtAlgn, bool zeroPad)
+:_displayPtr{newDisplay}, _countRghtAlgn{rghtAlgn}, _countZeroPad{zeroPad}
 {
 }
 
-ClickCounter::~ClickCounter(){
+ClickCounter::~ClickCounter()
+{
 }
 
 bool ClickCounter::blink(){
@@ -913,9 +914,11 @@ bool ClickCounter::countDown(int32_t qty){
     bool result {false};
     qty = abs(qty);
 
-    if((_count - qty) >= _displayPtr->getDspValMin()){
-        _count -= qty;
-        result = updDisplay();
+    if(qty != 0){
+		 if((_count - qty) >= _displayPtr->getDspValMin()){
+			  _count -= qty;
+			  result = updDisplay();
+		 }
     }
 
     return result;
@@ -939,16 +942,23 @@ bool ClickCounter::countRestart(int32_t restartVal){
 
 bool ClickCounter::countEnd(){
 
+	clear();
 	return _displayPtr->end();
 }
 
 bool ClickCounter::countToZero(int32_t qty){
 	bool result {false};
+	qty = abs(qty);
 
-	if (_count != 0){
-		if(abs(_count) >= abs(qty)){
-			_count = _count - (_count > 0)?abs(qty):(-1)*abs(qty);
-			result = true;
+	if(qty != 0){
+		if(_count != 0){
+			if(abs(_count) >= qty){
+				if(_count > 0)
+					_count -= qty;
+				else
+					_count += qty;
+				result = true;
+			}
 		}
 	}
 
@@ -959,9 +969,11 @@ bool ClickCounter::countUp(int32_t qty){
     bool result {false};
     qty = abs(qty);
 
-    if((_count + qty) <= _displayPtr->getDspValMax()){
-        _count += qty;
-        result = updDisplay();
+    if(qty != 0){
+		 if((_count + qty) <= _displayPtr->getDspValMax()){
+			  _count += qty;
+			  result = updDisplay();
+		 }
     }
 
     return result;
@@ -989,5 +1001,5 @@ bool ClickCounter::setBlinkRate(const unsigned long &newOnRate, const unsigned l
 
 bool ClickCounter::updDisplay(){
 
-    return _displayPtr->print(_count, _countRgthAlgn, _countZeroPad);
+    return _displayPtr->print(_count, _countRghtAlgn, _countZeroPad);
 }

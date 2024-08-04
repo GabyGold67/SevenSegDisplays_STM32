@@ -44,7 +44,7 @@ const int MAX_DISPLAYS_QTY{16};
 //============================================================> Class declarations separator
 
 /**
- * @brief Implements a seven segment display object.
+ * @brief Models seven segment display class objects.
  *
  * The class implements a hardware independent API for seven segment display objects. The data to be shown by the physical display, after generated, is stored and passed to the underlying hardware display.
  *
@@ -521,24 +521,34 @@ public:
 
 //============================================================> Class declarations separator
 
+/**
+ * @brief Models Click Counter (a.k.a. Tally Counter) class objects.
+ *
+ * The class implements a Click Counter, a device with the main purpose of incrementing a count by one every time a pushbutton or lever is pressed. The devices have a long story, passing from purely mechanical, to electro mechanical to electronic implementations. This implementation adds several improvements and extensions to the basic services provided by the mechanical counterparts, and uses a SevenSegDisplay class object to show the count status.
+ *
+ * @class ClickCounter
+ */
 class ClickCounter{
 private:
     SevenSegDisplays* _displayPtr;
-    int _count{0};
-    int _beginStartVal{0};
-    bool _countRgthAlgn{true};
-    bool _countZeroPad{false};
+    bool _countRghtAlgn;
+    bool _countZeroPad;
+protected:
+    int32_t _beginStartVal{0};
+    int32_t _count{0};
 public:
     /**
-     * @brief Class constructor
+     * @brief
      *
-     * @param newDisplay A pointer to a SevenSegDisplays object which will display the counter status of the instantiated object
-     *
-     * @class ClickCounter
+     * @param newDisplay A pointer to a SevenSegDisplays class object which will display the counter current count value.
+     * @param rghtAlgn (Optional) Establishes if the numbers will be displayed right aligned (true) or left aligned (false). Default value is true. For more details see SevenSegDisplays::print(const int32_t, bool, bool)
+     * @param zeroPad (Optional) Establishes if the numbers when displayed right aligned, if the digits are less than the display ports, will be completed with heading spaces or 0s. For more details see SevenSegDisplays::print(const int32_t, bool, bool)
      */
-    ClickCounter(SevenSegDisplays* newDisplay);
+    ClickCounter(SevenSegDisplays* newDisplay, bool rghtAlgn = true, bool zeroPad = false);
     /**
      * @brief Class destructor
+     *
+     * @attention The ClickCounter class destructor **does not call** the SevenSegDisplays destructor method. As the ClickCounter object was instantiated with the provision of a pointer to an SevenSegDisplays object, the logical path is for the code calling this destructor to dispose of the SevenSegDisplays object according to it's plans.
      */
     ~ClickCounter();
     /**
@@ -561,44 +571,49 @@ public:
      * - Checking the starting value is within the valid range
      * - Saving the starting value for future reference
      *
-     * @param startVal (optional) The starting value setting for the counter, it must be in the range _displayPtr->getDspValMin() <= startVal <= _displayPtr->getDspValMax(). If no value is specified the default value, 0, will be assumed.
+     * @param startVal (optional) The starting value setting for the counter, it must be in the range _displayPtr->getDspValMin() <= startVal <= _displayPtr->getDspValMax(). If no value is specified the default value 0 will be assumed.
      *
-     * @return The success initiating the counter
+     * @return The success initiating the counter.
      * @retval true: The initiation succeeded.
-     * @retval false: The initiation failed, either caused with a fail initiating the SevenSegDisplay object or caused by a startVal out of acceptable range.
+     * @retval false: The initiation failed, either caused by a fail initializing the SevenSegDisplay object or caused by a startVal out of range.
      */
     bool countBegin(int32_t startVal = 0);
     /**
      * @brief Decrements the counter value.
      *
-     * Decrements the value of the current count and refreshes the display to keep it updated. The counter is decremented independently of the sign of the current count, as long as the new value resulting is in the displayable range.
+     * Decrements the value of the current count and refreshes the display to keep it updated. The counter **is decremented** independently of the sign of the current count, as long as the new value resulting is in the displayable range.
      *
-     * @param qty (Optional) The integer whose **absolute value** is to decrement from the current count. If a parameter is not provided a value of 1 is assumed.
+     * @param qty (Optional) The integer whose **absolute value** is to be decremented from the current count. If a parameter is not provided a value of 1 is assumed.
      *
      * @return The success in decrementing the parameter value from the counter
      * @retval true: The result of subtracting the **absolute value** of parameter from the counter was within the valid range, counter updated.
-     * @retval false: The result of subtracting **absolute value** of the parameter from the counter was out of the valid range, counter was not updated, i.e. (count - abs(qty)) < _displayPtr->getDspValMin().
-     *
-     * @attention According to the present definition, 0 is a valid parameter. As such the execution of `.countDown(0)` will be successful, even if the count value won't change!!
+     * @retval false: The counter modification failed.Either the parameter value was 0, or the result of subtracting **absolute value** of the parameter from the counter was out of the valid range, counter was not updated, i.e. (count - abs(qty)) < _displayPtr->getDspValMin().
      */
     bool countDown(int32_t qty = 1);
     /**
-     * @brief Returns the counter count value to the value of the parameter used in the countBegin(int32_t) method
+     * @brief Returns the counter count value to that of the parameter used in the countBegin(int32_t) method
      *
      * @return The success in returning the count to it's original value.
      */
     bool countReset();
     /**
-     * @brief Changes the current count value without stopping and restarting it.
+     * @brief Changes the current count value without stopping and restarting the ClickCounter.
      *
      * The count value will be set to the parameter value passed if it's within valid range.
      *
-     * @param restartValue (Optional) New value for the counter count attribute. If a parameter is not provided a value of 1 is assumed.
+     * @param restartVal (Optional) New value for the counter count attribute. If a parameter is not provided a value of 0 is assumed.
      *
      * @return The success restarting the counter
      * @retval true: The restarting succeeded.
      * @retval false: The restarting failed, caused by a restartVal out of acceptable range.     */
     bool countRestart(int32_t restartVal = 0);
+    /**
+     * @brief Clears the display and stops the SevenSegDisplays object.
+     *
+     * The display is cleared -see clear()- and the SevenSegDisplays object working is stopped by sending a SevenSegDisplays::end(), but it is not destructed. The object might be restarted by using the CountBegin(uint32_t) method.
+     *
+     * @return The value returned by the SevenSegDisplays::end()
+     */
     bool countEnd();
     /**
      * @brief Modifies the value of the current count by the adding or subtracting the parameter value passed to make the count absolute value smaller until it reaches zero.
@@ -609,23 +624,19 @@ public:
      *
      * @return The success in subtracting the absolute value of the parameter from the absolute value of the counter.
      * @retval true: The result of the operation value from the counter was within the valid range, counter updated.
-     * @retval false: The result of subtracting the absolute value of the parameter from the absolute value of the counter resulted in less than 0, counter was not updated.
-     *
-     * @attention According to the present definition, 0 is a valid parameter. As such the execution of `.countDown(0)` will be successful, even if the count value won't change!!
+     * @retval false: Either the parameter value was 0, or the result of subtracting the absolute value of the parameter from the absolute value of the counter resulted in less than 0, counter was not updated.
      */
     bool countToZero(int32_t qty = 1);
     /**
      * @brief Increments the counter value.
      *
-     * Increments the value of the current count and refreshes the display to keep it updated. The counter is incremented independently of the sign of the current count, as long as the new value resulting is in the displayable range.
+     * Increments the value of the current count and refreshes the display to keep it updated. The counter **is incremented** independently of the sign of the current count, as long as the new value resulting is in the displayable range.
      *
-     * @param qty (Optional) The integer whose **absolute value** is to be increment from the current count. If a parameter is not provided a value of 1 is assumed.
+     * @param qty (Optional) The integer whose **absolute value** is to be incremented to the current count. If a parameter is not provided a value of 1 is assumed.
      *
-     * @return The success in incrementing the counter by the the parameter's absolute value.
+     * @return The success in incrementing the parameter value from the counter
      * @retval true: The result of adding the **absolute value** of parameter to the counter was within the valid range, counter updated.
-     * @retval false: The result of adding **absolute value** of the parameter to the counter was out of the valid range, counter was not updated, i.e. (count + abs(qty)) > _displayPtr->getDspValMax().
-     *
-     * @attention According to the present definition, 0 is a valid parameter. As such the execution of `.countUp(0)` will be successful, even if the count value won't change!!
+     * @retval false: The counter modification failed.Either the parameter value was 0 (not accepted value), or the result of adding the **absolute value** of the parameter to the counter was out of the valid range, counter was not updated, i.e. (count + abs(qty)) > _displayPtr->getDspValMax().
      */
     bool countUp(int32_t qty = 1);
     /**
@@ -650,11 +661,16 @@ public:
      * @brief See SevenSegDisplays::setBlinkRate(const unsigned long, const unsigned long)
      */
     bool setBlinkRate(const unsigned long &newOnRate, const unsigned long &newOffRate = 0);
-    bool updDisplay();  //To be analyzed it's current need
+    /**
+     * @brief Sends the current count value to the SevenSegDisplay
+     *
+     * The information sent to the SevenSegDisplays object includes the alignment and padding settings
+     *
+     * @return The value returned by the SevenSegDisplays::print(const int32_t, bool, bool) method invoked.
+     */
+    bool updDisplay();
 };
 
 //============================================================> Class declarations separator
-
-
 
 #endif /* _SEVENSEGDISPLAYS_STM32_H_ */
